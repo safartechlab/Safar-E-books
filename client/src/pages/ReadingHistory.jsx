@@ -32,7 +32,6 @@ function ReadingHistory() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Search / filter / sort controls
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortBy, setSortBy] = useState("recent");
@@ -235,7 +234,7 @@ function ReadingHistory() {
             </button>
           </div>
         ) : (
-          /* Book Cards Grid */
+
           <div className="rh-grid">
             {sortedHistory.map((item, index) => {
               const book = item.book;

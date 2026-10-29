@@ -1,4 +1,3 @@
-/* Only brand colors — table/layout/spacing come from Bootstrap, matching the other admin pages */
 .manage-reviews-bg { background: var(--color-cream-bg); }
 .manage-reviews-heading { color: var(--color-text-dark); }
 
@@ -22,6 +21,7 @@
 
 .manage-reviews-comment {
   display: -webkit-box;
+  line-clamp: 2;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;

@@ -37,7 +37,6 @@ const galleryImages = [
     height: "short",
   },
 ];
-// 1250 -> "1.2K+", 12000 -> "12K+", 840 -> "840"
 const formatCount = (n) => {
   if (n === null || n === undefined) return "—";
   if (n < 1000) return n.toLocaleString("en-IN");
@@ -56,7 +55,7 @@ function About() {
         const res = await API.get("/stats");
         if (isMounted) setStats(res.data?.stats || null);
       } catch (error) {
-        // leave stats null -> cards show "—"
+       
       }
     };
     fetchStats();

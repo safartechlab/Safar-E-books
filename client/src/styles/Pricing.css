@@ -4,7 +4,6 @@
   margin: 0 auto;
 }
 
-/* ---------- Hero ---------- */
 .pricing-title {
   font-family: var(--font-serif);
   font-size: 2.6rem;
@@ -20,7 +19,6 @@
   line-height: 1.5;
 }
 
-/* ---------- Billing cycle toggle ---------- */
 .cycle-toggle {
   display: inline-flex;
   background: var(--color-card-bg);
@@ -66,7 +64,6 @@
   color: #ffffff;
 }
 
-/* ---------- Plan grid ---------- */
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -233,7 +230,6 @@
   background: var(--brand-amber-hover);
 }
 
-/* ---------- Footnote ---------- */
 .pricing-footnote {
   margin-top: 44px;
   text-align: center;
@@ -241,7 +237,6 @@
   color: var(--color-text-muted);
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 500px) {
   .pricing-page {
     padding-top: 90px;

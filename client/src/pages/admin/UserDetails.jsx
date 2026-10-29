@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Card, Row, Col, Button, Badge } from "react-bootstrap";
 import API from "../../api/axios";
-import "../../styles/UserDetails.css"; // brand colors + avatar circle only
+import "../../styles/UserDetails.css";
 
 function UserDetails() {
   const { id } = useParams();

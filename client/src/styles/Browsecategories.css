@@ -1,23 +1,20 @@
-/* Container & Section Spacing */
 .bc-section {
   background-color: var(--color-cream-bg, #F7ECEB);
-  /* Top 20px, Bottom 40px karke comfortable breathing space diya */
   padding: 10px 0 55px 0 !important; 
   position: relative;
   z-index: 5;
   width: 100%;
   box-sizing: border-box;
 }
-/* Thoda right side shift alignment matching New Arrivals */
+
 .bc-inner-container {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 4.5rem; /* Exact left-right margin taaki content thoda right push ho */
+  padding: 0 4.5rem;
   box-sizing: border-box;
 }
 
-/* Header Row */
 .bc-header-row {
   display: flex;
   justify-content: space-between;
@@ -32,7 +29,6 @@
   flex-direction: column;
 }
 
-/* Heading: New Arrivals identical */
 .bc-heading {
   font-family: var(--font-serif, "Playfair Display", Georgia, serif);
   font-size: clamp(26px, 3.2vw, 34px);
@@ -43,7 +39,6 @@
   margin: 0;
 }
 
-/* Accent Underline Line */
 .bc-heading::after {
   content: "";
   display: block;
@@ -62,7 +57,6 @@
   margin: 2px 0 0 0;
 }
 
-/* Minimalist Circular Arrow Button */
 .bc-viewall-btn {
   display: inline-flex;
   align-items: center;
@@ -85,7 +79,6 @@
   transform: translateX(3px);
 }
 
-/* 6-Column Strip without gaps */
 .bc-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -93,7 +86,6 @@
   width: 100%;
 }
 
-/* Compact Card */
 .bc-card {
   position: relative;
   width: 100% !important;
@@ -114,7 +106,6 @@
   box-shadow: 0 8px 20px rgba(74, 59, 71, 0.2);
 }
 
-/* Vignette Overlay */
 .bc-overlay {
   position: absolute;
   inset: 0;
@@ -137,7 +128,6 @@
   );
 }
 
-/* Card Content: Centered Layout */
 .bc-card-content {
   position: relative;
   z-index: 2;
@@ -150,7 +140,6 @@
   box-sizing: border-box;
 }
 
-/* Circular Icon Badge */
 .bc-icon-badge {
   width: 34px;
   height: 34px;
@@ -173,7 +162,6 @@
   border-color: #FFFFFF;
 }
 
-/* Text Container */
 .bc-text-meta {
   display: flex;
   flex-direction: column;
@@ -204,7 +192,6 @@
   white-space: nowrap;
 }
 
-/* ================= Tablet & Mobile Responsive ================= */
 @media (max-width: 1199.98px) {
   .bc-inner-container {
     padding: 0 2rem;
@@ -216,11 +203,10 @@
 }
 
 @media (max-width: 768px) {
-  /* Mobile par bottom margin aur padding ko tighten kiya */
   .bc-section {
     padding-top: 14px !important;
     padding-bottom: 12px !important;
-    margin-bottom: 0 !important; /* Extra bottom gap bilkul zero kiya */
+    margin-bottom: 0 !important;
   }
 
   .bc-inner-container {
@@ -251,7 +237,6 @@
     height: 34px !important;
   }
 
-  /* Horizontal swipe track */
   .bc-grid {
     display: flex !important;
     flex-direction: row !important;

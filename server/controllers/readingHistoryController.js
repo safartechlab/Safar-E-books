@@ -2,10 +2,9 @@ const Book = require("../models/Book");
 const ReadingHistory = require("../models/ReadingHistory");
 const mongoose = require("mongoose");
 
-// Save / Update Continue Reading
 const saveReadingHistory = async (req, res) => {
   try {
-    // Always use the logged-in user's own id — never trust a client-supplied one.
+
     const userId = req.user._id;
     const { bookId } = req.body;
     let currentPage = Number(req.body.currentPage ?? 1);
@@ -15,7 +14,6 @@ const saveReadingHistory = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid book id" });
     }
 
-    // Page numbers must be whole numbers >= 1
     if (!Number.isInteger(currentPage) || currentPage < 1) {
       return res.status(400).json({
         success: false,
@@ -35,14 +33,11 @@ const saveReadingHistory = async (req, res) => {
       });
     }
 
-    // The book must exist (archived books are allowed so people who
-    // already own one can keep their progress)
     const bookDoc = await Book.findById(bookId).select("editions language pages");
     if (!bookDoc) {
       return res.status(404).json({ success: false, message: "Book not found" });
     }
 
-    // Progress is stored per language edition.
     const editionList = bookDoc.editions?.length
       ? bookDoc.editions.map((e) => e.language)
       : [bookDoc.language];
@@ -57,9 +52,6 @@ const saveReadingHistory = async (req, res) => {
       lang = match;
     }
 
-    // Do NOT trust the page total sent by the browser. A preview reader's
-    // browser only sees 20 pages, and a user could send any number. If the
-    // real page count of this language is known, use that instead.
     const matchedEdition = bookDoc.editions?.find(
       (e) => String(e.language).toLowerCase() === String(lang).toLowerCase()
     );
@@ -103,7 +95,6 @@ const saveReadingHistory = async (req, res) => {
   }
 };
 
-// Get Continue Reading
 const getReadingHistory = async (req, res) => {
   try {
     const allHistory = await ReadingHistory.find({
@@ -112,8 +103,6 @@ const getReadingHistory = async (req, res) => {
       .populate("book")
       .sort({ lastOpened: -1 });
 
-    // Hide "buy once" books the user no longer owns (for example after a refund).
-    // If they buy the book again, it shows up again with the saved progress.
     const isAdmin = req.user.role === "admin";
     const owned = new Set((req.user.purchasedBooks || []).map(String));
 
@@ -138,9 +127,6 @@ const getReadingHistory = async (req, res) => {
   }
 };
 
-// Delete a single reading-history entry (used by the "✕ remove" button on
-// Continue Reading / Reading History). Scoped to req.user._id so a user
-// can only ever delete their own entries.
 const deleteReadingHistory = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {

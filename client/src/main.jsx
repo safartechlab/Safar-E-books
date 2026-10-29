@@ -7,9 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from './App.jsx'
 
-// "Remember Me" was off: the login only lasts until the browser is closed.
-// The bv_session cookie disappears on close, so if the flag is still set
-// but the cookie is gone, this is a new browser session -> sign out.
 if (
   localStorage.getItem("sessionOnly") === "1" &&
   !/(?:^|;\s*)bv_session=1/.test(document.cookie)

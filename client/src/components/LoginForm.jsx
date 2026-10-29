@@ -26,20 +26,16 @@ function LoginForm({ closeLogin, openRegister, openForgotPassword, openSignupOtp
     submitLock.current = true;
     setSubmitting(true);
     try {
-      // rememberMe tells the server how long the token should last
-      // (30 days if checked, 1 day if not).
+      
       const response = await API.post("/auth/login", { ...formData, rememberMe });
 
-      // Admins may only sign in from a laptop/desktop. The server already
-      // refuses most phones; this second check also catches iPads, which
-      // pretend to be Macs. Undo the session it just created and stop.
       if (response.data.user?.role === "admin" && isMobileOrTabletDevice()) {
         try {
           await API.post("/auth/logout", null, {
             headers: { Authorization: `Bearer ${response.data.token}` },
           });
         } catch (e) {
-          /* nothing saved in the browser yet, so there is nothing else to undo */
+          
         }
         submitLock.current = false;
         setSubmitting(false);
@@ -54,9 +50,7 @@ function LoginForm({ closeLogin, openRegister, openForgotPassword, openSignupOtp
         localStorage.removeItem("sessionOnly");
         document.cookie = "bv_session=; path=/; max-age=0";
       } else {
-        // Session cookie (no max-age): shared by all tabs, dropped when the
-        // browser closes. main.jsx signs the user out if the flag is set
-        // but this cookie is gone.
+      
         localStorage.setItem("sessionOnly", "1");
         document.cookie = "bv_session=1; path=/; SameSite=Lax";
       }

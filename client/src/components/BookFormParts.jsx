@@ -1,6 +1,6 @@
 import "../styles/AddBook.css";
 
-// A white card with a numbered title, used by Add Book and Edit Book.
+
 export function BookSection({ step, title, hint, children, className = "" }) {
   return (
     <section className={`bk-section ${className}`}>
@@ -21,8 +21,6 @@ const ACCESS_OPTIONS = [
   { value: "external_only", icon: "🛍️", name: "External link only", desc: "Not readable on the website; store links only." },
 ];
 
-// Four clickable cards instead of a dropdown. It calls the same handlers the
-// old <select> used, so the saving logic does not change.
 export function BookAccessPicker({ accessType, price, onAccessTypeChange, onChange }) {
   return (
     <>

@@ -4,10 +4,6 @@ import "../styles/Legal.css";
 
 const LAST_UPDATED = "10th October 2026";
 
-// Contact details come from Admin > Settings > Website Information.
-// Tokens below are replaced when the page renders.
-
-// Block types: { p } paragraph, { sub } sub-heading, { list } bullets, { lines } stacked lines
 const intro = [
   {
     p: "This Privacy Policy explains how SAFAR TECHLAB LLP (“SAFAR TECHLAB LLP”, “we”, “us”, or “our”), operating the SAFAR EBOOKS website and application, collects, uses, stores, shares and protects information relating to users of our Platform.",

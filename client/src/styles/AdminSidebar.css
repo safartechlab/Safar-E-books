@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
 
-/* Aesthetic Deep Warm Plum Sidebar */
 .aesthetic-admin-sidebar {
   width: 250px;
   height: 100vh;
@@ -17,7 +16,6 @@
   overflow-y: auto;
 }
 
-/* Custom Sleek Scrollbar */
 .aesthetic-admin-sidebar::-webkit-scrollbar {
   width: 4px;
 }
@@ -26,7 +24,6 @@
   border-radius: 4px;
 }
 
-/* Brand Header */
 .sidebar-brand-box {
   display: flex;
   align-items: center;
@@ -63,7 +60,6 @@
   font-weight: 500;
 }
 
-/* Nav Container */
 .sidebar-nav-container {
   display: flex;
   flex-direction: column;
@@ -71,7 +67,6 @@
   flex-grow: 1;
 }
 
-/* Nav Item Links */
 .sidebar-nav-link {
   display: flex;
   align-items: center;
@@ -103,7 +98,6 @@
   opacity: 1;
 }
 
-/* Active Menu Item (Match Reference Styling) */
 .sidebar-nav-link.active {
   background: #dcc6c6;
   color: #2a1f26;
@@ -116,7 +110,6 @@
   opacity: 1;
 }
 
-/* Unread Messages Pill */
 .sidebar-unread-badge {
   font-size: 10.5px;
   font-weight: 700;
@@ -124,7 +117,6 @@
   background-color: #d9534f !important;
 }
 
-/* Reference-Style Bottom Status Card */
 .sidebar-perk-card {
   background: rgba(220, 198, 198, 0.08);
   border: 1px solid rgba(220, 198, 198, 0.18);
@@ -150,7 +142,6 @@
   margin: 0;
 }
 
-/* Logout Button */
 .sidebar-logout-btn {
   display: flex;
   align-items: center;

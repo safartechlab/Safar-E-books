@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-/* Main Page Container with Sticky Footer Lock */
 .my-purchases-page {
   background-color: var(--color-light-blush, #f7f1f0);
   min-height: calc(100vh - 120px);
@@ -16,7 +15,6 @@
   margin: 0 auto;
 }
 
-/* Header */
 .purchases-header {
   margin-bottom: 24px;
 }
@@ -36,7 +34,6 @@
   margin-top: 4px;
 }
 
-/* Empty / Loading Box */
 .purchases-status-box {
   text-align: center;
   padding: 50px 20px;
@@ -77,14 +74,12 @@
   background: var(--color-deep-mauve);
 }
 
-/* Orders List Track */
 .orders-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-/* Mauve Unified Order Card */
 .order-card {
   display: flex;
   align-items: center;
@@ -106,7 +101,6 @@
   transform: translateY(-2px);
 }
 
-/* Poster Cover */
 .order-cover {
   width: 65px;
   height: 88px;
@@ -125,7 +119,6 @@
   border: 1px dashed var(--color-rose-mauve);
 }
 
-/* Details Section */
 .order-details {
   flex: 1;
 }
@@ -144,7 +137,6 @@
   margin: 0 0 6px;
 }
 
-/* Status Badges */
 .status-badge {
   display: inline-block;
   padding: 3px 10px;
@@ -173,7 +165,6 @@
   border: 1px solid #ffcdd2;
 }
 
-/* Read Button */
 .order-read-btn {
   padding: 8px 16px;
   border: none;
@@ -194,7 +185,6 @@
   transform: translateY(-1px);
 }
 
-/* Mobile Responsive */
 @media (max-width: 576px) {
   .my-purchases-page {
     padding: 85px 14px 50px 14px !important;
@@ -224,7 +214,6 @@
   }
 }
 .status-refunded { background: #e7f0ff; color: #1d4ed8; }
-/* ---- Refund info on each order ---- */
 .refund-hint {
   font-size: 12px;
   color: var(--color-text-muted, #7a6873);
@@ -256,7 +245,6 @@
 .refund-approved   { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
 .refund-rejected   { background: #ffebee; color: #c62828; border-color: #ffcdd2; }
 
-/* Outline style, so it doesn't look like the main "Read Now" button */
 .order-refund-btn {
   margin-top: 4px;
   padding: 6px 14px;

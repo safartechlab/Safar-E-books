@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Table, Form, Button, Badge } from "react-bootstrap";
 import API from "../../api/axios";
-import "../../styles/ManageBooks.css"; // brand colors only
+import "../../styles/ManageBooks.css";
 import { useNavigate } from "react-router-dom";
 import AddBookModal from "./AddBookModal";
 import { toast } from "react-toastify";
@@ -14,7 +14,6 @@ function ManageBooks() {
   const [showArchived, setShowArchived] = useState(false);
   const navigate = useNavigate();
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 5;
 
@@ -57,9 +56,7 @@ function ManageBooks() {
   };
 
   const deleteBook = async (book) => {
-  // "Delete" now archives the book (server-side: isArchived = true) — it
-  // stays owned by anyone who already purchased it and can be restored
-  // later. It's just hidden from the public catalog immediately.
+
   let warningText = "It will be hidden from the catalog immediately. You can restore it later from \"Show archived\" — nothing purchased by users is affected.";
 
   try {
@@ -119,9 +116,6 @@ function ManageBooks() {
       book.category?.toLowerCase().includes(search.toLowerCase())
   );
 
-  // ==========================
-  // Pagination
-  // ==========================
   const totalPages = Math.ceil(filteredBooks.length / booksPerPage) || 1;
   const paginatedBooks = filteredBooks.slice(
     (currentPage - 1) * booksPerPage,

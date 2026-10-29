@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-/* Main Page Container Background */
 .profile-bg {
   background-color: var(--color-light-blush, #f7f1f0) !important;
   font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
@@ -8,7 +7,6 @@
   min-height: 100vh;
 }
 
-/* Unified Mauve Card */
 .profile-card {
   max-width: 650px;
   width: 100%;
@@ -23,7 +21,6 @@
   box-shadow: 0 12px 32px rgba(74, 59, 71, 0.08) !important;
 }
 
-/* Avatar Styling */
 .profile-avatar {
   width: 110px;
   height: 110px;
@@ -32,7 +29,6 @@
   box-shadow: 0 6px 16px rgba(74, 59, 71, 0.15);
 }
 
-/* Typography */
 .profile-name {
   font-family: var(--font-serif, "Playfair Display", serif);
   color: var(--color-deep-mauve, #2a2227);
@@ -52,14 +48,12 @@
   word-break: break-word;
 }
 
-/* Row Dividing Lines */
 .profile-row {
   border-bottom: 1px solid rgba(164, 135, 148, 0.22) !important;
   padding-top: 12px !important;
   padding-bottom: 12px !important;
 }
 
-/* Interactive States */
 .profile-sub-active {
   color: var(--color-plum, #5d4857);
   font-weight: 600;
@@ -76,7 +70,6 @@
   font-weight: 600;
 }
 
-/* Form Inputs */
 .profile-input {
   background-color: rgba(255, 255, 255, 0.75) !important;
   border: 1.5px solid var(--color-rose-mauve, #c9aeb5) !important;
@@ -91,14 +84,12 @@
   box-shadow: 0 0 0 3px rgba(93, 72, 87, 0.15) !important;
 }
 
-/* Password Edit Box */
 .profile-edit-password-box {
   background: rgba(255, 255, 255, 0.45);
   border: 1.5px dashed var(--color-rose-mauve, #c9aeb5);
   border-radius: 14px !important;
 }
 
-/* Buttons */
 .profile-btn-primary {
   background-color: var(--color-plum, #5d4857) !important;
   color: #ffffff !important;
@@ -129,17 +120,14 @@
   color: var(--color-deep-mauve, #2a2227) !important;
 }
 
-/* =========================================================
-   MOBILE FIXES (@media max-width: 576px)
-   ========================================================= */
 @media (max-width: 576px) {
   .profile-bg {
-    padding: 85px 14px 40px !important; /* Top navbar se theek distance aur side margins */
+    padding: 85px 14px 40px !important;
   }
 
   .profile-card {
     border-radius: 18px !important;
-    padding: 24px 16px !important; /* Screen ke mutabiq compact padding */
+    padding: 24px 16px !important;
   }
 
   .profile-avatar {
@@ -154,7 +142,6 @@
     margin-bottom: 16px !important;
   }
 
-  /* Label aur value ko 2 alag rows me vertical stack kiya gaya hai taaki clean dikhe */
   .profile-row {
     display: flex !important;
     flex-direction: column !important;
@@ -189,7 +176,6 @@
   }
 }
 
-/* ---------- Change Password popup ---------- */
 .profile-modal-header {
   background: var(--color-light-blush);
   border-bottom: 1px solid var(--color-border);

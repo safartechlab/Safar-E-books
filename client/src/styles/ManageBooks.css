@@ -1,4 +1,3 @@
-/* Only brand colors — table/layout/spacing now come from Bootstrap */
 .manage-books-bg { background: var(--color-cream-bg); }
 .manage-books-heading { color: var(--color-text-dark); }
 

@@ -11,9 +11,6 @@ const Wishlist = require("../models/Wishlist");
 const ReadingHistory = require("../models/ReadingHistory");
 const { getSiteSettings } = require("../config/siteSettings");
 
-// Escapes text that gets interpolated into HTML emails, so a crafted name
-// (or other user-supplied field) can't inject markup/links into an email
-// we send on the user's behalf.
 const escapeHtml = (str = "") =>
   String(str).replace(/[&<>"']/g, (c) => ({
     "&": "&amp;",
@@ -23,10 +20,8 @@ const escapeHtml = (str = "") =>
     "'": "&#39;",
   }[c]));
 
-// We only ever store a hash of the OTP, never the raw code.
 const hashOtp = (otp) => crypto.createHash("sha256").update(String(otp)).digest("hex");
 
-// Constant-time comparison between a submitted OTP and the stored hash.
 const otpMatches = (submitted, storedHash) => {
   if (!storedHash || !submitted) return false;
   const a = Buffer.from(hashOtp(submitted));
@@ -34,19 +29,13 @@ const otpMatches = (submitted, storedHash) => {
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 };
 
-// After this many wrong guesses against the current OTP, void it — forces
-// a fresh code instead of allowing unlimited guessing.
 const MAX_OTP_ATTEMPTS = 5;
 
-// Basic type guard for fields we drop straight into a Mongo query
-// (findOne({ email })) — without this, a crafted request body like
-// { email: { "$ne": null } } would be passed through to Mongoose as-is.
 const isNonEmptyString = (v) => typeof v === "string" && v.trim().length > 0;
 
-// Register User
 const registerUser = async (req, res) => {
   try {
-    // Emergency switch: admin can pause new signups from Settings.
+
     const siteSettings = await getSiteSettings();
     if (siteSettings.signupsPaused) {
       return res.status(503).json({
@@ -140,7 +129,6 @@ const registerUser = async (req, res) => {
       return res.status(201).json(genericResponse);
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    // Generate signup OTP
     const otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
@@ -154,9 +142,9 @@ const registerUser = async (req, res) => {
       role: "user",
       isVerified: false,
       otp: hashOtp(otp),
-      otpExpiry: new Date(Date.now() + 5 * 60 * 1000), // 5 minutes for signup
+      otpExpiry: new Date(Date.now() + 5 * 60 * 1000),
     });
-    // Send verification email
+
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -169,9 +157,6 @@ const registerUser = async (req, res) => {
       `,
     });
 
-    // Note: we intentionally do NOT return the created user object here.
-    // The old code did (minus password), which leaked the OTP/OTP expiry
-    // straight to the browser network tab.
     res.status(201).json(genericResponse);
 
   } catch (error) {
@@ -182,7 +167,7 @@ const registerUser = async (req, res) => {
     });
   }
 };
-// Login User
+
 const loginUser = async (req, res) => {
   try {
     const { email, password, rememberMe } = req.body;
@@ -207,11 +192,6 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Check the password BEFORE revealing anything else (blocked status,
-    // unverified status). Checking those first let anyone who merely
-    // knows an email address confirm the account exists, learn whether
-    // it's blocked, and trigger a fresh OTP email to it — none of which
-    // requires proving they actually own the account.
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({
@@ -219,9 +199,6 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // The admin side is laptop/desktop only. This runs AFTER the password
-    // check on purpose, so it can't be used to find out which emails are
-    // admin accounts.
     if (user.role === "admin" && isMobileOrTabletRequest(req)) {
       return res.status(403).json({
         success: false,
@@ -230,7 +207,6 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Maintenance mode: only admins may log in while it's on.
     const siteSettings = await getSiteSettings();
     if (siteSettings.maintenanceMode && user.role !== "admin") {
       return res.status(503).json({
@@ -242,16 +218,14 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Blocked user check
     if (user.status === "blocked") {
       return res.status(403).json({
         success: false,
         message: "Your account has been blocked by the administrator.",
       });
     }
-    // Email verification check
+
     if (!user.isVerified) {
-      // Their old OTP is likely expired since time has passed — generate a fresh one
       const otp = otpGenerator.generate(6, {
         upperCaseAlphabets: false,
         lowerCaseAlphabets: false,
@@ -312,10 +286,6 @@ const token = jwt.sign(
   }
 );
 
-    // Only ever send back the fields the client actually needs — never the
-    // raw session list (tokenId values are effectively bearer credentials)
-    // or anything OTP-related, even though otp/otpExpiry are select:false
-    // by default now anyway.
     const userResponse = {
       _id: user._id,
       name: user.name,
@@ -349,7 +319,6 @@ const token = jwt.sign(
   }
 };
 
-// Forgot Password
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -370,13 +339,13 @@ const forgotPassword = async (req, res) => {
     if (!user) {
       return res.status(200).json(genericResponse);
     }
-    // Generate OTP
+
     const otp = otpGenerator.generate(6, {
       upperCaseAlphabets: false,
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    // Save OTP (hashed) with 2 minute expiry
+ 
     user.otp = hashOtp(otp);
     user.otpExpiry = new Date(Date.now() + 2 * 60 * 1000);
     user.otpAttempts = 0;
@@ -408,7 +377,6 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// Verify OTP (password reset flow)
 const verifyOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -421,22 +389,20 @@ const verifyOtp = async (req, res) => {
     }
     const user = await User.findOne({ email }).select("+otp +otpExpiry +otpAttempts");
     if (!user) {
-      // Same generic message as an invalid/expired OTP — don't let this
-      // route be used to check whether an email is registered.
+
       return res.status(400).json({
         success: false,
         message: "Invalid or expired OTP",
       });
     }
-    // Check OTP Expiry
+
     if (!user.otpExpiry || new Date() > user.otpExpiry) {
       return res.status(400).json({
         success: false,
         message: "OTP has expired. Please resend OTP.",
       });
     }
-    // Too many wrong guesses against this code — void it instead of
-    // allowing unlimited attempts.
+
     if ((user.otpAttempts || 0) >= MAX_OTP_ATTEMPTS) {
       user.otp = "";
       user.otpExpiry = null;
@@ -447,7 +413,6 @@ const verifyOtp = async (req, res) => {
         message: "Too many incorrect attempts. Please request a new OTP.",
       });
     }
-    // Check OTP
     if (!otpMatches(otp, user.otp)) {
       user.otpAttempts = (user.otpAttempts || 0) + 1;
       await user.save();
@@ -456,12 +421,11 @@ const verifyOtp = async (req, res) => {
         message: "Invalid OTP",
       });
     }
-    // Clear OTP
+
     user.otp = "";
     user.otpExpiry = null;
     user.otpAttempts = 0;
 
-    // Issue a one-time reset token proving this OTP was verified.
     const rawResetToken = crypto.randomBytes(32).toString("hex");
     user.resetToken = crypto.createHash("sha256").update(rawResetToken).digest("hex");
     user.resetTokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
@@ -484,7 +448,6 @@ const verifyOtp = async (req, res) => {
   }
 };
 
-// Verify Signup OTP
 const verifySignupOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -556,7 +519,7 @@ const verifySignupOtp = async (req, res) => {
     });
   }
 };
-// Resend Signup OTP
+
 const resendSignupOtp = async (req, res) => {
   try {
     const { email } = req.body;
@@ -569,7 +532,6 @@ const resendSignupOtp = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
-    // Same response whether or not this email has a pending signup
     const genericResponse = {
       success: true,
       message: "If there's a pending signup for that email, a new code has been sent.",
@@ -606,7 +568,7 @@ const resendSignupOtp = async (req, res) => {
     });
   }
 };
-// Reset Password
+
 const resetPassword = async (req, res) => {
   try {
     const { email, password, resetToken } = req.body;
@@ -622,11 +584,10 @@ const resetPassword = async (req, res) => {
         message: "Password must be at least 8 characters",
       });
     }
-    // resetToken/resetTokenExpiry are select:false, so pull them in explicitly.
+
     const user = await User.findOne({ email }).select("+resetToken +resetTokenExpiry");
     if (!user) {
-      // Generic — matches the "expired session" message below, so this
-      // route can't be used to check whether an email is registered.
+
       return res.status(400).json({
         success: false,
         message: "Reset session has expired. Please verify the OTP again.",
@@ -640,7 +601,7 @@ const resetPassword = async (req, res) => {
       });
     }
     const hashedIncomingToken = crypto.createHash("sha256").update(resetToken).digest("hex");
-    // Constant-time compare so token validation can't leak timing info.
+  
     const providedBuf = Buffer.from(hashedIncomingToken);
     const storedBuf = Buffer.from(user.resetToken);
     const tokenMatches =
@@ -663,9 +624,6 @@ const resetPassword = async (req, res) => {
     user.otpAttempts = 0;
     user.resetToken = null;
     user.resetTokenExpiry = null;
-    // A password reset via "forgot password" should sign the account out
-    // everywhere, the same way changePassword already does — otherwise a
-    // stolen device that's still logged in stays logged in.
     user.activeSessions = [];
 
     await user.save();
@@ -685,7 +643,6 @@ const resetPassword = async (req, res) => {
   }
 };
 
-// PATCH /api/auth/users/:id/status
 const updateUserStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -702,10 +659,7 @@ const updateUserStatus = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // An admin can't block themself (would lock them out) or any other
-    // admin account through this endpoint — admin status changes should
-    // go through the database directly, not a button another admin can
-    // click.
+
     if (targetUser.role === "admin") {
       return res.status(403).json({
         success: false,
@@ -732,7 +686,6 @@ const updateUserStatus = async (req, res) => {
   }
 };
 
-// DELETE /api/auth/users/:id
 const deleteUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -744,9 +697,6 @@ const deleteUser = async (req, res) => {
       });
     }
 
-    // Never allow deleting an admin account (including your own) through
-    // this endpoint — there's no "undo", and losing the last admin locks
-    // everyone out of the admin panel.
     if (user.role === "admin") {
       return res.status(403).json({
         success: false,
@@ -780,7 +730,7 @@ const deleteUser = async (req, res) => {
     });
   }
 };
-// Get All Users
+
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find()
@@ -812,7 +762,7 @@ const getUserSessions = async (req, res) => {
         message: "User not found",
       });
     }
-    // Newest first — most useful order for an admin scanning the list.
+
     const sessions = [...(user.activeSessions || [])]
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .map((s) => ({ device: s.device, createdAt: s.createdAt }));
@@ -821,7 +771,7 @@ const getUserSessions = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      // Infinity (admin accounts)
+
       deviceLimit: deviceLimit === Infinity ? null : deviceLimit,
       sessionCount: sessions.length,
       sessions,
@@ -834,7 +784,7 @@ const getUserSessions = async (req, res) => {
     });
   }
 };
-// Admin: force-logout every device a user is currently signed into.
+
 const forceLogoutUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -869,7 +819,7 @@ const forceLogoutUser = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    // Only the account owner or an admin may view this profile.
+
     if (req.user._id.toString() !== req.params.id && req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
@@ -897,7 +847,7 @@ const getUserById = async (req, res) => {
     });
   }
 };
-// Change password while logged in (self-service)
+
 const changePassword = async (req, res) => {
   try {
     const { currentPassword, newPassword } = req.body;
@@ -916,7 +866,6 @@ const changePassword = async (req, res) => {
       });
     }
 
-    // req.user (set by the protect middleware) has the password field
     const user = await User.findById(req.user._id);
 
     if (!user) {
@@ -934,7 +883,7 @@ const changePassword = async (req, res) => {
       });
     }
     user.password = await bcrypt.hash(newPassword, 10);
-    // Sign out every other device — keep only this request's own session
+  
     user.activeSessions = (user.activeSessions || []).filter(
       (s) => s.tokenId === req.sessionId
     );
@@ -954,7 +903,7 @@ const changePassword = async (req, res) => {
 };
 const updateUserProfile = async (req, res) => {
   try {
-    // Only the account owner or an admin may edit this profile.
+
     if (req.user._id.toString() !== req.params.id && req.user.role !== "admin") {
       return res.status(403).json({
         success: false,
@@ -964,7 +913,6 @@ const updateUserProfile = async (req, res) => {
 
     const { name } = req.body;
 
-    // Validate Name
     if (!name || name.trim().length < 3) {
       return res.status(400).json({
         success: false,
@@ -972,7 +920,6 @@ const updateUserProfile = async (req, res) => {
       });
     }
 
-    // Update User
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
       {
@@ -1006,7 +953,6 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-// Logout:
 const logoutUser = async (req, res) => {
   try {
     if (req.sessionId) {
@@ -1020,8 +966,7 @@ const logoutUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-// A user deleting their own account (Privacy Policy: right to request deletion).
-// Order records are intentionally kept for legal and accounting purposes.
+
 const deleteMyAccount = async (req, res) => {
   try {
     const password = String(req.body?.password || "");

@@ -1,9 +1,3 @@
-// One-time fix: remove books from users whose book order was fully refunded.
-// Safe to run more than once.
-//
-// Usage (from the server/ folder):
-//   node scripts/revokeRefundedBooks.js
-
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Order = require("../models/Order");
@@ -21,7 +15,7 @@ const User = require("../models/User");
 
   let removed = 0;
   for (const o of orders) {
-    // Keep the book if the user bought it again in another paid order
+ 
     const boughtAgain = await Order.exists({
       _id: { $ne: o._id },
       user: o.user,

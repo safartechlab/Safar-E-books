@@ -18,10 +18,6 @@ import maleAvatar from "../assets/images/male-avatar.png";
 import femaleAvatar from "../assets/images/female-avatar.png";
 import loginIcon from "../assets/images/login.png";
 
-// Defined at module level on purpose. When this lived inside Navbar(), every
-// Navbar re-render (scroll, route change, any state update) created a brand-new
-// component type, so React unmounted and remounted the open popup and wiped
-// whatever the user had typed into the login/register forms.
 const Popup = ({ onClose, children }) => (
   <div
     className="position-fixed top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center p-3 popup-overlay"

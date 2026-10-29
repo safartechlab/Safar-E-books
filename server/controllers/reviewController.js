@@ -3,7 +3,6 @@ const Review = require("../models/Review");
 const mongoose = require("mongoose");
 const escapeRegex = require("../utils/escapeRegex");
 
-// Add a review (one per user per book)
 const addReview = async (req, res) => {
   try {
     const { bookId, rating, comment } = req.body;
@@ -26,7 +25,6 @@ const addReview = async (req, res) => {
       });
     }
 
-    // The book must actually exist
     const bookExists = await Book.exists({ _id: bookId });
     if (!bookExists) {
       return res.status(404).json({ success: false, message: "Book not found" });
@@ -63,8 +61,7 @@ const addReview = async (req, res) => {
     });
   }
 };
-
-// Get all reviews for a book + average rating
+g
 const getReviewsForBook = async (req, res) => {
   try {
     const { bookId } = req.params;
@@ -99,10 +96,6 @@ const getReviewsForBook = async (req, res) => {
   }
 };
 
-// Site-wide reviews showcase (the public "Reviews" page) — paginated,
-// sortable, and optionally filtered by minimum star rating. Only shows
-// reviews that actually have a comment, so the wall reads like real
-// testimonials instead of bare, contextless star ratings.
 const getAllReviews = async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page) || 1);
@@ -123,16 +116,13 @@ const getAllReviews = async (req, res) => {
         .skip((page - 1) * limit)
         .limit(limit),
       Review.countDocuments(listFilter),
-      // Platform-wide stats are intentionally computed over ALL reviews
-      // (ignoring the comment/minRating filters above) so the hero numbers
-      // always reflect reality, not just what's currently displayed.
+
       Review.aggregate([
         { $group: { _id: null, avgRating: { $avg: "$rating" }, count: { $sum: 1 } } },
       ]),
       Review.distinct("book"),
     ]);
 
-    // A book that's since been deleted leaves populate("book") as null —
     const cleanReviews = reviews.filter((r) => r.book);
 
     res.status(200).json({
@@ -156,7 +146,6 @@ const getAllReviews = async (req, res) => {
   }
 };
 
-// returns EVERY review 
 const getAllReviewsForAdmin = async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page) || 1);
@@ -167,7 +156,7 @@ const getAllReviewsForAdmin = async (req, res) => {
         ? { rating: -1, createdAt: -1 }
         : req.query.sort === "rating-low"
         ? { rating: 1, createdAt: -1 }
-        : { createdAt: -1 }; // default: "recent"
+        : { createdAt: -1 }; 
 
     const filter = {};
 
@@ -178,7 +167,7 @@ const getAllReviewsForAdmin = async (req, res) => {
 
     const search = (req.query.search || "").trim();
     if (search) {
-      // Case-insensitive substring match on the review text itself.
+    
       filter.comment = { $regex: escapeRegex(search), $options: "i" };
     }
 
@@ -208,7 +197,6 @@ const getAllReviewsForAdmin = async (req, res) => {
   }
 };
 
-// Update your own review
 const updateReview = async (req, res) => {
   try {
     const { rating, comment } = req.body;
@@ -263,7 +251,6 @@ const updateReview = async (req, res) => {
   }
 };
 
-// Delete your own review (or admin can delete any)
 const deleteReview = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {

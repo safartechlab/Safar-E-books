@@ -17,13 +17,11 @@ function AddBookModal({ onClose, fetchBooks }) {
     description: "",
     isPopular: false,
 
-    // Access & Monetization Model
-    accessType: "free", // Options: 'free', 'subscription', 'paid', 'external_only'
+    accessType: "free",
     isFree: true,
     isSubscriptionRequired: false,
     price: 0,
 
-    // Optional External Platform Links
     kindleUrl: "",
     amazonPrintUrl: "",
     flipkartPrintUrl: "",
@@ -36,9 +34,7 @@ function AddBookModal({ onClose, fetchBooks }) {
   const { categories, languages } = useOptions();
   const coverPreview = useObjectUrl(coverImage);
 
-  // Extra languages (besides the first one chosen in the Cover & PDF section).
-  // Page count is never entered by hand, the server reads it from each PDF.
-  const [extraEditions, setExtraEditions] = useState([]); // [{ key, language, pdf, cover }]
+  const [extraEditions, setExtraEditions] = useState([]);
 
   const addExtraRow = (language = "") =>
     setExtraEditions((prev) => [
@@ -54,13 +50,12 @@ function AddBookModal({ onClose, fetchBooks }) {
   const removeExtra = (key) =>
     setExtraEditions((prev) => prev.filter((r) => r.key !== key));
 
-  // Languages already used (first language + other rows), so the same one
-  // can't be picked twice.
+ 
   const takenLanguages = [book.language, ...extraEditions.map((r) => r.language)]
     .filter(Boolean)
     .map((l) => l.toLowerCase());
 
-  // Languages still free to add as extra editions.
+  
   const remainingLanguages = languages.filter(
     (l) => !takenLanguages.includes(l.toLowerCase())
   );
@@ -76,8 +71,6 @@ function AddBookModal({ onClose, fetchBooks }) {
     }));
   };
 
-  // Changing the first language: if an extra row already uses that language,
-  // clear that row's language so it can be picked again.
   const handleFirstLanguageChange = (e) => {
     const value = e.target.value;
     setBook((prev) => ({ ...prev, language: value }));
@@ -110,7 +103,6 @@ function AddBookModal({ onClose, fetchBooks }) {
     e.preventDefault();
     if (submitLock.current) return;
 
-    // External-link-only books have no PDFs, so extra languages don't apply.
     const extras = book.accessType === "external_only" ? [] : extraEditions;
     for (const row of extras) {
       if (!row.language) {
@@ -125,12 +117,10 @@ function AddBookModal({ onClose, fetchBooks }) {
 
     const formData = new FormData();
 
-    // Determine exact flags based on accessType
     const isFreeVal = book.accessType === "free";
     const isSubVal = book.accessType === "subscription";
     const priceVal = book.accessType === "paid" ? Number(book.price) : 0;
 
-    // Append basic fields (pages is read from the PDF by the server)
     formData.append("title", book.title);
     formData.append("author", book.author);
     formData.append("category", book.category);
@@ -138,24 +128,21 @@ function AddBookModal({ onClose, fetchBooks }) {
     formData.append("publishedYear", book.publishedYear);
     formData.append("description", book.description || "");
 
-    // Append monetization fields explicitly
     formData.append("isFree", String(isFreeVal));
     formData.append("isSubscriptionRequired", String(isSubVal));
     formData.append("price", String(priceVal));
 
-    // Append store links
+
     formData.append("kindleUrl", book.kindleUrl || "");
     formData.append("amazonPrintUrl", book.amazonPrintUrl || "");
     formData.append("flipkartPrintUrl", book.flipkartPrintUrl || "");
 
-    // Flags
     formData.append("isPopular", String(book.isPopular));
 
     if (coverImage) {
       formData.append("coverImage", coverImage);
     }
 
-    // Only send the PDF when the book is actually readable on the website.
     if (pdfFile && book.accessType !== "external_only") {
       formData.append("pdfFile", pdfFile);
     }
@@ -169,8 +156,6 @@ function AddBookModal({ onClose, fetchBooks }) {
         },
       });
 
-      // The book now exists with its first language. Add the other
-      // languages one by one.
       const newBookId = res.data?.book?._id;
       const failed = [];
       for (const row of extras) {

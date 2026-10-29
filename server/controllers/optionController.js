@@ -4,11 +4,8 @@ const Book = require("../models/Book");
 
 const TYPES = ["category", "language"];
 
-// Case-insensitive comparison (matches the unique index on the model).
 const CI = { locale: "en", strength: 2 };
 
-// Used once, to fill an empty collection. Anything already stored on
-// existing books is merged in too, so no current book loses its value.
 const DEFAULTS = {
   category: [
     "Fiction", "Non-Fiction", "Science", "Technology", "History", "Biography",
@@ -20,10 +17,6 @@ const DEFAULTS = {
 const cleanName = (value) =>
   typeof value === "string" ? value.replace(/\s+/g, " ").trim() : "";
 
-// ---------------------------------------------------------------
-// First run: if no options exist yet, create them from the old
-// hard-coded lists + whatever values books already use.
-// ---------------------------------------------------------------
 let seeded = false;
 const ensureSeeded = async () => {
   if (seeded) return;
@@ -51,15 +44,13 @@ const ensureSeeded = async () => {
     try {
       await Option.insertMany(docs, { ordered: false });
     } catch (err) {
-      // Two requests seeding at the same moment -> duplicates are fine.
+
       if (err.code !== 11000 && !err.writeErrors) throw err;
     }
   }
   seeded = true;
 };
 
-// Exported so bookController can validate / normalise submitted values.
-// Returns the stored (correctly-cased) name, or null if it isn't in the list.
 const resolveOptionName = async (type, value) => {
   const name = cleanName(value);
   if (!name) return null;
@@ -68,10 +59,6 @@ const resolveOptionName = async (type, value) => {
   return found ? found.name : null;
 };
 
-// ---------------------------------------------------------------
-// GET /api/options   (public)
-// Admins also get `bookCount` per option for the management page.
-// ---------------------------------------------------------------
 const getOptions = async (req, res) => {
   try {
     await ensureSeeded();
@@ -127,9 +114,6 @@ const getOptions = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------
-// POST /api/options   { type, name }   (admin)
-// ---------------------------------------------------------------
 const createOption = async (req, res) => {
   try {
     const { type } = req.body;
@@ -163,11 +147,6 @@ const createOption = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------
-// PUT /api/options/:id   { name }   (admin)
-// Books store the category/language as plain text, so a rename also
-// updates every book that uses the old name.
-// ---------------------------------------------------------------
 const updateOption = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
@@ -210,8 +189,6 @@ const updateOption = async (req, res) => {
       { timestamps: false }
     );
 
-    // A language also lives inside each book's editions[] / languages[]
-    // (and in per-language reading progress), so rename it there too.
     if (option.type === "language") {
       await Book.updateMany(
         { "editions.language": oldName },
@@ -243,10 +220,6 @@ const updateOption = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------
-// DELETE /api/options/:id   (admin)
-// Refused while any book (archived ones included) still uses it.
-// ---------------------------------------------------------------
 const deleteOption = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {

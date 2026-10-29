@@ -2,8 +2,6 @@ const User = require("../models/User");
 const Book = require("../models/Book");
 const Review = require("../models/Review");
 
-// Public, read-only platform numbers for the About page.
-// Cached for 5 minutes so a busy About page can't hammer the database.
 const CACHE_MS = 5 * 60 * 1000;
 let cache = { data: null, time: 0 };
 
@@ -35,7 +33,7 @@ const getPublicStats = async (req, res) => {
       readers,
       books,
       totalReviews: r?.totalReviews || 0,
-      // null when there are no reviews yet, so the UI shows "—"
+
       averageRating: r ? Number(r.avgRating.toFixed(1)) : null,
       satisfaction: r
         ? Number(((r.positiveReviews / r.totalReviews) * 100).toFixed(1))

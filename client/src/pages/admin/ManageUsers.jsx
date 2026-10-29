@@ -11,14 +11,12 @@ function ManageUsers() {
   const [activeUsers, setActiveUsers] = useState(0);
   const [blockedUsers, setBlockedUsers] = useState(0);
 
-  // Popup State
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [sessionInfo, setSessionInfo] = useState(null); // { deviceLimit, sessionCount, sessions }
   const [sessionsLoading, setSessionsLoading] = useState(false);
   const [forceLogoutLoading, setForceLogoutLoading] = useState(false);
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10;
 
@@ -30,9 +28,6 @@ function ManageUsers() {
     setCurrentPage(1);
   }, [search]);
 
-  // ==========================
-  // Fetch Users
-  // ==========================
   const fetchUsers = async () => {
     try {
       const res = await API.get("/auth/users");
@@ -57,9 +52,6 @@ function ManageUsers() {
     }
   };
 
-  // ==========================
-  // View User Popup
-  // ==========================
   const viewUser = (user) => {
     setSelectedUser(user);
     setShowModal(true);
@@ -106,9 +98,6 @@ function ManageUsers() {
     }
   };
 
-  // ==========================
-  // Block / Unblock User
-  // ==========================
   const toggleStatus = async (user) => {
     const newStatus =
       user.status === "active" ? "blocked" : "active";
@@ -144,9 +133,6 @@ function ManageUsers() {
     }
   };
 
-  // ==========================
-  // Delete User
-  // ==========================
   const deleteUser = async (id) => {
     const result = await Swal.fire({
       title: "Delete User?",
@@ -170,9 +156,6 @@ function ManageUsers() {
     }
   };
 
-  // ==========================
-  // Search Filter
-  // ==========================
   const filteredUsers = users.filter(
     (user) =>
       (user.name || "")
@@ -183,9 +166,6 @@ function ManageUsers() {
         .includes(search.toLowerCase())
   );
 
-  // ==========================
-  // Pagination
-  // ==========================
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage) || 1;
   const paginatedUsers = filteredUsers.slice(
     (currentPage - 1) * usersPerPage,

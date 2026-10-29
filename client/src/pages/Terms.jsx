@@ -4,10 +4,6 @@ import "../styles/Legal.css";
 
 const LAST_UPDATED = "10 October 2026";
 
-// Contact details come from Admin > Settings > Website Information.
-// Tokens below are replaced when the page renders.
-
-// Block types: { p } paragraph, { list } bullet list, { lines } stacked lines
 const intro = [
   {
     p: "Welcome to SAFAR EBOOKS, a digital and online book platform operated by SAFAR TECHLAB LLP (“SAFAR TECHLAB LLP”, “SAFAR EBOOKS”, “we”, “us”, or “our”).",

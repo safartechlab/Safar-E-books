@@ -45,8 +45,6 @@ function Reader() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Reading needs an account. If someone opens a reader link while logged out,
-  // send them to the login popup (and bring them back here afterwards).
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       toast.warning("Please login to read this book.");
@@ -70,7 +68,7 @@ function Reader() {
       } catch (err) {}
     };
 
-    refreshUser(); // check right away, not only after 5 minutes
+    refreshUser();
     const interval = setInterval(refreshUser, SUBSCRIPTION_RECHECK_MS);
     return () => clearInterval(interval);
   }, [user?._id]);
@@ -78,8 +76,6 @@ function Reader() {
   const [book, setBook] = useState(null);
   const [numPages, setNumPages] = useState(0);
 
-  // Which language edition to open (from ?lang=). Falls back to the first
-  // edition that has a PDF.
   const requestedLang = searchParams.get("lang");
   const bookEditions = book?.editions?.length ? book.editions : [];
   const activeLanguage =
@@ -90,7 +86,6 @@ function Reader() {
     book?.language ||
     "";
 
-  // Mobile mode switches by 1 page, Desktop by spread (2 pages)
   const [currentPage, setCurrentPage] = useState(() => {
     const p = Number(searchParams.get("page")) || 1;
     return window.innerWidth <= 768 ? Math.max(1, p) : toSpreadStart(p);
@@ -118,12 +113,9 @@ function Reader() {
   const isIndividuallyPaidBook = Boolean(
     book && !book.isFree && !book.isSubscriptionRequired && book.price > 0
   );
-  // "Buy once" book this person hasn't bought: they can read a preview only.
+
   const needsPurchase = isIndividuallyPaidBook && !hasPurchasedThisBook && !isAdmin;
 
-  // Preview mode (first 20 pages) applies to VIP books without a
-  // subscription AND to paid books that haven't been bought yet. The server
-  // enforces the same limit by only sending those pages.
   const isLocked =
     (requiresSubscription && !isSubscribed && !hasPurchasedThisBook) || needsPurchase;
 
@@ -149,7 +141,7 @@ function Reader() {
     try {
       const res = await API.get(`/books/${id}`);
       setBook(res.data.book || res.data);
-      // Count one "read" per book per browser session (not on every refresh/retry).
+
       const readKey = `read-counted:${id}`;
       if (localStorage.getItem("token") && !sessionStorage.getItem(readKey)) {
         sessionStorage.setItem(readKey, "1");
@@ -164,7 +156,6 @@ function Reader() {
     fetchBook();
   }, [fetchBook]);
 
-  // Responsive page width measurement
   useEffect(() => {
     const handleResize = () => {
       if (!containerRef.current) return;
@@ -173,11 +164,11 @@ function Reader() {
       const containerHeight = containerRef.current.clientHeight;
 
       if (window.innerWidth <= 768) {
-        // Mobile view: single page takes full available width with small margin
+
         const targetWidth = Math.min(containerWidth - 24, (containerHeight - 20) * pageRatio);
         setPageWidth(Math.floor(targetWidth));
       } else {
-        // Desktop view: dual page spread
+
         const maxHeightWidth = (containerHeight - 30) * pageRatio;
         const maxWidthWidth = (containerWidth - 50) / 2;
         const calculatedWidth = Math.min(maxHeightWidth, maxWidthWidth);
@@ -203,7 +194,6 @@ function Reader() {
     return `${baseURL}/api/books/${bookId}/pdf${lang ? `?lang=${encodeURIComponent(lang)}` : ""}`;
   };
 
-  // Next page (Step = 1 on mobile, Step = 2 on desktop)
   const nextPage = useCallback(() => {
     const step = isMobile ? 1 : 2;
     const nextP = currentPage + step;
@@ -219,7 +209,6 @@ function Reader() {
     saveReadingProgress(nextP);
   }, [currentPage, effectiveMaxPage, isLocked, isMobile, saveReadingProgress]);
 
-  // Prev page (Step = 1 on mobile, Step = 2 on desktop)
   const prevPage = useCallback(() => {
     const step = isMobile ? 1 : 2;
     if (currentPage - step < 1) return;
@@ -361,8 +350,7 @@ function Reader() {
           </div>
         ) : (
           <Document
-            // Different key for preview vs full book, so right after a
-            // purchase the file is downloaded again (now the whole book).
+
             key={`${isLocked ? "preview" : "full"}-${activeLanguage}`}
             file={{
               url: pdfUrl,
@@ -513,7 +501,7 @@ function Reader() {
                       type: "book",
                       bookId: book._id,
                       onSuccess: () => {
-                        // startPayment already saved the refreshed user
+
                         setUser(JSON.parse(localStorage.getItem("user") || "null"));
                         setShowPaywall(false);
                       },

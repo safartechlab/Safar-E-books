@@ -1,5 +1,3 @@
-/* Shared brand styling for auth forms — everything else comes from Bootstrap */
-
 .form-control-brand:focus,
 .form-select-brand:focus {
   border-color: var(--brand-amber);

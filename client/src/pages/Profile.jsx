@@ -18,7 +18,6 @@ function Profile() {
 
   const [saving, setSaving] = useState(false);
 
-  // Change Password popup
   const [showPwModal, setShowPwModal] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -26,7 +25,6 @@ function Profile() {
   const [showPw, setShowPw] = useState({ current: false, next: false, confirm: false });
   const [pwSaving, setPwSaving] = useState(false);
 
-  // Renewal-reminder email switch (the "auto-renew" setting — it never charges)
   const [reminderSaving, setReminderSaving] = useState(false);
   const toggleReminders = async () => {
     setReminderSaving(true);
@@ -132,7 +130,6 @@ function Profile() {
     }
   };
 
-  // One password input with a show/hide eye
   const passwordField = (key, label, value, setValue, placeholder, autoComplete) => (
     <Form.Group className="mb-3">
       <Form.Label className="small fw-semibold profile-label">{label}</Form.Label>

@@ -1,6 +1,5 @@
 import BookShelf from "./BookShelf";
 
-// Books included with a VIP subscription.
 function VipBooks() {
   return (
     <BookShelf

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
 
-// Only used if the API call fails, so forms never end up with empty
-// dropdowns. These match the old hard-coded lists.
 const FALLBACK = {
   categories: [
     "Fiction", "Non-Fiction", "Science", "Technology", "History", "Biography",
@@ -11,7 +9,6 @@ const FALLBACK = {
   languages: ["English", "Hindi", "Gujarati"],
 };
 
-// Returns plain arrays of names: { categories, languages, loading }
 function useOptions() {
   const [categories, setCategories] = useState([]);
   const [languages, setLanguages] = useState([]);

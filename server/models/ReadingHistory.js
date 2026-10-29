@@ -24,8 +24,7 @@ const readingHistorySchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // Which language edition this progress is for (reading pages differ
-    // per language, so each gets its own bookmark).
+
     language: {
       type: String,
       default: "",

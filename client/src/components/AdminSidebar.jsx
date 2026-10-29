@@ -27,15 +27,15 @@ function AdminSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [unreadCount, setUnreadCount] = useState(0);
-  const [reviewCount, setReviewCount] = useState(0); // orders needing manual review
-  const [refundCount, setRefundCount] = useState(0); // pending refund requests
+  const [reviewCount, setReviewCount] = useState(0); 
+  const [refundCount, setRefundCount] = useState(0); 
 
   const fetchUnreadCount = async () => {
     try {
       const res = await API.get("/contact/unread-count");
       setUnreadCount(res.data.count || 0);
     } catch (error) {
-      // Non-critical
+     
     }
   };
 
@@ -44,7 +44,7 @@ function AdminSidebar() {
       const res = await API.get("/payments/admin/summary");
       setReviewCount(res.data.summary?.needsReview || 0);
     } catch (error) {
-      // Non-critical
+      
     }
   };
 
@@ -53,7 +53,7 @@ function AdminSidebar() {
       const res = await API.get("/refunds/admin/pending-count");
       setRefundCount(res.data.count || 0);
     } catch (error) {
-      // Non-critical
+      l
     }
   };
 
@@ -66,7 +66,7 @@ function AdminSidebar() {
       fetchReviewCount();
       fetchRefundCount();
     }, UNREAD_POLL_MS);
-    // The Refund Requests page fires this after approve / reject
+    
     window.addEventListener("refund-count-changed", fetchRefundCount);
     return () => {
       clearInterval(interval);

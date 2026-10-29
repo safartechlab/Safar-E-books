@@ -6,7 +6,6 @@
   color: var(--color-deep-mauve);
 }
 
-/* Hero Section with Mauve top-to-bottom linear gradient */
 .contact-hero {
   position: relative;
   background: linear-gradient(
@@ -36,7 +35,6 @@
   line-height: 1.6; 
 }
 
-/* About/Library matched wave */
 .contact-hero-wave { 
   position: absolute; 
   bottom: 0; 
@@ -54,7 +52,6 @@
   height: 100%; 
 }
 
-/* Arch Image Frame */
 .contact-cover-frame {
   width: clamp(130px, 26vw, 310px);
   height: clamp(170px, 34vw, 450px);
@@ -74,7 +71,6 @@
   object-fit: cover; 
 }
 
-/* Form Card with subtle gradient */
 .contact-form-card {
   background: linear-gradient(
     to bottom,
@@ -100,7 +96,6 @@
   line-height: 1.5;
 }
 
-/* Inputs styled with Mauve blush border */
 .contact-input { 
   background: rgba(241, 229, 226, 0.7); 
   border: 1.5px solid var(--color-rose-mauve); 
@@ -120,7 +115,6 @@
   opacity: 0.8;
 }
 
-/* Buttons and icons */
 .contact-submit-btn { 
   background-color: var(--color-plum) !important; 
   border: none !important; 
@@ -149,7 +143,6 @@
   color: var(--color-muted-purple);
 }
 
-/* Book-name autosuggest dropdown */
 .contact-autosuggest {
   position: relative;
 }
@@ -201,26 +194,18 @@
   color: var(--color-muted-purple);
 }
 
-/* ==========================================================================
-   DESKTOP ONLY OVERRIDES (>= 992px)
-   Forces width, card elevation, clear borders, and input spacing
-   ========================================================================== */
 @media (min-width: 992px) {
-  /* Widen desktop container to look expansive and broad */
   .contact-page .container {
     max-width: 1240px !important;
     padding-left: 20px !important;
     padding-right: 20px !important;
   }
-
-  /* Pull arch in slightly so it aligns with content instead of floating off-screen */
-  .contact-hero .contact-cover-frame {
+  .contact-cover-frame {
     margin-right: 40px;
     width: 290px;
     height: 400px;
   }
 
-  /* Make Card visibly elevated with solid white background, drop shadow & dark mauve border */
   .contact-page .contact-form-card {
     background: #ffffff !important;
     border: 1.5px solid var(--color-rose-mauve) !important;
@@ -228,7 +213,6 @@
     box-shadow: 0 14px 38px rgba(74, 59, 71, 0.1) !important;
   }
 
-  /* Give inputs comfortable height and breathing room from the rounded borders */
   .contact-page .contact-input {
     padding: 13px 22px !important;
     font-size: 15px !important;
@@ -248,9 +232,6 @@
   }
 }
 
-/* ==========================================================================
-   ALL YOUR ORIGINAL RESPONSIVE CODE REMAINS COMPLETELY UNCHANGED BELOW
-   ========================================================================== */
 @media (max-width: 768px) {
   .contact-hero {
     padding: 40px 0 80px;
@@ -263,7 +244,6 @@
   }
 }
 
-/* ---------- Contact page: phone layout ---------- */
 @media (max-width: 576px) {
   .contact-hero {
     padding: 90px 0 70px;
@@ -292,7 +272,6 @@
     height: 70px;
   }
 
-  /* form card + info block */
   .contact-form-card .card-body {
     padding: 22px 16px !important;
   }
@@ -314,7 +293,6 @@
     height: 42px;
   }
 
-  /* long emails / addresses must wrap instead of overflowing the screen */
   .contact-info-title,
   .contact-info-sub {
     word-break: break-word;
@@ -330,7 +308,6 @@
   }
 }
 
-/* tablets: keep the hero arch from crowding the text */
 @media (min-width: 577px) and (max-width: 991px) {
   .contact-cover-frame {
     width: clamp(150px, 30vw, 230px);
@@ -338,7 +315,6 @@
   }
 }
 
-/* Keep native query dropdowns and autosuggest panels within narrow screens. */
 .contact-page, .contact-page .container, .contact-form-card, .contact-form-card .card-body,
 .contact-page form, .contact-page .form-group, .contact-page .mb-3 { min-width: 0; max-width: 100%; }
 .contact-page select.contact-input, .contact-page .form-select.contact-input {

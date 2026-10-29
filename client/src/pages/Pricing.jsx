@@ -52,7 +52,7 @@ const PLANS = [
 
 function Pricing() {
   const navigate = useNavigate();
-  const [cycle, setCycle] = useState("monthly"); // "monthly" | "quarterly"
+  const [cycle, setCycle] = useState("monthly");
   const loggedUser = JSON.parse(localStorage.getItem("user"));
 
   const handleSubscribe = (plan) => {

@@ -5,17 +5,6 @@ import useOptions from "../../hooks/useOptions";
 import { BookSection } from "../../components/BookFormParts";
 import { getFileUrl } from "../../utils/fileUrl";
 
-// Admin: manage the language editions of ONE book.
-// Each language has its own PDF, page count and (optional) cover image.
-// The page count is always read from the PDF automatically; admins cannot type it.
-// A purchase belongs to the book, so every language is unlocked at once.
-//
-// Everything here is saved immediately (it does not wait for "Update Book"):
-//   - add a language (language first, then cover + PDF)
-//   - rename a language
-//   - replace the PDF / replace or reset the cover
-//   - make a language the default one
-//   - remove a language
 function EditionsManager({ bookId }) {
   const { languages } = useOptions();
   const [editions, setEditions] = useState([]);
@@ -31,8 +20,6 @@ function EditionsManager({ bookId }) {
       let res = await API.get(`/books/${bookId}`);
       let b = res.data?.book || res.data;
 
-      // Old book (added before languages existed): upgrade it automatically,
-      // so the admin never has to run a script to manage its languages.
       if (!b.editions?.length) {
         await API.post(`/books/${bookId}/editions/init`);
         res = await API.get(`/books/${bookId}`);
@@ -61,7 +48,7 @@ function EditionsManager({ bookId }) {
       await load();
     } catch (err) {
       toast.error(err.response?.data?.message || "Something went wrong");
-      await load(); // put the screen back in sync with the server
+      await load();
     } finally {
       setBusy(false);
     }
@@ -125,7 +112,6 @@ function EditionsManager({ bookId }) {
     send(() => API.delete(`/books/${bookId}/editions/${edition._id}`), "Language removed");
   };
 
-  // Languages this row may be renamed to: its own + the ones not used yet.
   const renameChoices = (edition) => [edition.language, ...available];
 
   return (

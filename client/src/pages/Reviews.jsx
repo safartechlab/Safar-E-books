@@ -138,10 +138,9 @@ function Reviews() {
     }
   }, [sort, minRating]);
 
-  // Re-fetch from page 1 whenever the sort or rating filter changes
   useEffect(() => {
     fetchReviews(1, true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [sort, minRating]);
 
   const handleLoadMore = () => {

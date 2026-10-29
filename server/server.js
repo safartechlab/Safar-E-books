@@ -33,11 +33,6 @@ const statsRoutes = require("./routes/statsRoutes");
 
 dotenv.config();
 
-// Fail fast and loudly if required config is missing, rather than
-// starting up and only failing later when a request actually needs
-// one of these (e.g. the first login after a bad deploy).
-// EMAIL_PROVIDER: "smtp" (default, Gmail), "resend" or "brevo" - see config/email.js.
-// EMAIL_USER is always needed (it is the "from"/inbox address used in the code).
 const EMAIL_PROVIDER = String(process.env.EMAIL_PROVIDER || "smtp").trim().toLowerCase();
 const EMAIL_VARS_BY_PROVIDER = {
   smtp: ["EMAIL_PASS"],
@@ -59,33 +54,14 @@ if (missingEnvVars.length > 0) {
   process.exit(1);
 }
 
-// After connecting, make sure the reading-history index is the new
-// (user, book, language) one. Before, this needed a manual migration step, and
-// until then saving a second language of the same book failed.
 connectDB()
   .then(() => require("./models/ReadingHistory").syncIndexes())
   .catch((e) => console.error("[startup] could not sync reading-history index:", e.message));
 
 const app = express();
 
-// Behind a reverse proxy (Nginx, Render, Railway, etc.) every request
-// otherwise looks like it comes from the proxy's own IP, so req.ip is
-// wrong and the rate limiters below would effectively rate-limit the
-// whole site as a single visitor. This tells Express to trust the
-// X-Forwarded-For header from the first hop.
 app.set("trust proxy", 1);
 
-// ---------------------------------------------------------------------
-// Optional "one server does everything" mode.
-//
-// With SERVE_CLIENT=true, this Express app also serves the built website
-// (client/dist) and falls back to index.html for page routes, so a single
-// Node process on a single domain is a complete deployment — no CORS, no
-// separate web server needed.
-//
-// If you put Nginx/Apache in front and let IT serve client/dist, leave
-// SERVE_CLIENT unset: Express then only answers /api and /uploads.
-// ---------------------------------------------------------------------
 const clientDistPath = path.join(__dirname, "..", "client", "dist");
 const clientIndexFile = path.join(clientDistPath, "index.html");
 const wantsClient = process.env.SERVE_CLIENT === "true";
@@ -102,28 +78,16 @@ app.post(
   razorpayWebhook
 );
 
-// Middleware
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: "cross-origin" },
-    // Helmet's default Content-Security-Policy is meant for a pure JSON API.
-    // On an HTML page it would block Razorpay checkout, Google Fonts, the
-    // PDF.js worker and Cloudinary images, so it is switched off when this
-    // server also serves the website.
+
     contentSecurityPolicy: serveClient ? false : undefined,
-    // Razorpay opens pop-ups for some payment methods (UPI apps, bank 3-D
-    // Secure pages); the strict default would cut those off from the page.
+
     crossOriginOpenerPolicy: serveClient ? { policy: "same-origin-allow-popups" } : undefined,
   })
 );
 
-// CORS_ORIGIN should be a comma-separated list of allowed origins in
-// production (e.g. "https://bookverse.com,https://www.bookverse.com").
-// Without it set, this falls back to wide-open CORS — fine for local
-// dev, NOT fine for production (any website could call this API using
-// a visitor's logged-in session/token).
-// A trailing "/" is stripped, because browsers send origins WITHOUT one and
-// "https://safarebooks.com/" would otherwise never match.
 const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .split(",")
   .map((o) => o.trim().replace(/\/+$/, ""))
@@ -136,8 +100,7 @@ app.use(
     allowedOrigins.length > 0
       ? {
           origin: (origin, callback) => {
-            // requests with no Origin header (server-to-server, curl, the
-            // Razorpay webhook) are always allowed through.
+
             if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
             callback(new Error("Not allowed by CORS"));
           },
@@ -146,22 +109,13 @@ app.use(
   )
 );
 
-// Static files (book covers, profile photos) are served before the global
-// rate limiter — a single page load can easily request a dozen+ cover
-// images, and those shouldn't eat into the same request budget as API
-// calls. The limiter still protects every real API route below.
 app.use("/uploads/covers", express.static(path.join(__dirname, "uploads/covers")));
 
-// Website files (only in SERVE_CLIENT mode). Mounted before the rate limiter
-// for the same reason as the covers above: one page view loads dozens of
-// JS/CSS/image files and they must not use up the API request budget.
 if (serveClient) {
   app.use(
     express.static(clientDistPath, {
       index: false,
-      // Vite puts a content hash in every file name under /assets, so those
-      // can be cached "forever"; index.html must always be re-checked so a
-      // new deploy is picked up straight away.
+
       setHeaders: (res, filePath) => {
         if (filePath.endsWith(".html")) {
           res.setHeader("Cache-Control", "no-cache");
@@ -174,8 +128,6 @@ if (serveClient) {
     })
   );
 
-  // Any other page URL (/library, /book/123, /admin/dashboard ...) is a
-  // React route: hand back index.html and let the browser router take over.
   app.use((req, res, next) => {
     if (req.method !== "GET" && req.method !== "HEAD") return next();
     if (req.path.startsWith("/api") || req.path.startsWith("/uploads")) return next();
@@ -202,7 +154,6 @@ app.use("/api/payments", paymentRoutes);
 app.use("/api/refunds", refundRoutes);
 app.use("/api/stats", statsRoutes);
 
-// Simple "is the API up?" check. Handy for uptime monitors.
 app.get("/api/health", (req, res) => {
   res.json({ success: true, status: "ok" });
 });

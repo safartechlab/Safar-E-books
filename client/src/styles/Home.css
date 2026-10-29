@@ -1,5 +1,3 @@
-
-/* Desktop: show category cards, hide mobile chips */
 .home-desktop-category-cards {
   display: block;
 }
@@ -8,7 +6,6 @@
   display: none;
 }
 
-/* Mobile and tablet */
 @media (max-width: 767.98px) {
   .home-desktop-category-cards {
     display: none;

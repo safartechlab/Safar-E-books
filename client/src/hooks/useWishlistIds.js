@@ -3,10 +3,6 @@ import { toast } from "react-toastify";
 import { addToWishlist, removeFromWishlist, getWishlist } from "../api/wishlist";
 import { getStoredUser } from "../utils/bookAccess";
 
-// Several book rows can be on the same page (New Arrivals, Free, VIP) and the
-// same book can appear in more than one of them. They all share this one
-// list of favourite ids, so tapping the heart in one row updates the others
-// right away, and the favourites are only fetched from the server once.
 let sharedIds = new Set();
 let loadedForUser = null;
 let inFlight = null;
@@ -30,7 +26,7 @@ const ensureLoaded = (userId) => {
       publish();
     })
     .catch(() => {
-      /* favourites are optional — the hearts just stay empty */
+    
     })
     .finally(() => {
       inFlight = null;
@@ -58,7 +54,6 @@ export default function useWishlistIds() {
 
       const wasWishlisted = sharedIds.has(bookId);
 
-      // Update the heart immediately, undo it if the server says no.
       if (wasWishlisted) sharedIds.delete(bookId);
       else sharedIds.add(bookId);
       publish();

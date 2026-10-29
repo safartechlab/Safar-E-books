@@ -1,6 +1,5 @@
 import BookShelf from "./BookShelf";
 
-// Books anyone can read for free.
 function FreeBooks() {
   return (
     <BookShelf

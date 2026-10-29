@@ -14,7 +14,6 @@ function Maintenance() {
       try {
         const res = await API.get("/settings/public");
         setMessage(res.data.maintenanceMessage || "");
-        // Maintenance is over: send people back to the site
         if (!res.data.maintenanceMode) {
           window.location.href = "/";
         }

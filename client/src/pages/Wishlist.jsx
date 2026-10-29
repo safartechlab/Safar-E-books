@@ -14,7 +14,6 @@ function Wishlist() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Search / filter / sort controls
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [sortBy, setSortBy] = useState("recent");
@@ -90,7 +89,7 @@ function Wishlist() {
     list = [...list].sort((a, z) => {
       if (sortBy === "title") return (a.book.title || "").localeCompare(z.book.title || "");
       if (sortBy === "author") return (a.book.author || "").localeCompare(z.book.author || "");
-      // "recent": newest favourite first
+
       return new Date(z.createdAt || 0) - new Date(a.createdAt || 0);
     });
     return list;

@@ -8,7 +8,6 @@
   padding-bottom: 70px;
 }
 
-/* 1. ORIGINAL HERO SECTION WITH MAUVE GRADIENT */
 .about-hero {
   position: relative;
   background: linear-gradient(
@@ -80,7 +79,6 @@
   margin-bottom: 15px; 
 }
 
-/* RESTORED WAVE SVG DIVIDER */
 .about-hero-wave { 
   position: absolute; 
   bottom: -1px !important;
@@ -99,7 +97,6 @@ width: 100%;
   display: block !important; 
 }
 
-/* Shared Typography */
 .about-eyebrow {
   display: inline-block;
   font-size: 11px;
@@ -124,7 +121,6 @@ width: 100%;
   font-size: 15px;
 }
 
-/* 2. VISION SECTION */
 .about-vision-section {
   padding-top: 30px;
   padding-bottom: 60px;
@@ -175,7 +171,6 @@ width: 100%;
   margin: 0;
 }
 
-/* 3. USP GRID & HIGHLIGHT CARD */
 .about-usp-section {
   padding: 0px 0 60px 0;
 }
@@ -209,7 +204,6 @@ width: 100%;
   margin: 0;
 }
 
-/* Deep Plum Highlight Card */
 .usp-highlight-card {
   background: linear-gradient(145deg, #3D2D37 0%, #4A3B47 100%);
   border-radius: 22px;
@@ -262,7 +256,6 @@ width: 100%;
   flex-shrink: 0;
 }
 
-/* 4. SOCIAL PROOF STRIP */
 .about-proof-section {
   padding: 0px 0 60px 0;
 }
@@ -301,7 +294,6 @@ width: 100%;
   margin: 0;
 }
 
-/* 5. CLOSING CTA BANNER */
 .about-cta-section {
   padding: 20px 0 10px 0;
 }
@@ -354,12 +346,8 @@ width: 100%;
   transform: translateY(-2px);
   background: #F7ECEB !important;
 }
-/* =========================================================
-   MOBILE RESPONSIVE ONLY (Desktop view un-touched)
-   ========================================================= */
 
 @media (max-width: 768px) {
-  /* 1. Page & Hero Spacing */
   .about-page {
     padding-bottom: 40px;
   }
@@ -380,7 +368,6 @@ width: 100%;
     margin-bottom: 20px !important;
   }
 
-  /* 2. Gallery 2x2 Clean Mobile Grid */
   .about-gallery-grid {
     margin-bottom: -50px !important;
     --bs-gutter-x: 10px;
@@ -401,7 +388,6 @@ width: 100%;
     height: 75px !important;
   }
 
-  /* 3. Vision Section (Pillars) */
   .about-vision-section {
     padding-top: 75px !important;
     padding-bottom: 35px !important;
@@ -432,7 +418,6 @@ width: 100%;
     font-size: 16px !important;
   }
 
-  /* 4. USP & Solutions Grid */
   .about-usp-section {
     padding: 30px 0 40px 0 !important;
   }
@@ -462,7 +447,6 @@ width: 100%;
     margin-bottom: 16px !important;
   }
 
-  /* 5. Numbers / Social Proof (App-style 2x2 Grid) */
   .about-proof-section {
     padding: 30px 0 40px 0 !important;
   }
@@ -492,7 +476,6 @@ width: 100%;
     font-size: 11.5px !important;
   }
 
-  /* 6. Closing CTA Banner */
   .about-cta-section {
     padding: 15px 0 0 0 !important;
   }

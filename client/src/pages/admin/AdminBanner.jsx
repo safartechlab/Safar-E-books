@@ -18,7 +18,6 @@ function AdminBanner() {
   const [books, setBooks] = useState([]);
   const [banners, setBanners] = useState([]);
 
-  // Modal State
   const [showModal, setShowModal] = useState(false);
   const [editingBanner, setEditingBanner] = useState(null);
   const [selectedBook, setSelectedBook] = useState("");
@@ -50,7 +49,6 @@ function AdminBanner() {
     return banners.find((b) => b.book?._id === bookId || b.book === bookId);
   };
 
-  // Open modal to Create Banner
   const handleOpenCreateModal = (book) => {
     setEditingBanner(null);
     setSelectedBook(book._id);
@@ -59,7 +57,6 @@ function AdminBanner() {
     setShowModal(true);
   };
 
-  // Open modal to Edit Banner
   const handleOpenEditModal = (banner) => {
     setEditingBanner(banner);
     setSelectedBook(banner.book?._id || banner.book);
@@ -68,7 +65,6 @@ function AdminBanner() {
     setShowModal(true);
   };
 
-  // Save / Update Banner API Call
   const handleSaveBanner = async () => {
     if (!selectedBook || !title.trim()) {
       toast.warning("Title and book are required.");
@@ -103,7 +99,6 @@ function AdminBanner() {
     }
   };
 
-  // Delete Banner API Call
   const handleDeleteBanner = async (bannerId, bannerTitle) => {
     if (!window.confirm(`Delete banner "${bannerTitle}"?`)) return;
     try {

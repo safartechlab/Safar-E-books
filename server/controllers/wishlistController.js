@@ -2,10 +2,9 @@ const Book = require("../models/Book");
 const Wishlist = require("../models/Wishlist");
 const mongoose = require("mongoose");
 
-// Add book to wishlist
 const addWishlist = async (req, res) => {
     try {
-        // Always use the logged-in user's own id — never trust a client-supplied one.
+
         const user = req.user._id;
         const { book } = req.body;
 
@@ -13,7 +12,6 @@ const addWishlist = async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid book id" });
         }
 
-        // The book must exist and not be archived
         const bookExists = await Book.exists({ _id: book, isArchived: { $ne: true } });
         if (!bookExists) {
             return res.status(404).json({ success: false, message: "Book not found" });
@@ -45,7 +43,6 @@ const addWishlist = async (req, res) => {
     }
 };
 
-// Remove book from wishlist
 const removeWishlist = async (req, res) => {
     try {
         const { bookId } = req.params;
@@ -70,7 +67,6 @@ const removeWishlist = async (req, res) => {
     }
 };
 
-// Get all wishlist books of the logged-in user
 const getWishlist = async (req, res) => {
     try {
         const wishlist = await Wishlist.find({
@@ -89,7 +85,6 @@ const getWishlist = async (req, res) => {
     }
 };
 
-// Check if a book is in the logged-in user's wishlist
 const checkWishlist = async (req, res) => {
     try {
         const { bookId } = req.params;

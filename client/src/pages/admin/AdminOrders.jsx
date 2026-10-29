@@ -29,7 +29,6 @@ const itemLabel = (o) =>
     ? o.book?.title || "Book deleted"
     : `Subscription · ${o.plan || "-"} (${o.billingCycle || "-"})`;
 
-// Local date -> "YYYY-MM-DD" (what <input type="date"> and the API use)
 const toYMD = (d) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
@@ -54,7 +53,7 @@ function AdminOrders() {
       const res = await API.get("/payments/admin/summary");
       setSummary(res.data.summary);
     } catch (e) {
-      /* non-critical */
+    
     }
   }, []);
 
@@ -89,7 +88,6 @@ function AdminOrders() {
   useEffect(() => {
     const t = setTimeout(() => fetchOrders(1), search ? 350 : 0);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tab, type, search, from, to]);
 
   useEffect(() => {
@@ -122,7 +120,6 @@ function AdminOrders() {
     }
   };
 
-  // Quick date presets
   const applyPreset = (key) => {
     const now = new Date();
     const y = now.getFullYear();
@@ -141,7 +138,6 @@ function AdminOrders() {
     }
   };
 
-  // Download every order matching the current filters as CSV
   const handleExport = async () => {
     setExporting(true);
     try {
@@ -168,7 +164,7 @@ function AdminOrders() {
       window.URL.revokeObjectURL(url);
       toast.success("Export downloaded.");
     } catch (e) {
-      // With responseType "blob", the error body arrives as a Blob too
+     
       let msg = "Export failed.";
       try {
         const text = await e.response?.data?.text?.();

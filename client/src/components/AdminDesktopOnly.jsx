@@ -2,13 +2,13 @@ import API from "../api/axios";
 import { ADMIN_DESKTOP_ONLY_MESSAGE } from "../utils/device";
 import "../styles/AdminDesktopOnly.css";
 
-// Shown instead of the admin panel on phones and tablets.
+
 function AdminDesktopOnly() {
   const signOutAndGoHome = async () => {
     try {
       await API.post("/auth/logout");
     } catch (e) {
-      /* even if this fails we still clear the browser below */
+   
     }
     localStorage.removeItem("token");
     localStorage.removeItem("user");

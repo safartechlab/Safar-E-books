@@ -8,7 +8,6 @@ const {
   deleteReadingHistory,
 } = require("../controllers/readingHistoryController");
 
-// Any logged-in user, for their own history
 router.post("/", protect, saveReadingHistory);
 router.get("/", protect, getReadingHistory);
 router.delete("/:id", protect, deleteReadingHistory);

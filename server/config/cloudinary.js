@@ -1,10 +1,4 @@
 const { v2: cloudinary } = require("cloudinary");
-
-// Configured lazily (on first use) so it always runs AFTER dotenv has
-// loaded the .env file, no matter which file requires this one first.
-//
-// Either set CLOUDINARY_URL (copy it from the Cloudinary dashboard), or
-// the three separate variables below.
 let configured = false;
 
 const isCloudinaryConfigured = () =>

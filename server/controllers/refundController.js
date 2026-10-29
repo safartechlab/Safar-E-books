@@ -14,7 +14,7 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-const REFUND_REQUEST_DAYS = 7; // must match RefundPolicy.jsx
+const REFUND_REQUEST_DAYS = 7;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 const cap = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
@@ -24,7 +24,6 @@ const itemName = (order) =>
     ? order.book?.title || "E-book"
     : `${cap(order?.plan) || "Premium"} subscription${order?.billingCycle ? ` (${order.billingCycle})` : ""}`;
 
-// An email problem must never break the refund flow.
 const safeMail = async (opts) => {
   try {
     await transporter.sendMail({ from: process.env.EMAIL_USER, ...opts });
@@ -33,16 +32,15 @@ const safeMail = async (opts) => {
   }
 };
 
-// Take back the book the order gave the customer.
 const revokeAccess = async (order) => {
   if (order.type === "book" && order.book) {
-    const bookId = order.book._id || order.book; // book is populated in approveRefundRequest
+    const bookId = order.book._id || order.book;
     await User.updateOne({ _id: order.user }, { $pull: { purchasedBooks: bookId } });
     return true;
   }
   return false;
 };
-// ---------- user: raise a request ----------
+
 const createRefundRequest = async (req, res) => {
   try {
     const { orderId, reason } = req.body;
@@ -88,8 +86,6 @@ const createRefundRequest = async (req, res) => {
       });
     }
 
-    // A rejected request may be sent ONE more time (for example with better
-    // proof). Anything else already on file blocks a new request.
     let request;
     const previous = await RefundRequest.findOne({ order: order._id });
     if (previous) {
@@ -119,7 +115,6 @@ const createRefundRequest = async (req, res) => {
       });
     }
 
-    // Acknowledge to the customer (the policy promises an acknowledgement)
     safeMail({
       to: req.user.email,
       subject: "We received your refund request",
@@ -134,7 +129,7 @@ const createRefundRequest = async (req, res) => {
         "SAFAR EBOOKS Support",
       ].join("\n"),
     });
-    // Tell the admin inbox
+
     if (process.env.EMAIL_USER) {
       safeMail({
         to: process.env.EMAIL_USER,
@@ -160,7 +155,6 @@ const createRefundRequest = async (req, res) => {
   }
 };
 
-// ---------- user: my requests ----------
 const getMyRefundRequests = async (req, res) => {
   try {
     const refunds = await RefundRequest.find({ user: req.user._id })
@@ -173,8 +167,6 @@ const getMyRefundRequests = async (req, res) => {
   }
 };
 
-// ---------- admin: list ----------
-// ---------- admin: list ----------
 const getAdminRefundRequests = async (req, res) => {
   try {
     const allowed = ["pending", "processing", "approved", "rejected"];
@@ -193,7 +185,6 @@ const getAdminRefundRequests = async (req, res) => {
       RefundRequest.countDocuments({ status: "pending" }),
     ]);
 
-    // Attach how much of the book each customer has read
     const requests = found.map((r) => r.toObject());
     const pairs = requests
       .filter((r) => r.user?._id && r.order?.book?._id)
@@ -203,7 +194,7 @@ const getAdminRefundRequests = async (req, res) => {
       const history = await ReadingHistory.find({ $or: pairs }).select(
         "user book percentage currentPage totalPages"
       );
-      const best = new Map(); // highest progress across language editions
+      const best = new Map(); 
       history.forEach((h) => {
         const key = `${h.user}_${h.book}`;
         const prev = best.get(key);
@@ -224,7 +215,6 @@ const getAdminRefundRequests = async (req, res) => {
   }
 };
 
-// ---------- admin: just the number of pending requests (sidebar badge) ----------
 const getPendingRefundCount = async (req, res) => {
   try {
     const count = await RefundRequest.countDocuments({ status: "pending" });
@@ -234,14 +224,12 @@ const getPendingRefundCount = async (req, res) => {
   }
 };
 
-// ---------- admin: approve = refund through Razorpay + (optionally) remove access ----------
 const approveRefundRequest = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ success: false, message: "Invalid request id" });
   }
 
-  // Lock the request so a double click can't send two refunds.
   const claimed = await RefundRequest.findOneAndUpdate(
     { _id: id, status: "pending" },
     { $set: { status: "processing" } },
@@ -302,7 +290,6 @@ const approveRefundRequest = async (req, res) => {
       });
     }
 
-    // ---- from here the money HAS been sent: never put the request back to "pending" ----
     const wantsRevoke = req.body.revokeAccess !== false && req.body.revokeAccess !== "false";
     const note = String(req.body.adminNote || "").trim().slice(0, 500);
     let accessRevoked = false;
@@ -326,7 +313,7 @@ const approveRefundRequest = async (req, res) => {
         },
       }
     );
-        // Update the order right away (no webhook needed)
+
     await Order.updateOne(
       { _id: order._id, refundIds: { $ne: refund.id } },
       {
@@ -370,7 +357,7 @@ const approveRefundRequest = async (req, res) => {
       await RefundRequest.updateOne({ _id: id, status: "processing" }, { $set: { status: "pending" } });
       return res.status(500).json({ success: false, message: "Server Error" });
     }
-    // Money was sent but a later step failed: do NOT retry — check Razorpay + Orders.
+  
     res.status(200).json({
       success: true,
       message: "Refund was sent, but some follow-up steps failed. Please check Orders & Payments.",
@@ -378,7 +365,6 @@ const approveRefundRequest = async (req, res) => {
   }
 };
 
-// ---------- admin: reject ----------
 const rejectRefundRequest = async (req, res) => {
   try {
     const { id } = req.params;

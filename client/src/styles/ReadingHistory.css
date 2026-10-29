@@ -28,7 +28,6 @@
   margin-top: 4px;
 }
 
-/* Empty Box */
 .rh-empty-box {
   text-align: center;
   padding: 60px 20px;
@@ -69,7 +68,6 @@
   background: var(--color-deep-mauve);
 }
 
-/* Responsive Grid */
 .rh-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
@@ -77,7 +75,6 @@
   padding: 4px 0 20px 0;
 }
 
-/* Individual Book Card */
 .rh-book-card {
   width: 100%;
   background-color: #2b2329;
@@ -98,7 +95,6 @@
   transform: translateY(-5px);
 }
 
-/* Poster Aspect Ratio */
 .rh-poster-wrap {
   position: relative;
   width: 100%;
@@ -114,7 +110,6 @@
   display: block;
 }
 
-/* Desktop Hover Overlay */
 .rh-hover-overlay {
   position: absolute;
   inset: 0;
@@ -202,7 +197,6 @@
   transform: translateY(-1px);
 }
 
-/* Progress bar inside poster bottom */
 .rh-progress-bar-bg {
   position: absolute;
   bottom: 0;
@@ -218,7 +212,6 @@
   background-color: #e50914;
 }
 
-/* Bottom Actions Bar */
 .rh-card-footer {
   height: 40px;
   display: flex;
@@ -247,7 +240,6 @@
   transform: scale(1.12);
 }
 
-/* Mobile Screen Clean View */
 @media (max-width: 768px) {
   .rh-page {
     padding: 85px 0 40px 0 !important;
@@ -279,7 +271,6 @@
   }
 }
 
-/* ================= Stats strip ================= */
 .rh-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -321,7 +312,6 @@
   color: var(--color-text-muted);
 }
 
-/* circular average-progress ring */
 .rh-ring {
   --p: 0;
   width: 46px;
@@ -350,7 +340,6 @@
   color: var(--color-deep-mauve);
 }
 
-/* ================= Toolbar ================= */
 .rh-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -431,7 +420,6 @@
   color: #ffffff;
 }
 
-/* ================= Card caption ================= */
 .rh-caption {
   background-color: #231c21;
   padding: 10px 12px 2px;

@@ -12,8 +12,6 @@ const { uploadCover, uploadPdf, deleteStoredFile } = require("../utils/cloudinar
 const { resolveOptionName } = require("./optionController");
 const { PDFDocument } = require("pdf-lib");
 
-// Reads the real number of pages from an uploaded PDF, so the admin does not
-// have to type it (and cannot type it wrong). Returns 0 if it can't be read.
 const countPdfPages = async (buffer) => {
   try {
     const doc = await PDFDocument.load(buffer, { ignoreEncryption: true, updateMetadata: false });
@@ -23,9 +21,6 @@ const countPdfPages = async (buffer) => {
   }
 };
 
-// What the PUBLIC is allowed to see about a book. The internal file location
-// of a PDF ("cloudinary:..." or a server path) is never sent to browsers - only
-// "available" / "" so the website can tell whether a PDF exists.
 const toPublicBook = (book) => {
   const obj = typeof book.toObject === "function" ? book.toObject() : { ...book };
   obj.pdfUrl = obj.pdfUrl ? "available" : "";
@@ -35,22 +30,14 @@ const toPublicBook = (book) => {
   return obj;
 };
 
-// A price must be a real number, zero or more.
 const isBadPrice = (raw) => {
   if (raw === undefined || raw === null || raw === "") return false;
   const n = Number(raw);
   return !Number.isFinite(n) || n < 0;
 };
 
-// Uploaded files are held in memory (multer memoryStorage) and only sent
-// to Cloudinary once every check has passed, so a rejected request leaves
-// nothing behind. Kept as a no-op so the existing call sites stay as they are.
 const cleanupUploadedFiles = () => {};
 
-// Checks the real bytes of every uploaded file in req.files against its
-// claimed type, deleting (and rejecting) anything that doesn't match —
-// see utils/fileSignature.js for why this matters. Returns an error
-// message string, or null if everything checked out.
 const validateUploadedFileSignatures = (files) => {
   for (const field of ["coverImage", "pdfFile"]) {
     const file = files?.[field]?.[0];
@@ -65,11 +52,8 @@ const validateUploadedFileSignatures = (files) => {
   return null;
 };
 
-// Helper to convert form-data string booleans safely
 const parseBoolean = (val) => val === true || val === "true";
 
-// Old (not yet migrated) books have no editions[]; turn their single
-// language/pdf/cover into editions[0] before we add or change anything.
 const ensureEditions = (book) => {
   if (!book.editions.length) {
     book.editions.push({
@@ -86,9 +70,6 @@ const findEditionByLanguage = (book, language) =>
     (e) => String(e.language).toLowerCase() === String(language).toLowerCase()
   );
 
-// The book's main cover (and page count) always follow the DEFAULT language,
-// which is editions[0]. If that language has no cover of its own, the book
-// keeps the cover it already has.
 const syncBookCover = (book) => {
   const def = book.editions?.[0];
   if (!def) return;
@@ -96,23 +77,10 @@ const syncBookCover = (book) => {
   if (def.pages) book.pages = def.pages;
 };
 
-// Is this stored file still used by the book or by any language?
-// Used so we never delete a cover file that something still points to.
 const isCoverInUse = (book, ref) =>
   Boolean(ref) &&
   (book.coverImage === ref || book.editions.some((e) => e.coverImage === ref));
 
-// A book should be exactly one of: free, subscription-only, individually
-// priced, or "external link only" (no PDF on the site at all — just
-// Kindle/Amazon/Flipkart links). Anything else (e.g. all three flags
-// false with no price AND no pdf) silently becomes readable by everyone
-// via the PDF route, since pdfController's isIndividuallyPaidBook check
-// requires price > 0.
-//
-// hasPdf tells us whether a book file exists (new upload or one already
-// on the book) — an "external only" book is allowed to have none of the
-// three monetization flags set ONLY when it also has no PDF, since there
-// is nothing on the site to gate in that case.
 const validateMonetization = (isFree, isSubscriptionRequired, price, hasPdf) => {
   const flagsSet = [isFree, isSubscriptionRequired, price > 0].filter(Boolean).length;
   if (flagsSet === 0 && hasPdf) {
@@ -127,15 +95,12 @@ const validateMonetization = (isFree, isSubscriptionRequired, price, hasPdf) => 
   return null;
 };
 
-// Add Book
 const addBook = async (req, res) => {
-  // Track what was uploaded to Cloudinary, so it can be removed again if
-  // saving the book fails afterwards.
+
   let uploadedCover = "";
   let uploadedPdf = "";
   try {
-    // NOTE: "pages" is intentionally not read from the request. The page
-    // count always comes from the uploaded PDF.
+    
     const {
       title,
       author,
@@ -144,7 +109,6 @@ const addBook = async (req, res) => {
       language,
       publishedYear,
       isPopular,
-      // Monetization & Store Fields
       isFree,
       isSubscriptionRequired,
       price,
@@ -158,7 +122,7 @@ const addBook = async (req, res) => {
       return res.status(400).json({ success: false, message: "Please choose a valid category" });
     }
 
-    let resolvedLanguage; // undefined -> schema default ("English")
+    let resolvedLanguage;
     if (language?.trim()) {
       resolvedLanguage = await resolveOptionName("language", language);
       if (!resolvedLanguage) {
@@ -187,7 +151,6 @@ const addBook = async (req, res) => {
     }
     const parsedPrice = Number(price) || 0;
 
-    // Uploaded files (still in memory at this point)
     const hasCover = Boolean(req.files?.coverImage);
     const hasPdf = Boolean(req.files?.pdfFile);
 
@@ -201,7 +164,6 @@ const addBook = async (req, res) => {
       return res.status(400).json({ success: false, message: "A cover image is required" });
     }
 
-    // Send the files to Cloudinary
     try {
       uploadedCover = await uploadCover(req.files.coverImage[0].buffer);
       if (hasPdf) uploadedPdf = await uploadPdf(req.files.pdfFile[0].buffer);
@@ -218,7 +180,6 @@ const addBook = async (req, res) => {
     const coverImage = uploadedCover;
     const pdfUrl = uploadedPdf;
 
-    // The page count is always read from the PDF itself.
     const firstPages = hasPdf ? await countPdfPages(req.files.pdfFile[0].buffer) : 0;
 
     const book = await Book.create({
@@ -233,14 +194,13 @@ const addBook = async (req, res) => {
         {
           language: resolvedLanguage || "English",
           pdfUrl,
-          coverImage, // the first (default) language owns this cover
+          coverImage,
           pages: firstPages,
         },
       ],
       pages: firstPages,
       publishedYear: Number(publishedYear) || 2026,
       isPopular: parseBoolean(isPopular),
-      // Express/Multer pass req.body values as strings, convert them explicitly:
       isFree: parsedIsFree,
       isSubscriptionRequired: parsedIsSubRequired,
       price: parsedPrice,
@@ -257,7 +217,6 @@ const addBook = async (req, res) => {
   } catch (error) {
     console.log(error);
 
-    // The book wasn't saved, so don't leave its files on Cloudinary.
     await deleteStoredFile(uploadedCover, "cover");
     await deleteStoredFile(uploadedPdf, "pdf");
 
@@ -268,11 +227,6 @@ const addBook = async (req, res) => {
   }
 };
 
-// Maps the ?access= query value to a MongoDB filter. Used by the home
-// page sections ("Free books", "VIP books") and the Library filters.
-//   free -> free to read for everyone
-//   vip  -> needs an active subscription
-//   paid -> individually priced (buy once)
 const buildAccessQuery = (access) => {
   switch (access) {
     case "free":
@@ -290,10 +244,6 @@ const buildAccessQuery = (access) => {
   }
 };
 
-// Latest books, newest first. Powers the home page "New Arrivals" row:
-// it always shows the most recently ADDED books (no manual "mark as new
-// arrival" step any more). Optional ?access=free|vip|paid narrows it to
-// one kind of book; ?limit= defaults to 6 (max 24).
 const getLatestBooks = async (req, res) => {
   try {
     const limit = Math.min(Math.max(parseInt(req.query.limit, 10) || 6, 1), 24);
@@ -302,8 +252,6 @@ const getLatestBooks = async (req, res) => {
     const accessQuery = buildAccessQuery(req.query.access);
     if (accessQuery) Object.assign(query, accessQuery);
 
-    // _id is a tie-breaker so books added in the same millisecond (bulk
-    // imports) still come back in a stable order.
     const books = await Book.find(query).sort({ createdAt: -1, _id: -1 }).limit(limit);
 
     res.status(200).json({ success: true, books: books.map(toPublicBook) });
@@ -312,16 +260,12 @@ const getLatestBooks = async (req, res) => {
   }
 };
 
-// Get All Books (search/filter always available; pagination only when requested)
 const getBooks = async (req, res) => {
   try {
     const { search, category, language, sort, page, limit, includeArchived, access } = req.query;
 
     const query = {};
 
-    // Archived (soft-deleted) books are hidden from the public catalog.
-    // Only a logged-in admin explicitly asking for them (ManageBooks'
-    // "Show archived" toggle) sees them.
     const showArchived = req.user?.role === "admin" && includeArchived === "true";
     if (!showArchived) {
       query.isArchived = { $ne: true };
@@ -347,7 +291,6 @@ const getBooks = async (req, res) => {
     else if (sort === "price-low") sortOption = { price: 1 };
     else if (sort === "price-high") sortOption = { price: -1 };
 
-    // Only paginate if the caller explicitly asked for page/limit.
     const isPaginating = page !== undefined || limit !== undefined;
 
     if (!isPaginating) {
@@ -382,7 +325,6 @@ const getBooks = async (req, res) => {
   }
 };
 
-// Get Single Book
 const getBookById = async (req, res) => {
   try {
     if (!mongoose.isValidObjectId(req.params.id)) {
@@ -397,12 +339,6 @@ const getBookById = async (req, res) => {
         message: "Book not found",
       });
     }
-    // Note: readCount is NOT incremented here anymore. It used to bump on
-    // every fetch of a book's details, and the Reader page separately
-    // calls POST /:id/read when someone actually opens the book — so a
-    // single "open a book" action was counting as two reads, inflating
-    // "Popular" sorting and the dashboard's Total Reads. incrementReadCount
-    // below is now the only place readCount changes.
 
     res.status(200).json({
       success: true,
@@ -416,10 +352,8 @@ const getBookById = async (req, res) => {
   }
 };
 
-// Update Book
 const updateBook = async (req, res) => {
-  // Files uploaded to Cloudinary during this request. If the update fails
-  // they are removed again; if it succeeds, the files they replace are.
+
   let newCover = "";
   let newPdf = "";
   const discardNewUploads = async () => {
@@ -433,10 +367,6 @@ const updateBook = async (req, res) => {
       return res.status(400).json({ success: false, message: "Invalid book id" });
     }
 
-    // Whitelist — req.body is arbitrary client input, and this used to be
-    // spread straight into the update. That let a crafted request set
-    // fields never meant to be admin-editable this way, like readCount
-    // or isArchived (which has its own dedicated archive/restore route).
     const ALLOWED_FIELDS = [
       "title", "author", "description", "category",
       "publishedYear", "isPopular",
@@ -447,7 +377,7 @@ const updateBook = async (req, res) => {
     for (const key of ALLOWED_FIELDS) {
       if (req.body[key] !== undefined) data[key] = req.body[key];
     }
-    // Convert booleans if present in update body
+   
     if (data.isFree !== undefined) data.isFree = parseBoolean(data.isFree);
     if (data.isSubscriptionRequired !== undefined)
       data.isSubscriptionRequired = parseBoolean(data.isSubscriptionRequired);
@@ -465,14 +395,7 @@ const updateBook = async (req, res) => {
       }
       data.category = resolved;
     }
-    // language / pages / PDF / cover now live on each edition — see addEdition,
-    // updateEdition and deleteEdition below. The book's main cover follows the
-    // default language's cover automatically (see syncBookCover).
 
-    // Only re-validate the free/subscription/price combination if the
-    // update actually touches one of those three fields — a partial
-    // update (e.g. just toggling isNewArrival) shouldn't require resending
-    // all three.
     const signatureError = validateUploadedFileSignatures(req.files);
     if (signatureError) {
       return res.status(400).json({ success: false, message: signatureError });
@@ -530,7 +453,6 @@ const updateBook = async (req, res) => {
       });
     }
 
-    // The update worked, so the files that were replaced can go.
     if (newCover && previousFiles?.coverImage) {
       deleteStoredFile(previousFiles.coverImage, "cover");
     }
@@ -553,15 +475,6 @@ const updateBook = async (req, res) => {
   }
 };
 
-// Archive Book (was: hard delete). "Delete" in the admin UI now archives
-// the book instead of erasing it — anyone who already purchased it (or
-// has it in reading history / wishlist / reviews) keeps a working
-// reference; the file is NOT removed from disk. Archived books are just
-// hidden from the public catalog (see getBooks' isArchived filter) and
-// pulled from any homepage banner.
-//
-// A genuinely permanent, irreversible delete isn't exposed here on
-// purpose — if it's ever needed, do it directly in the database.
 const deleteBook = async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -578,7 +491,6 @@ const deleteBook = async (req, res) => {
       });
     }
 
-    // An archived book shouldn't keep showing on the homepage banner.
     await Banner.deleteMany({ book: bookId });
 
     res.status(200).json({
@@ -596,9 +508,6 @@ const deleteBook = async (req, res) => {
   }
 };
 
-
-// Permanently remove an already archived book only when it has no purchase
-// history or order audit trail. This prevents breaking access or payment records.
 const permanentlyDeleteBook = async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -608,7 +517,6 @@ const permanentlyDeleteBook = async (req, res) => {
     const book = await Book.findById(bookId);
     if (!book) return res.status(404).json({ success: false, message: "Book not found" });
 
-    // Safety: a book must be archived first, so nobody deletes a live book by accident.
     if (!book.isArchived) {
       return res.status(409).json({
         success: false,
@@ -635,13 +543,10 @@ const permanentlyDeleteBook = async (req, res) => {
     ]);
     await Book.deleteOne({ _id: bookId });
 
-    // Database deletion is complete. File cleanup is best-effort; failed
-    // Cloudinary cleanup is logged so an orphan can be removed later.
-    // Remove the cover plus the PDF of EVERY language edition.
     const pdfRefs = new Set(
       [book.pdfUrl, ...(book.editions || []).map((e) => e.pdfUrl)].filter(Boolean)
     );
-    // The book cover usually equals editions[0].coverImage, so de-duplicate.
+  
     const coverRefs = new Set(
       [book.coverImage, ...(book.editions || []).map((e) => e.coverImage)].filter(Boolean)
     );
@@ -661,7 +566,6 @@ const permanentlyDeleteBook = async (req, res) => {
   }
 };
 
-// Restore a previously archived book back into the public catalog.
 const restoreBook = async (req, res) => {
   try {
     const bookId = req.params.id;
@@ -681,7 +585,7 @@ const restoreBook = async (req, res) => {
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
-// Admin: how many users currently own this book
+
 const getBookPurchaseCount = async (req, res) => {
   try {
     const count = await User.countDocuments({ purchasedBooks: req.params.id });
@@ -698,8 +602,6 @@ const getBookPurchaseCount = async (req, res) => {
     });
   }
 };
-
-// Increment a book's read count
 
 const incrementReadCount = async (req, res) => {
   try {
@@ -723,8 +625,6 @@ const incrementReadCount = async (req, res) => {
   }
 };
 
-// Autosuggest for the Contact Us form: up to 8 non-archived books whose
-// TITLE contains the typed text (case-insensitive).
 const getBookSuggestions = async (req, res) => {
   try {
     const q = String(req.query.q || "").trim().slice(0, 100);
@@ -747,17 +647,6 @@ const getBookSuggestions = async (req, res) => {
   }
 };
 
-// ---------------------------------------------------------------
-// Language editions. One Book, many languages: each edition has its own
-// PDF, cover and page count. A purchase belongs to the Book, so buying once
-// unlocks every language.
-//
-// The first edition (editions[0]) is the DEFAULT language. The book's main
-// cover and page count always follow it (see syncBookCover).
-// Page counts are always read from the PDF; admins cannot type them.
-// ---------------------------------------------------------------
-
-// POST /api/books/:id/editions  (admin) — add a language
 const addEdition = async (req, res) => {
   let uploadedPdf = "";
   let uploadedCover = "";
@@ -808,7 +697,6 @@ const addEdition = async (req, res) => {
       return res.status(502).json({ success: false, message: "Could not upload the file. Please try again." });
     }
 
-    // Always read from the PDF.
     const editionPages = await countPdfPages(pdfFile.buffer);
 
     book.editions.push({
@@ -829,7 +717,6 @@ const addEdition = async (req, res) => {
   }
 };
 
-// PUT /api/books/:id/editions/:editionId  (admin) — change language / PDF / cover / default
 const updateEdition = async (req, res) => {
   let newPdf = "";
   let newCover = "";
@@ -862,9 +749,6 @@ const updateEdition = async (req, res) => {
       edition.language = language;
     }
 
-    // NOTE: a typed "pages" value is ignored on purpose. The page count is
-    // read from the PDF whenever a PDF is uploaded.
-
     const signatureError = validateUploadedFileSignatures(req.files);
     if (signatureError) return res.status(400).json({ success: false, message: signatureError });
 
@@ -879,7 +763,6 @@ const updateEdition = async (req, res) => {
       }
       oldPdf = edition.pdfUrl;
       edition.pdfUrl = newPdf;
-      // New PDF -> always re-read the page count from the file.
       const detected = await countPdfPages(pdfFile.buffer);
       if (detected) edition.pages = detected;
     }
@@ -898,13 +781,11 @@ const updateEdition = async (req, res) => {
       edition.coverImage = newCover;
     }
 
-    // Admin clicked "Reset" -> this language goes back to the book's main cover
     if (req.body.removeCover === "true" && !coverFile) {
       oldCover = edition.coverImage;
       edition.coverImage = "";
     }
 
-    // "Make this the default language" -> move it to the front of the list.
     if (req.body.makeDefault === "true") {
       const plain = book.editions.map((e) => e.toObject());
       const at = plain.findIndex((e) => String(e._id) === String(editionId));
@@ -915,16 +796,13 @@ const updateEdition = async (req, res) => {
       }
     }
 
-    // The book's main cover + page count follow the (possibly new) default language.
     syncBookCover(book);
 
     await book.save();
     if (oldPdf) deleteStoredFile(oldPdf, "pdf");
-    // Only delete the old cover if nothing (book or language) still uses it,
-    // so resetting the default language's cover never breaks the main cover.
+
     if (oldCover && !isCoverInUse(book, oldCover)) deleteStoredFile(oldCover, "cover");
 
-    // A renamed language must keep everybody's saved reading place.
     if (edition.language !== previousLanguage) {
       await ReadingHistory.updateMany(
         { book: id, language: previousLanguage },
@@ -941,7 +819,6 @@ const updateEdition = async (req, res) => {
   }
 };
 
-// DELETE /api/books/:id/editions/:editionId  (admin)
 const deleteEdition = async (req, res) => {
   try {
     const { id, editionId } = req.params;
@@ -961,7 +838,6 @@ const deleteEdition = async (req, res) => {
       });
     }
 
-    // Never remove the only language that has a readable PDF.
     const otherHasPdf = book.editions.some(
       (e) => String(e._id) !== String(editionId) && e.pdfUrl
     );
@@ -974,8 +850,7 @@ const deleteEdition = async (req, res) => {
 
     const { pdfUrl, coverImage, language } = edition;
     book.editions.pull(editionId);
-    // If the default language was removed, the next one becomes the default
-    // and its cover becomes the book's main cover.
+ 
     syncBookCover(book);
     await book.save();
 
@@ -992,9 +867,6 @@ const deleteEdition = async (req, res) => {
   }
 };
 
-// POST /api/books/:id/editions/init  (admin)
-// Old books (added before "languages") have no editions list. This upgrades one
-// in place, so the admin can manage its languages straight away.
 const initEditions = async (req, res) => {
   try {
     const { id } = req.params;

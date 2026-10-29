@@ -23,7 +23,6 @@ function EditBook() {
     pdfUrl: "",
     isPopular: false,
 
-    // Monetization & External Fields
     accessType: "free",
     isFree: true,
     isSubscriptionRequired: false,
@@ -39,8 +38,6 @@ function EditBook() {
   const submitLock = useRef(false);
   const { categories } = useOptions();
 
-  // Keep a book's current value selectable even if it's missing from the
-  // list, so opening Edit never silently blanks the field.
   const categoryChoices =
     book.category && !categories.includes(book.category)
       ? [book.category, ...categories]
@@ -57,7 +54,6 @@ function EditBook() {
       const response = await API.get(`/books/${id}`);
       const fetchedBook = response.data?.book || response.data;
 
-      // Derive accessType from flags
       let derivedAccessType = "free";
       if (fetchedBook.isSubscriptionRequired) derivedAccessType = "subscription";
       else if (fetchedBook.price > 0) derivedAccessType = "paid";
@@ -111,24 +107,20 @@ function EditBook() {
     const isSubVal = book.accessType === "subscription";
     const priceVal = book.accessType === "paid" ? Number(book.price) : 0;
 
-    // Page count is never sent: the server reads it from each language's PDF.
     formData.append("title", book.title);
     formData.append("author", book.author);
     formData.append("category", book.category);
     formData.append("publishedYear", book.publishedYear);
     formData.append("description", book.description || "");
 
-    // Monetization fields string conversions
     formData.append("isFree", String(isFreeVal));
     formData.append("isSubscriptionRequired", String(isSubVal));
     formData.append("price", String(priceVal));
 
-    // Store links
     formData.append("kindleUrl", book.kindleUrl || "");
     formData.append("amazonPrintUrl", book.amazonPrintUrl || "");
     formData.append("flipkartPrintUrl", book.flipkartPrintUrl || "");
 
-    // Flags
     formData.append("isPopular", String(book.isPopular));
 
     submitLock.current = true;

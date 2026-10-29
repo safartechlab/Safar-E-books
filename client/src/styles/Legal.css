@@ -1,9 +1,6 @@
-/* Shared styling for Terms & Conditions, Privacy Policy and Refund Policy */
-
 .legal-page {
   background-color: var(--color-light-blush);
   min-height: 100vh;
-  /* top padding clears the fixed navbar */
   padding: 120px 16px 70px;
   font-family: var(--font-sans);
   color: var(--color-deep-mauve);
@@ -20,7 +17,6 @@
   overflow: hidden;
 }
 
-/* thin brand-colour strip on top of the card */
 .legal-container::before {
   content: "";
   position: absolute;

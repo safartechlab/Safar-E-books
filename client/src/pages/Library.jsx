@@ -23,8 +23,6 @@ import {
   getWishlist,
 } from "../api/wishlist";
 
-// ?access=free|vip|paid in the URL (used by the "view all" buttons on the
-// home page) pre-selects the matching filter tab.
 const ACCESS_FROM_QUERY = { free: "Free", vip: "VIP", paid: "Paid" };
 
 function Library() {
@@ -42,13 +40,10 @@ function Library() {
     () => ACCESS_FROM_QUERY[searchParams.get("access")] || "All"
   );
 
-  // Admin-managed lists (Admin > Categories & Languages)
   const { categories: categoryList, languages: languageList } = useOptions();
   const categories = useMemo(() => ["All", ...categoryList], [categoryList]);
   const languages = useMemo(() => ["All", ...languageList], [languageList]);
 
-  // Kept in state (not read once) so that right after a purchase the button
-  // changes from "Buy Now" to "Read eBook" without reloading the page.
   const [user, setUser] = useState(() => getStoredUser() || {});
 
   const fetchBooks = useCallback(async () => {
@@ -137,8 +132,6 @@ function Library() {
   const handleActionClick = (e, book, action) => {
     e.stopPropagation();
 
-    // Reading and buying both need an account. (Before this, a visitor who
-    // wasn't logged in was sent to a reader page that could not load the file.)
     if (!user?._id) {
       toast.warning(
         action.kind === "buy" ? "Please login to buy this book." : "Please login to read this book."
@@ -234,8 +227,7 @@ function Library() {
           {filteredBooks.length > 0 ? (
             filteredBooks.map((book) => {
               if (!book || !book._id) return null;
-              // "Buy Now" for paid books the person hasn't bought yet,
-              // "Unlock VIP" for VIP books, otherwise "Read eBook".
+
               const action = getBookAction(book, user, "Read eBook");
               return (
                 <div

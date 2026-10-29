@@ -7,20 +7,13 @@ const { getPlanPrice } = require("../config/plans");
 const RefundRequest = require("../models/RefundRequest");
 const transporter = require("../config/email");
 
-// TODO: this will throw until RAZORPAY_KEY_ID / RAZORPAY_KEY_SECRET are real values in .env
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Pending orders older than this are treated as abandoned (closed popup,
-// dead tab, etc). We don't run a cron for this — instead we lazily sweep
-// the *current user's* stale pending orders every time they start a new
-// checkout, which is enough to keep dedup lookups honest without needing
-// a scheduled job.
 const ABANDONED_ORDER_MINUTES = 60;
 
-// Sends the customer a simple payment receipt. Failures are logged only.
 const sendPurchaseReceipt = async (order) => {
   const user = await User.findById(order.user).select("name email subscriptionExpiry");
   if (!user?.email) return;
@@ -63,19 +56,14 @@ const sendPurchaseReceipt = async (order) => {
   });
 };
 
-// ==========================
-// Create an order (for a single book OR a subscription)
-// ==========================
 const createOrder = async (req, res) => {
   try {
-    const { type, bookId, plan, billingCycle } = req.body; // type: "book" | "subscription"
+    const { type, bookId, plan, billingCycle } = req.body;
 
     if (type !== "book" && type !== "subscription") {
       return res.status(400).json({ success: false, message: "Invalid order type" });
     }
 
-    // Sweep this user's own stale pending orders first, so an old
-    // abandoned checkout never blocks (or gets confused with) a new one.
     const staleCutoff = new Date(Date.now() - ABANDONED_ORDER_MINUTES * 60 * 1000);
     await Order.updateMany(
       { user: req.user._id, status: "pending", createdAt: { $lt: staleCutoff } },
@@ -84,7 +72,7 @@ const createOrder = async (req, res) => {
 
     let amount;
     let book = null;
-    let planInfo = null; // filled in for subscriptions only
+    let planInfo = null; 
 
     if (type === "book") {
       if (!bookId) {
@@ -121,10 +109,7 @@ const createOrder = async (req, res) => {
       }
       amount = book.price;
     } else {
-      // Subscription: the client tells us which plan + billing cycle was
-      // picked, but the PRICE always comes from our own config (plans.js),
-      // never from anything the client sends — so a tampered request can
-      // never buy a plan for less than it costs.
+
       planInfo = getPlanPrice(plan, billingCycle);
       if (!planInfo) {
         return res.status(400).json({
@@ -133,9 +118,6 @@ const createOrder = async (req, res) => {
         });
       }
 
-      // Block re-subscribing while an active subscription still has time
-      // left, instead of silently charging again and (previously)
-      // resetting the expiry from "now".
       if (req.user.isSubscribed && req.user.subscriptionExpiry && req.user.subscriptionExpiry > new Date()) {
         return res.status(400).json({
           success: false,
@@ -145,19 +127,13 @@ const createOrder = async (req, res) => {
       amount = planInfo.amount;
     }
 
-    // Reuse an existing pending order for the same thing instead of
-    // creating a duplicate (fixes: same book/subscription opened in two
-    // tabs, or a double "Buy Now"/"Choose Plan" click). For subscriptions
-    // this is scoped to the same plan+cycle too, so switching plans while
-    // an old pending order sits around never reuses the wrong price.
     const dedupQuery =
       type === "book"
         ? { user: req.user._id, type: "book", book: bookId, status: "pending" }
         : { user: req.user._id, type: "subscription", plan, billingCycle, status: "pending" };
 
     let existingOrder = await Order.findOne(dedupQuery);
-    // The price may have changed since this checkout was opened. Never reuse
-    // an old order with an old price - close it and make a fresh one.
+
     if (existingOrder && Number(existingOrder.amount) !== Number(amount)) {
       await Order.updateOne(
         { _id: existingOrder._id, accessGrantedAt: null },
@@ -177,11 +153,10 @@ const createOrder = async (req, res) => {
       });
     }
 
-    // Razorpay expects amount in paise (smallest currency unit)
     const razorpayOrder = await razorpay.orders.create({
       amount: Math.round(amount * 100),
       currency: "INR",
-      payment_capture: 1, // take the money automatically once the customer pays
+      payment_capture: 1,
       receipt: `receipt_${Date.now()}`,
     });
 
@@ -198,10 +173,7 @@ const createOrder = async (req, res) => {
         status: "pending",
       });
     } catch (err) {
-      // Race: another request for the same user+book(/plan) created a
-      // pending order between our findOne above and this create() (the
-      // unique partial index on Order catches it for books). Fall back to
-      // that order.
+
       if (err.code === 11000) {
         const raceOrder = await Order.findOne(dedupQuery);
         if (raceOrder) {
@@ -233,22 +205,8 @@ const createOrder = async (req, res) => {
   }
 };
 
-// ==========================
-// Shared "grant access for a paid order" logic — called from
-// verifyPayment (client-side callback), razorpayWebhook (server-side,
-// authoritative), and the reconcile job. Atomic and idempotent: safe to
-// call twice (or concurrently) for the same order — only ONE caller ever
-// actually runs the $addToSet / subscription-extend logic below, because
-// the claim step atomically flips accessGrantedAt from null -> a
-// timestamp and only the caller that wins that flip proceeds.
-//
-// paidAmountPaise (optional): when the caller knows what Razorpay says
-// was actually captured, pass it so a tampered/mismatched amount is
-// rejected instead of silently granting access for less than the order
-// was for. Order.amount is stored in rupees, Razorpay works in paise.
-// ==========================
 const grantAccessForOrder = async (order, { paymentId, paidAmountPaise } = {}) => {
-  if (order.accessGrantedAt) return; // fast path, avoids an unnecessary write attempt
+  if (order.accessGrantedAt) return; 
 
     if (typeof paidAmountPaise === "number") {
     const expectedPaise = Math.round(order.amount * 100);
@@ -257,8 +215,6 @@ const grantAccessForOrder = async (order, { paymentId, paidAmountPaise } = {}) =
         `[payments] amount mismatch for order ${order._id} (razorpay ${order.razorpayOrderId}): ` +
         `expected ${expectedPaise} paise, captured ${paidAmountPaise} paise. Access NOT granted — needs manual review.`
       );
-      // Persist it so admins can see it. `reviewedAt: null` in the filter means
-      // once an admin has reviewed it, the reconcile job won't re-flag it.
       await Order.updateOne(
         { _id: order._id, accessGrantedAt: null, reviewedAt: null },
         {
@@ -273,10 +229,6 @@ const grantAccessForOrder = async (order, { paymentId, paidAmountPaise } = {}) =
     }
   }
 
-  // Atomic claim: only the caller whose update actually matches a
-  // document (accessGrantedAt still null) proceeds to grant access.
-  // Everyone else — a concurrent verify+webhook race, or a second
-  // delivery of the same webhook — gets null back and does nothing.
   const claimed = await Order.findOneAndUpdate(
     { _id: order._id, accessGrantedAt: null },
     {
@@ -289,24 +241,20 @@ const grantAccessForOrder = async (order, { paymentId, paidAmountPaise } = {}) =
     { new: true }
   );
 
-  if (!claimed) return; // lost the race — the other path already granted access
+  if (!claimed) return;
 
   if (claimed.type === "book") {
     await User.findByIdAndUpdate(claimed.user, {
       $addToSet: { purchasedBooks: claimed.book },
     });
   } else if (claimed.type === "subscription") {
-    // Prefer the duration that matches what was actually paid for on this
-    // order. Falls back to the old flat env value only for orders created
-    // before plans existed (so nothing already pending breaks).
+   
     const planInfo = getPlanPrice(claimed.plan, claimed.billingCycle);
     const durationDays = planInfo?.durationDays || Number(process.env.SUBSCRIPTION_DURATION_DAYS) || 30;
 
     const user = await User.findById(claimed.user);
     if (user) {
-      // Extend from the existing expiry if it's still in the future,
-      // instead of always resetting from "now" (which used to shorten
-      // remaining time if someone resubscribed early).
+
       const base =
         user.isSubscribed && user.subscriptionExpiry && user.subscriptionExpiry > new Date()
           ? user.subscriptionExpiry.getTime()
@@ -321,15 +269,11 @@ const grantAccessForOrder = async (order, { paymentId, paidAmountPaise } = {}) =
     }
   }
 
-  // Receipt email — a mail problem must never undo or block access.
   sendPurchaseReceipt(claimed).catch((e) =>
     console.error("[payments] receipt email failed:", e.message)
   );
 };
 
-// ==========================
-// Verify payment after Razorpay checkout completes
-// ==========================
 const verifyPayment = async (req, res) => {
   try {
     const {
@@ -342,16 +286,11 @@ const verifyPayment = async (req, res) => {
       return res.status(400).json({ success: false, message: "Payment verification failed" });
     }
 
-    // Recreate the expected signature and compare — this proves the
-    // payment really came from Razorpay and wasn't faked by the client.
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
-    // Constant-time comparison — a plain !== leaks how many leading
-    // characters matched via response timing, which is unnecessary risk
-    // for a security check like this.
     const expectedBuf = Buffer.from(expectedSignature, "utf8");
     const receivedBuf = Buffer.from(String(razorpay_signature), "utf8");
     const signatureValid =
@@ -373,10 +312,6 @@ const verifyPayment = async (req, res) => {
       return res.status(404).json({ success: false, message: "Order not found" });
     }
 
-    // The order must belong to whoever is calling this — otherwise a
-    // logged-in user could pass someone else's razorpay_order_id (from a
-    // guessed/leaked receipt) and trigger a "verified" no-op on it, or
-    // worse, confuse which account access gets granted to.
     if (order.user.toString() !== req.user._id.toString()) {
       return res.status(403).json({ success: false, message: "This order does not belong to you" });
     }
@@ -385,9 +320,6 @@ const verifyPayment = async (req, res) => {
       return res.status(200).json({ success: true, message: "Payment already verified" });
     }
 
-    // Fetch what Razorpay actually captured for this payment, so a
-    // tampered amount can never slip through this client-reported path —
-    // grantAccessForOrder checks it against order.amount before granting.
     let paidAmountPaise;
     try {
       const payment = await razorpay.payments.fetch(razorpay_payment_id);
@@ -412,8 +344,7 @@ const verifyPayment = async (req, res) => {
     res.status(500).json({ success: false, message: "Payment verification error" });
   }
 };
-// A refund was processed on Razorpay. We never auto-revoke access (that's
-// a business decision), so we record the refund and flag it for review.
+
 const handleRefundProcessed = async (refund) => {
   if (!refund?.id || !refund.payment_id) return;
 
@@ -425,7 +356,6 @@ const handleRefundProcessed = async (refund) => {
 
   const refundRupees = (refund.amount || 0) / 100;
 
-  // `refundIds: { $ne }` makes a duplicate webhook delivery a no-op
   const updated = await Order.findOneAndUpdate(
     { _id: order._id, refundIds: { $ne: refund.id } },
     {
@@ -439,15 +369,11 @@ const handleRefundProcessed = async (refund) => {
 
   const isFull = Math.round(updated.refundedAmount * 100) >= Math.round(updated.amount * 100);
 
-    // Refunds approved from the Refund Requests page already dealt with access,
-  // so only flag refunds made some other way (e.g. in the Razorpay Dashboard).
    const handledInApp = await RefundRequest.exists({
     order: updated._id,
     status: { $in: ["processing", "approved"] },
   });
 
-  // Full refund of a book done outside the app (e.g. Razorpay Dashboard):
-  // take the book away automatically.
   let autoRevoked = false;
   if (!handledInApp && isFull && updated.type === "book" && updated.book) {
     await User.updateOne(
@@ -473,9 +399,7 @@ const handleRefundProcessed = async (refund) => {
     }
   );
 };
-// ==========================
-// Razorpay webhook — authoritative source of truth
-// ==========================
+
 const razorpayWebhook = async (req, res) => {
   try {
     const webhookSecret = process.env.RAZORPAY_WEBHOOK_SECRET;
@@ -524,8 +448,7 @@ const razorpayWebhook = async (req, res) => {
         else if (event === "payment.failed") {
       const p = payload.payload?.payment?.entity;
       if (p?.order_id) {
-        // Only touch orders still waiting. If the customer retries and pays,
-        // grantAccessForOrder still flips it to "paid".
+
         await Order.updateOne(
           { razorpayOrderId: p.order_id, status: "pending", accessGrantedAt: null },
           {
@@ -562,9 +485,6 @@ const razorpayWebhook = async (req, res) => {
   }
 };
 
-// ==========================
-// Cancel subscription logic
-// ==========================
 const cancelSubscription = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -572,11 +492,6 @@ const cancelSubscription = async (req, res) => {
       return res.status(400).json({ success: false, message: "No active subscription found" });
     }
 
-    // There is no recurring charge to cancel — every plan is a fixed-term
-    // pass that was already paid for in full. "Cancelling" should stop the
-    // renewal-reminder email, NOT revoke time the user already paid for.
-    // (Previously this cleared isSubscribed/plan immediately, forfeiting
-    // whatever days were left.)
     user.autoRenew = false;
     await user.save();
 
@@ -590,9 +505,6 @@ const cancelSubscription = async (req, res) => {
   }
 };
 
-// ==========================
-// Toggle auto-renew settings
-// ==========================
 const setAutoRenew = async (req, res) => {
   try {
     const { autoRenew } = req.body;
@@ -616,9 +528,6 @@ const setAutoRenew = async (req, res) => {
   }
 };
 
-// ==========================
-// Get my order history
-// ==========================
 const getMyOrders = async (req, res) => {
   try {
     const orders = await Order.find({ user: req.user._id })
@@ -638,5 +547,5 @@ module.exports = {
   razorpayWebhook,
   cancelSubscription,
   setAutoRenew,
-  grantAccessForOrder, // reused by scripts/reconcilePendingOrders.js
+  grantAccessForOrder,
 };

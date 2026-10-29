@@ -2,15 +2,13 @@ import { Container } from "react-bootstrap";
 import useSiteInfo from "../hooks/useSiteInfo";
 import "../styles/Legal.css";
 
-// ---- Client: confirm these values before launch ----
 const LAST_UPDATED = "14th October, 2026";
-const REFUND_REQUEST_DAYS = 7; // how long after purchase a refund can be requested
-const ACKNOWLEDGE_DAYS = "2 business days"; // how fast we reply to a request
-const REFUND_TIMELINE = "5 to 7 business days"; // time for money to reach the customer
-const REMINDER_DAYS = 3; // how many days before expiry the reminder email is sent
-const PHYSICAL_REPORT_DAYS = 7; // only used if physical books are sold
+const REFUND_REQUEST_DAYS = 7; 
+const ACKNOWLEDGE_DAYS = "2 business days"; 
+const REFUND_TIMELINE = "5 to 7 business days";
+const REMINDER_DAYS = 3; 
+const PHYSICAL_REPORT_DAYS = 7; 
 
-// Block types: { p } paragraph, { list } bullet list, { lines } stacked lines
 const intro = [
   {
     p: "This Refund & Cancellation Policy explains how cancellations, renewals and refunds work for purchases made on SAFAR EBOOKS, operated by SAFAR TECHLAB LLP. It should be read together with our Terms & Conditions and Privacy Policy.",

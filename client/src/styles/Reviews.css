@@ -4,7 +4,6 @@
   margin: 0 auto;
 }
 
-/* ---------- Hero ---------- */
 .reviews-title {
   font-family: var(--font-serif);
   font-size: 2.6rem;
@@ -75,7 +74,6 @@
   }
 }
 
-/* ---------- Controls ---------- */
 .reviews-controls {
   display: flex;
   flex-wrap: wrap;
@@ -135,7 +133,6 @@
   color: #ffffff;
 }
 
-/* ---------- Grid ---------- */
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -187,8 +184,8 @@
   flex-grow: 1;
   margin-bottom: 20px;
 
-  /* Clamp long reviews to 5 lines so the wall stays scannable */
   display: -webkit-box;
+  line-clamp: 5;
   -webkit-line-clamp: 5; 
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -282,7 +279,6 @@
   text-overflow: ellipsis;
 }
 
-/* ---------- Load more ---------- */
 .reviews-load-more {
   border: 1.5px solid var(--brand-amber);
   background: transparent;
@@ -304,7 +300,6 @@
   cursor: not-allowed;
 }
 
-/* ---------- Bottom CTA ---------- */
 .reviews-cta {
   margin-top: 60px;
   padding: 40px 24px;
@@ -342,7 +337,6 @@
   background: var(--brand-amber-hover);
 }
 
-/* ---------- Skeleton loading ---------- */
 .review-card-skeleton {
   pointer-events: none;
 }
@@ -360,7 +354,6 @@
   100% { background-position: 0 50%; }
 }
 
-/* ---------- Mobile ---------- */
 @media (max-width: 500px) {
   .reviews-page {
     padding-top: 90px;

@@ -8,7 +8,6 @@
   min-height: 520px;
 }
 
-/* Swiper Base Fixes */
 .hb-swiper {
   width: 100%;
   height: 100%;
@@ -31,7 +30,6 @@
   pointer-events: auto;
 }
 
-/* Desktop Banner Card */
 .hb-banner-card {
   position: relative;
   width: 100%;
@@ -131,9 +129,6 @@
   color: var(--color-deep-mauve); 
 }
 
-/* ========================================================
-   MOBILE VIEW: NETFLIX STYLE POSTER CARD (GHOST CORNER FIX)
-   ======================================================== */
 @media (max-width: 768px) {
   .hb-hero-wrapper {
     min-height: auto;
@@ -142,7 +137,6 @@
     overflow: hidden;
   }
 
-  /* Desktop block ko mobile screen par completely detach karein */
   .hb-banner-card {
     display: none !important;
   }
@@ -173,7 +167,6 @@
     height: 480px;
     border-radius: 20px;
     overflow: hidden;
-    /* Corner clipping fix: hardware border leak roke */
     -webkit-mask-image: -webkit-radial-gradient(white, black);
     mask-image: radial-gradient(white, black);
     box-shadow: 0 16px 36px rgba(74, 59, 71, 0.28);
@@ -191,7 +184,6 @@
     display: block;
   }
 
-  /* Netflix Bottom Shadow Gradient Overlay */
   .hb-mobile-overlay {
     position: absolute;
     bottom: 0;
@@ -243,7 +235,6 @@
     font-size: 14px;
   }
 
-  /* Action Buttons Row */
   .hb-mobile-btn-row {
     display: flex;
     align-items: center;
@@ -252,7 +243,6 @@
     width: 100%;
   }
 
-  /* White/Blush Play/Read Button */
   .hb-btn-play {
     flex: 1;
     display: flex;
@@ -273,7 +263,6 @@
     transform: scale(0.96);
   }
 
-  /* Translucent Glassy My List Button */
   .hb-btn-mylist {
     flex: 1;
     display: flex;

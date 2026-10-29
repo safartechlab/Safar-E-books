@@ -26,7 +26,6 @@
   margin-top: 4px;
 }
 
-/* Empty State Box */
 .wishlist-empty-box {
   text-align: center;
   padding: 60px 20px;
@@ -67,7 +66,6 @@
   background: var(--color-deep-mauve);
 }
 
-/* Bigger Card Responsive Grid */
 .wishlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -75,7 +73,6 @@
   padding: 4px 0 20px 0;
 }
 
-/* Book Card */
 .wl-book-card {
   width: 100%;
   background-color: transparent;
@@ -92,7 +89,6 @@
   transform: translateY(-5px);
 }
 
-/* Poster Dimensions (Thoda Bada: 270px) */
 .wl-poster-wrap {
   position: relative;
   width: 100%;
@@ -113,7 +109,6 @@
   display: block;
 }
 
-/* Top-right Heart Button */
 .wl-heart-remove-btn {
   position: absolute;
   top: 8px;
@@ -137,7 +132,6 @@
   transform: scale(1.1);
 }
 
-/* Desktop Hover Overlay */
 .wl-hover-overlay {
   position: absolute;
   inset: 0;
@@ -223,7 +217,6 @@
   transform: translateY(-1px);
 }
 
-/* ================= Mobile Screen Clean View ================= */
 @media (max-width: 768px) {
   .wishlist-page {
     padding: 85px 0 40px 0 !important;
@@ -248,7 +241,6 @@
   }
 }
 
-/* ================= Stats strip ================= */
 .wl-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -290,7 +282,6 @@
   color: var(--color-text-muted);
 }
 
-/* ================= Toolbar ================= */
 .wl-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -347,7 +338,6 @@
   margin: 6px 4px 16px;
 }
 
-/* ================= Card extras ================= */
 .wl-price-pill {
   position: absolute;
   top: 8px;

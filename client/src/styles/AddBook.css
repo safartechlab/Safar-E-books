@@ -1,9 +1,3 @@
-/* =====================================================================
-   Add Book (modal) + Edit Book (page) + Languages box
-   Built on Bootstrap 5 classes, with the site's mauve palette on top.
-   ===================================================================== */
-
-/* ---------- Add Book modal shell (react-bootstrap Modal) ---------- */
 .bk-modal .modal-content {
   border: 1px solid var(--color-rose-mauve);
   border-radius: var(--radius-md);
@@ -34,7 +28,6 @@
   color: #fff;
 }
 
-/* ---------- Page (Edit Book) ---------- */
 .bk-page { max-width: 1100px; margin: 0 auto; }
 .bk-page-header {
   display: flex;
@@ -63,7 +56,6 @@
   .bk-sticky { position: sticky; top: 20px; }
 }
 
-/* ---------- Section cards ---------- */
 .bk-section {
   background: #fff;
   border: 1px solid var(--color-border);
@@ -103,7 +95,6 @@
   color: var(--color-text-muted);
 }
 
-/* ---------- Form controls ---------- */
 .bk-form .form-label,
 .bk-section .form-label {
   font-size: 0.82rem;
@@ -140,7 +131,6 @@
   border-color: var(--color-plum);
 }
 
-/* ---------- Access type: pick-a-card ---------- */
 .bk-access-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -177,7 +167,6 @@
 .bk-access-name { font-weight: 700; font-size: 0.9rem; color: var(--color-deep-mauve); }
 .bk-access-desc { font-size: 0.78rem; line-height: 1.35; color: var(--color-text-muted); }
 
-/* ---------- Cover preview ---------- */
 .bk-cover-preview {
   width: 100%;
   max-width: 190px;
@@ -202,7 +191,6 @@
 }
 .bk-cover-preview.has-image { border-style: solid; border-color: var(--color-border); padding: 0; }
 
-/* ---------- Extra-language rows (Add Book) ---------- */
 .bk-lang-row {
   background: var(--color-light-blush);
   border: 1px solid var(--color-border);
@@ -211,7 +199,6 @@
   margin-bottom: 10px;
 }
 
-/* ---------- Languages & PDFs box (Edit Book) ---------- */
 .bk-edition-row {
   padding: 12px 0;
   border-bottom: 1px solid var(--color-border);
@@ -225,7 +212,6 @@
   margin-top: 14px;
 }
 
-/* ---------- Buttons ---------- */
 .bk-btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--color-plum);
@@ -254,7 +240,6 @@
   font-weight: 600;
 }
 
-/* ---------- Narrow screens ---------- */
 @media (max-width: 576px) {
   .bk-modal .modal-header,
   .bk-modal .modal-body,
@@ -267,5 +252,4 @@
   .bk-modal .modal-footer .btn { width: 100%; }
 }
 
-/* Native select menus must never force the form wider than the viewport. */
 select, .form-select { max-width: 100%; min-width: 0; box-sizing: border-box; }

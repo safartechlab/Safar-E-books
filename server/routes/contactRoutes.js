@@ -13,10 +13,8 @@ const {
   bulkDeleteMessages,
 } = require("../controllers/contactController");
 
-// Public: anyone can submit the contact form
 router.post("/", contactLimiter, sendMessage);
 
-// Admin only: managing messages
 router.get("/", protect, adminOnly, getMessages);
 router.get("/unread-count", protect, adminOnly, getUnreadCount);
 router.post("/reply", protect, adminOnly, replyMessage);

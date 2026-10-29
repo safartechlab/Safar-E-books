@@ -1,7 +1,5 @@
 const { getSiteSettings, updateSiteSettings } = require("../config/siteSettings");
 
-// Public: the client needs this to show the maintenance page and the
-// "signups paused" notice.
 const getPublicSettings = async (req, res) => {
   try {
     const settings = await getSiteSettings();
@@ -12,8 +10,6 @@ const getPublicSettings = async (req, res) => {
   }
 };
 
-// Admin only
-// Basic website details: field -> max length. Empty string clears the field.
 const INFO_FIELDS = {
   siteName: 80,
   supportEmail: 120,

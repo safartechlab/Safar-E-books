@@ -20,7 +20,6 @@ const contactSchema = new mongoose.Schema(
       default: "general",
     },
 
-    // Only filled when queryType is "book"
     bookName: {
       type: String,
       default: "",

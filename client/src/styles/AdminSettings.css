@@ -1,10 +1,7 @@
-/* Admin > Settings */
-
 .set-page {
   max-width: 1100px;
 }
 
-/* ---------- Tabs ---------- */
 .set-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -43,7 +40,6 @@
   color: #ffffff;
 }
 
-/* ---------- Layout ---------- */
 .set-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -98,7 +94,6 @@
   font-size: 17px;
 }
 
-/* ---------- Profile summary ---------- */
 .set-profile {
   display: flex;
   align-items: center;
@@ -147,7 +142,6 @@
   color: #ffffff;
 }
 
-/* ---------- Forms ---------- */
 .set-form {
   display: flex;
   flex-direction: column;
@@ -246,7 +240,6 @@
   background: var(--color-light-blush);
 }
 
-/* ---------- Switch rows ---------- */
 .set-row {
   display: flex;
   justify-content: space-between;
@@ -327,7 +320,6 @@
   font-weight: 600;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
   .set-grid {
     grid-template-columns: minmax(0, 1fr);

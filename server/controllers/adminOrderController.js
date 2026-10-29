@@ -8,7 +8,6 @@ const STATUS_FILTERS = {
   paid: { status: "paid" },
   pending: { status: "pending" },
   failed: { status: "failed" },
-  // includes partial refunds (status stays "paid" for those)
   refunded: { $or: [{ status: "refunded" }, { refundedAmount: { $gt: 0 } }] },
   review: { needsReview: true },
 };
@@ -16,22 +15,18 @@ const STATUS_FILTERS = {
 const MAX_EXPORT_ROWS = 10000;
 const YMD = /^\d{4}-\d{2}-\d{2}$/;
 
-// Parse "YYYY-MM-DD" into a Date (start or end of that day, server time).
 const parseDay = (value, endOfDay) => {
   if (!YMD.test(value)) return null;
   const d = new Date(`${value}T${endOfDay ? "23:59:59.999" : "00:00:00.000"}`);
   return Number.isNaN(d.getTime()) ? null : d;
 };
 
-// Shared by the list and the CSV export so they always match.
-// Returns { filter } or { error }.
 const buildOrderFilter = async (query) => {
   const and = [];
 
   if (STATUS_FILTERS[query.status]) and.push(STATUS_FILTERS[query.status]);
   if (["book", "subscription"].includes(query.type)) and.push({ type: query.type });
 
-  // Date range (inclusive, based on order creation date)
   const from = query.from ? parseDay(String(query.from), false) : null;
   const to = query.to ? parseDay(String(query.to), true) : null;
 
@@ -66,7 +61,6 @@ const buildOrderFilter = async (query) => {
   return { filter: and.length ? { $and: and } : {} };
 };
 
-// GET /api/payments/admin/orders?status=&type=&search=&from=&to=&page=&limit=
 const getAdminOrders = async (req, res) => {
   try {
     const page = Math.max(1, parseInt(req.query.page) || 1);
@@ -99,9 +93,6 @@ const getAdminOrders = async (req, res) => {
   }
 };
 
-// ---- CSV helpers ----
-// Text cells: quote + escape quotes, and neutralise spreadsheet formulas
-// (a cell starting with = + - @ could run as a formula when opened in Excel).
 const csvText = (value) => {
   let s = String(value ?? "");
   if (/^[=+\-@\t\r]/.test(s)) s = `'${s}`;
@@ -110,7 +101,6 @@ const csvText = (value) => {
 const csvNum = (value) => (Number.isFinite(Number(value)) ? String(Number(value)) : "0");
 const csvDate = (value) => (value ? new Date(value).toISOString() : "");
 
-// GET /api/payments/admin/orders/export?status=&type=&search=&from=&to=
 const exportAdminOrders = async (req, res) => {
   try {
     const { filter, error } = await buildOrderFilter(req.query);
@@ -156,7 +146,6 @@ const exportAdminOrders = async (req, res) => {
 
     const rows = orders.map((o) => {
       const refunded = o.refundedAmount || 0;
-      // Net = what you actually kept. Unpaid orders (pending/failed) are 0.
       const countsAsRevenue = o.status === "paid" || o.status === "refunded";
       const net = countsAsRevenue ? o.amount - refunded : 0;
 
@@ -185,7 +174,6 @@ const exportAdminOrders = async (req, res) => {
       ].join(",");
     });
 
-    // \uFEFF = BOM so Excel reads UTF-8 names correctly
     const csv = "\uFEFF" + [headers.map(csvText).join(","), ...rows].join("\r\n");
 
     res.setHeader("Content-Type", "text/csv; charset=utf-8");
@@ -197,7 +185,6 @@ const exportAdminOrders = async (req, res) => {
   }
 };
 
-// GET /api/payments/admin/summary
 const getAdminOrderSummary = async (req, res) => {
   try {
     const [byStatus, revenueAgg, refundAgg, needsReview] = await Promise.all([
@@ -241,7 +228,6 @@ const getAdminOrderSummary = async (req, res) => {
   }
 };
 
-// PATCH /api/payments/admin/orders/:id/review   body: { note }
 const markOrderReviewed = async (req, res) => {
   try {
     const { id } = req.params;
@@ -271,20 +257,17 @@ const markOrderReviewed = async (req, res) => {
   }
 };
 
-// ================= Revenue analytics =================
 const TZ = "Asia/Kolkata";
 const IST_OFFSET_MS = 330 * 60 * 1000;
 const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const round2 = (n) => Math.round((Number(n) || 0) * 100) / 100;
 const pct = (part, whole) => (whole > 0 ? Math.round((part / whole) * 1000) / 10 : 0);
 
-// GET /api/payments/admin/analytics?range=3|6|12|all
 const getRevenueAnalytics = async (req, res) => {
   try {
     const range = ["3", "6", "12", "all"].includes(req.query.range) ? req.query.range : "12";
     const PAID = { status: { $in: ["paid", "refunded"] } };
 
-    // Month indexes (year*12 + month) in IST
     const nowIst = new Date(Date.now() + IST_OFFSET_MS);
     const endIdx = nowIst.getUTCFullYear() * 12 + nowIst.getUTCMonth();
 
@@ -300,7 +283,7 @@ const getRevenueAnalytics = async (req, res) => {
       } else {
         startIdx = endIdx;
       }
-      startIdx = Math.max(startIdx, endIdx - 59); // chart shows at most 60 months
+      startIdx = Math.max(startIdx, endIdx - 59); 
     } else {
       startIdx = endIdx - (Number(range) - 1);
     }
@@ -314,8 +297,7 @@ const getRevenueAnalytics = async (req, res) => {
       { $match: PAID },
       {
         $addFields: {
-          // Use the date the payment was actually confirmed (falls back to
-          // creation date for older orders without accessGrantedAt)
+
           paidAt: { $ifNull: ["$accessGrantedAt", "$createdAt"] },
           refunded: { $ifNull: ["$refundedAmount", 0] },
         },
@@ -404,7 +386,6 @@ const getRevenueAnalytics = async (req, res) => {
       },
     ]);
 
-    // ---- KPIs ----
     const t = result.totals[0] || {};
     const gross = round2(t.gross);
     const refunded = round2(t.refunded);
@@ -412,7 +393,6 @@ const getRevenueAnalytics = async (req, res) => {
     const refundedOrders = t.refundedOrders || 0;
     const net = round2(gross - refunded);
 
-    // ---- Monthly series (gap-free) ----
     const monthMap = Object.fromEntries(result.byMonth.map((m) => [m._id, m]));
     const byMonth = [];
     for (let i = startIdx; i <= endIdx; i++) {
@@ -432,7 +412,6 @@ const getRevenueAnalytics = async (req, res) => {
       });
     }
 
-    // ---- Books vs subscriptions ----
     const typeMap = Object.fromEntries(result.byType.map((r) => [r._id, r]));
     const byType = ["book", "subscription"].map((type) => {
       const r = typeMap[type] || {};
@@ -449,7 +428,6 @@ const getRevenueAnalytics = async (req, res) => {
       };
     });
 
-    // ---- Revenue per plan (every tier x cycle shown, even if 0) ----
     const planMap = {};
     result.byPlan.forEach((r) => {
       planMap[`${r._id.plan}|${r._id.cycle}`] = r;

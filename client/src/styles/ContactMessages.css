@@ -1,4 +1,3 @@
-/* Page Wrapper */
 .contact-page-wrapper {
   background-color: var(--color-cream-bg);
   min-height: 100vh;
@@ -10,7 +9,6 @@
   font-size: 28px;
 }
 
-/* Pill Search Input */
 .search-input-pill {
   border-radius: 20px !important;
   border: none !important;
@@ -23,7 +21,6 @@
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Stat Cards */
 .custom-stat-card {
   border-radius: 16px !important;
   background-color: var(--color-surface-alt) !important;
@@ -41,7 +38,6 @@
   font-size: 26px;
 }
 
-/* Direct Table Wrapper (No Card Component) */
 .standalone-table-wrapper {
   background-color: #ffffff !important;
   border-radius: 16px !important;
@@ -49,7 +45,6 @@
   overflow: hidden;
 }
 
-/* Clean Brown Table Header */
 .clean-theme-table thead tr {
   background-color: var(--brand-primary) !important;
 }
@@ -74,7 +69,6 @@
   background-color: rgba(var(--brand-amber-rgb), 0.03);
 }
 
-/* Status Badges */
 .status-badge-active {
   background-color: #D4EDDA !important;
   color: #155724 !important;
@@ -91,7 +85,6 @@
   font-size: 13px !important;
 }
 
-/* Action Buttons */
 .btn-action-view {
   background-color: #2196F3 !important;
   border: none !important;
@@ -119,7 +112,6 @@
   font-size: 13px !important;
 }
 
-/* Filter Buttons */
 .filter-btn {
   background-color: transparent !important;
   border: 1px solid var(--brand-amber-hover) !important;
@@ -138,7 +130,6 @@
   border-color: var(--brand-primary) !important;
 }
 
-/* Clickable Status Badge */
 .status-badge-toggle {
   cursor: pointer;
   user-select: none;
@@ -149,7 +140,6 @@
   transform: scale(1.05);
 }
 
-/* CSV Export Button */
 .btn-export-csv {
   background-color: var(--color-surface-alt) !important;
   color: var(--brand-primary) !important;
@@ -168,13 +158,11 @@
   border-color: var(--brand-primary) !important;
 }
 
-/* Custom Checkbox Alignment */
 .clean-theme-table .form-check-input:checked {
   background-color: var(--brand-primary);
   border-color: var(--brand-primary);
 }
 
-/* Send Email Button in Modal */
 .btn-send-email {
   background-color: var(--brand-primary) !important;
   border: none !important;
@@ -188,7 +176,6 @@
   background-color: var(--brand-primary) !important;
 }
 
-/* Custom Pagination Theme */
 .custom-pagination .page-link {
   color: var(--brand-primary) !important;
   border-color: var(--color-border) !important;

@@ -26,7 +26,6 @@
   line-height: 1.2;
 }
 
-/* Horizontal track */
 .cr-scroll-track {
   display: flex;
   align-items: center;
@@ -43,7 +42,6 @@
   display: none;
 }
 
-/* Individual Book Card */
 .cr-book-card {
   flex: 0 0 165px;
   width: 165px;
@@ -66,7 +64,6 @@
   transform: translateY(-4px);
 }
 
-/* Poster Aspect Ratio */
 .cr-poster-wrap {
   position: relative;
   width: 100%;
@@ -82,9 +79,6 @@
   display: block;
 }
 
-/* =========================================================
-   Top-Left Progress Badge (Exact Match with Image)
-   ========================================================= */
 .cr-progress-pill {
   position: absolute;
   top: 9px;
@@ -105,7 +99,6 @@
   pointer-events: none;
 }
 
-/* Hover Overlay (Desktop) */
 .cr-hover-overlay {
   position: absolute;
   inset: 0;
@@ -132,7 +125,7 @@
 
 .cr-overlay-top {
   display: flex;
-  justify-content: flex-end; /* Progress pill left mein hai isliye badge right me shift */
+  justify-content: flex-end; 
   align-items: center;
   width: 100%;
 }
@@ -200,7 +193,6 @@
   transform: translateY(-1px);
 }
 
-/* Progress line at poster bottom */
 .cr-progress-bar-bg {
   position: absolute;
   bottom: 0;
@@ -216,7 +208,6 @@
   background-color: #e50914;
 }
 
-/* Bottom Actions Bar */
 .cr-card-footer {
   height: 40px;
   display: flex;
@@ -245,7 +236,6 @@
   transform: scale(1.12);
 }
 
-/* Mobile Screens */
 @media (max-width: 768px) {
   .continue-reading-section {
     padding: 0 0 10px 0 !important;
@@ -291,13 +281,6 @@
   }
 }
 
-
-/* =========================================================
-   SIMPLE POLISH — paste at the END of styles/ContinueReading.css
-   CSS only. No JSX changes. Same colors as your theme.
-   ========================================================= */
-
-/* Small accent line under the heading (same as the other sections) */
 .continue-section-heading::after {
   content: "";
   display: block;
@@ -308,18 +291,15 @@
   background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
 }
 
-/* Soft resting shadow so covers feel lifted off the page */
 .continue-reading-section .cr-book-card {
   box-shadow: 0 6px 16px rgba(74, 59, 71, 0.18) !important;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Gentle zoom on the cover (smooth) */
 .cr-poster-img {
   transition: transform 0.4s ease;
 }
 
-/* Hover effects only on devices that really have hover (not phones) */
 @media (hover: hover) {
   .continue-reading-section .cr-book-card:hover {
     box-shadow: 0 14px 28px rgba(74, 59, 71, 0.3) !important;
@@ -330,7 +310,6 @@
   }
 }
 
-/* Slightly thicker progress bar, rounded end */
 .cr-progress-bar-bg {
   height: 5px;
 }
@@ -338,14 +317,6 @@
 .cr-progress-bar-fill {
   border-radius: 0 4px 4px 0;
 }
-
-/* OPTIONAL: progress bar in your theme color instead of red.
-   Remove the comment marks to turn it on.
-
-.cr-progress-bar-fill {
-  background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
-}
-*/
 
 @media (max-width: 768px) {
   .continue-section-heading::after {

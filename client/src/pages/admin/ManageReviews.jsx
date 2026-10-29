@@ -91,7 +91,6 @@ function ManageReviews() {
     try {
       await API.delete(`/reviews/${review._id}`);
       toast.success("Review deleted successfully!");
-      // Re-fetch the current page; if it's now empty (and not page 1), step back a page
       if (reviews.length === 1 && page > 1) {
         fetchReviews(page - 1);
       } else {

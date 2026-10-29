@@ -7,9 +7,6 @@
   color: var(--color-deep-mauve);
 }
 
-/* =========================================================
-   1. HERO SECTION (Compact spacing & smooth wave)
-   ========================================================= */
 .library-hero {
   position: relative;
   background: linear-gradient(
@@ -62,7 +59,6 @@
   height: 100%;
 }
 
-/* Search / Dropdown controls */
 .library-top input,
 .library-top select {
   border: 1px solid var(--color-rose-mauve);
@@ -82,7 +78,6 @@
   outline: none;
 }
 
-/* Filter pills */
 .filter-tab {
   background: rgba(241, 229, 226, 0.6);
   color: var(--color-deep-mauve);
@@ -107,9 +102,6 @@
   color: var(--color-deep-mauve);
 }
 
-/* =========================================================
-   2. BOOK GRID & CARD STYLING
-   ========================================================= */
 .library-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -138,7 +130,6 @@
   display: block;
 }
 
-/* Badges & Wishlist Icon */
 .card-badges {
   top: 10px;
   left: 10px;
@@ -181,9 +172,6 @@
   background: rgba(74, 59, 71, 0.85);
 }
 
-/* =========================================================
-   3. HOVER OVERLAY (Details appear ONLY on hover)
-   ========================================================= */
 .library-card-content {
   background: linear-gradient(
     to top,
@@ -197,7 +185,6 @@
   z-index: 2;
 }
 
-/* Card par mouse aane par details show hongi */
 .library-card:hover .library-card-content {
   opacity: 1;
   visibility: visible;
@@ -213,7 +200,6 @@
   color: var(--color-blush);
 }
 
-/* Action Buttons inside Card */
 .btn-action {
   font-size: 12px;
   transition: background .2s ease;
@@ -239,7 +225,6 @@
   color: #ffffff;
 }
 
-/* "Buy Now" for paid books */
 .btn-buy {
   background-color: var(--color-muted-purple);
   color: #ffffff;
@@ -262,9 +247,6 @@
   color: #ffffff;
 }
 
-/* =========================================================
-   4. MOBILE RESPONSIVE
-   ========================================================= */
 @media (max-width: 768px) {
   .library-hero {
     padding: 60px 16px 85px;
@@ -278,9 +260,6 @@
     width: 100%;
   }
 
-  /* Phones: a normal wrapping grid (2 columns on most phones, more as the
-     screen gets wider). It used to be ONE long row you had to swipe through,
-     which made a big library very hard to browse. */
   .library-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
@@ -292,8 +271,6 @@
     min-width: 0;
   }
 
-  /* No store-link row on small cards - Kindle / Amazon / Flipkart links are
-     on the book's details page. */
   .library-card .external-store-links {
     display: none !important;
   }
@@ -314,9 +291,8 @@
   }
 }
 
-/* Category + Language dropdown row */
 .library-select-row {
-  display: contents; /* desktop: behaves exactly as before */
+  display: contents;
 }
 
 @media (max-width: 768px) {
@@ -341,12 +317,6 @@
   }
 }
 
-
-/* =========================================================
-   TOUCH SCREENS (phones & tablets): there is no "hover", so the title and
-   the Read / Buy Now / Unlock VIP button would never be visible. Show them
-   all the time, over a gradient at the bottom of the cover.
-   ========================================================= */
 @media (hover: none), (max-width: 768px) {
   .library-card-content {
     opacity: 1;
@@ -359,13 +329,11 @@
     );
   }
 
-  /* Sticky "hover" lift on touch looks like a glitch */
   .library-card:hover {
     transform: none;
   }
 }
 
-/* Small phones */
 @media (max-width: 380px) {
   .library-hero {
     padding-left: 12px;

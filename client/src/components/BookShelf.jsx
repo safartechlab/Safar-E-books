@@ -20,19 +20,14 @@ import { startPayment } from "../utils/payment";
 import useWishlistIds from "../hooks/useWishlistIds";
 import "../styles/NewArrivals.css";
 
-// A horizontally scrolling row of book covers. The home page uses it three
-// times: "New Arrivals" (the latest books added), "Free Books" and "VIP Access
-// Books". The books always come straight from the server, newest first.
-//
-//   access  - "free" | "vip" | "paid" to only show that kind of book
-//   limit   - how many books to show
+
 const SKELETON_COUNT = 6;
 
 const badgeFor = (book) => {
   if (book.isFree) return "FREE";
-  if (book.isSubscriptionRequired) return "👑 VIP";
+  if (book.isSubscriptionRequired) return " VIP";
   if (book.price > 0) return `₹${book.price}`;
-  return ""; // external-link-only book: nothing to label
+  return ""; 
 };
 
 function BookShelf({
@@ -75,7 +70,7 @@ function BookShelf({
     };
   }, [access, limit]);
 
-  // Show the left/right buttons only when the row is wider than the screen.
+ 
   const measure = useCallback(() => {
     const el = trackRef.current;
     if (el) setOverflowing(el.scrollWidth > el.clientWidth + 4);
@@ -108,8 +103,7 @@ function BookShelf({
       startPayment({
         type: "book",
         bookId: book._id,
-        // startPayment refreshes the saved user; pick that up so this
-        // button flips from "Buy Now" to "Read Now" straight away.
+        
         onSuccess: () => setUser(getStoredUser()),
       });
       return;
@@ -214,8 +208,7 @@ function BookShelf({
                       }}
                     />
 
-                    {/* Always-visible label, so phones (which have no hover) can
-                        still tell Free / VIP / paid books apart. */}
+                    
                     {badge && <span className="na-corner-badge">{badge}</span>}
 
                     {/* Desktop hover overlay */}

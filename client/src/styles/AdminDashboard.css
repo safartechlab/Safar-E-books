@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
-/* Main Canvas Wrapper */
 .admin-dashboard-container {
   padding: 30px 24px 70px;
   max-width: 1380px;
@@ -11,7 +10,6 @@
   min-height: 100vh;
 }
 
-/* 1. Simple Header Without Box Container */
 .admin-simple-header {
   display: flex;
   justify-content: space-between;
@@ -47,7 +45,6 @@
   box-shadow: 0 2px 8px rgba(74, 59, 71, 0.05);
 }
 
-/* 2. Stat Cards with Icon Bubbles */
 .admin-stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -121,7 +118,6 @@
   display: block;
 }
 
-/* 3. Two-Column Grid */
 .admin-dashboard-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -141,7 +137,6 @@
   gap: 22px;
 }
 
-/* Card Styling */
 .admin-dash-card {
   background: #FFFFFF;
   border-radius: 22px;
@@ -175,7 +170,6 @@
   border: 1px solid var(--color-rose-mauve, #B99BA7);
 }
 
-/* 4. Modern Striped Tables */
 .admin-book-table {
   width: 100%;
   border-collapse: separate;
@@ -231,7 +225,6 @@
   display: inline-block;
 }
 
-/* 5. Achievement Bottom Strip */
 .admin-bottom-strip {
   background: linear-gradient(135deg, #4A3B47 0%, #5D4857 100%);
   border-radius: 20px;
@@ -257,7 +250,6 @@
   color: #DCC6C6;
 }
 
-/* Mobile Screens */
 @media (max-width: 576px) {
   .admin-dashboard-container {
     padding: 20px 14px 50px;

@@ -39,7 +39,6 @@ function AdminDashboard() {
   const [userData, setUserData] = useState([]);
   const [totalReads, setTotalReads] = useState(0);
 
-  // Revenue statistics
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
   const [bookSalesCount, setBookSalesCount] = useState(0);
@@ -75,7 +74,6 @@ function AdminDashboard() {
 
       setUserData(res.data.userStatistics || []);
 
-      // Revenue data
       setTotalRevenue(res.data.totalRevenue || 0);
       setTotalOrders(res.data.totalOrders || 0);
       setBookSalesCount(res.data.bookSalesCount || 0);
@@ -98,9 +96,9 @@ function AdminDashboard() {
       {/* 1. Clean Simple Top Header */}
       <div className="admin-simple-header">
         <div>
-          <h1 className="admin-welcome-h1">Welcome Back, Admin 👋</h1>
+          <h1 className="admin-welcome-h1">Welcome Back, Admin </h1>
           <p className="admin-welcome-sub">
-            Manage your SAFAR EBOOKS eBook Library
+            Manage your SAFAR E-BOOKS eBook Library
           </p>
         </div>
         <div className="admin-date-pill">

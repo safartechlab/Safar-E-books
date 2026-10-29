@@ -1,7 +1,3 @@
-/* =========================================================
-FOOTER WRAPPER
-========================================================= */
-
 .footer-wrapper {
 background: linear-gradient(
 to bottom,
@@ -40,10 +36,6 @@ border-color: var(--color-rose-mauve);
 opacity: 0.35;
 }
 
-/* =========================================================
-FOOTER NAVIGATION
-========================================================= */
-
 .footer-links-column {
 min-width: 0;
 overflow-wrap: anywhere;
@@ -69,10 +61,6 @@ transition: color 0.2s ease;
 .footer-link:hover {
 color: var(--color-plum);
 }
-
-/* =========================================================
-ANIMATED WIREFRAME BOOK
-========================================================= */
 
 .footer-illustration-column {
 min-width: 0;
@@ -136,10 +124,6 @@ r: 4.5px;
 }
 }
 
-/* =========================================================
-DIAGONAL STEPPED BANNER
-========================================================= */
-
 .diagonal-stepped-banner {
 position: relative;
 width: 100%;
@@ -180,10 +164,6 @@ justify-content: flex-end;
 padding-right: 40px;
 }
 
-/* =========================================================
-SCROLL TO TOP BUTTON
-========================================================= */
-
 .scroll-top-btn {
 width: 26px;
 height: 26px;
@@ -203,10 +183,6 @@ transition: all 0.3s ease;
 background-color: var(--color-light-blush);
 color: var(--color-deep-mauve);
 }
-
-/* =========================================================
-FOOTER BOTTOM BAR
-========================================================= */
 
 .footer-bottom-bar {
 background-color: var(--color-deep-mauve);
@@ -244,10 +220,6 @@ color: var(--color-soft-rose);
 overflow-wrap: anywhere;
 }
 
-/* =========================================================
-TABLET AND DESKTOP
-========================================================= */
-
 @media (min-width: 768px) {
 .footer-main-row {
 flex-direction: row;
@@ -267,10 +239,6 @@ justify-content: flex-end;
 }
 }
 
-/* =========================================================
-TABLETS AND SMALLER SCREENS
-========================================================= */
-
 @media (max-width: 900px) {
 .layer-deep-mauve {
 clip-path: polygon(40% 0, 100% 0, 100% 100%, 25% 100%);
@@ -285,10 +253,6 @@ clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
 padding-right: 15px;
 }
 }
-
-/* =========================================================
-MOBILE: LINKS LEFT, SVG RIGHT
-========================================================= */
 
 @media (max-width: 767.98px) {
 .footer-content-container {
@@ -399,10 +363,6 @@ text-align: center;
 }
 }
 
-/* =========================================================
-EXTRA SMALL PHONES
-========================================================= */
-
 @media (max-width: 380px) {
 .footer-wrapper .footer-main-row > .footer-links-column {
 flex-basis: 68%;
@@ -450,10 +410,6 @@ gap: 6px;
 font-size: 0.72rem;
 }
 }
-
-/* =========================================================
-ACCESSIBILITY: REDUCED MOTION
-========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 .footer-wireframe-svg,

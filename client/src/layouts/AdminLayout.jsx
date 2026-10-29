@@ -4,8 +4,7 @@ import AdminDesktopOnly from "../components/AdminDesktopOnly";
 import { isMobileOrTabletDevice } from "../utils/device";
 
 function AdminLayout() {
-  // The admin panel is built for a big screen. On a phone or tablet show a
-  // short explanation instead of a broken layout.
+  
   if (isMobileOrTabletDevice()) {
     return <AdminDesktopOnly />;
   }

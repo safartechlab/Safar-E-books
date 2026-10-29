@@ -1,10 +1,9 @@
 .book-details {
   max-width: 1200px;
-  /* Top margin 110px kiya hai taaki navbar ke sath gap achha dikhe */
   margin: 110px auto 60px auto;
   padding: 48px;
   display: flex;
-  gap: 60px; /* Cover image aur details ke beech gap */
+  gap: 60px;
   background: #ffffff;
   border-radius: 24px;
   box-shadow: 0 12px 35px rgba(74, 59, 71, 0.08);
@@ -89,7 +88,6 @@
   font-size: 14px;
 }
 
-/* Description Box */
 .description {
   margin-top: 24px;
   margin-bottom: 24px;
@@ -102,7 +100,6 @@
   line-height: 1.65;
 }
 
-/* Read Book Button */
 .book-right button {
   margin-top: auto;
   align-self: flex-start;
@@ -123,7 +120,6 @@
   transform: translateY(-2px);
 }
 
-/* Reviews Section */
 .reviews-section {
   max-width: 1200px;
   margin: 40px auto 80px auto;
@@ -211,7 +207,6 @@
   color: #7a6873;
 }
 
-/* Responsive */
 @media (max-width: 900px) {
   .book-details {
     flex-direction: column;
@@ -240,7 +235,6 @@
   }
 }
 
-/* Refined book-details experience */
 .book-details-page { padding: 1px 16px 48px; background: radial-gradient(ellipse at top, rgba(232,210,196,.42), transparent 55%); overflow-x: clip; }
 .book-details-page .book-details { width: min(1160px, 100%); margin: 108px auto 34px; padding: clamp(22px, 4vw, 48px); gap: clamp(26px, 5vw, 64px); align-items: center; background: linear-gradient(135deg, #fff 0%, #fffaf6 100%); border: 1px solid rgba(158,129,137,.25); border-radius: 30px 30px 30px 8px; box-shadow: 0 24px 60px rgba(62,50,57,.10); box-sizing: border-box; }
 .book-details-page .book-left { flex: 0 0 clamp(220px, 27%, 310px); }
@@ -273,7 +267,6 @@
   .book-details-page .review-form-actions button { width: 100%; }
 }
 
-/* Language chips (one book, several languages) */
 .book-details .language-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; }
 .book-details .language-chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .book-details .language-chip {

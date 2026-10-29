@@ -16,7 +16,7 @@ const VARIANT = { pending: "warning", processing: "info", approved: "success", r
 const FILTERS = ["pending", "processing", "approved", "rejected", "all"];
 
 const DAY_MS = 24 * 60 * 60 * 1000;
-const ACK_BUSINESS_DAYS = 2; // keep in sync with ACKNOWLEDGE_DAYS in RefundPolicy.jsx
+const ACK_BUSINESS_DAYS = 2;
 
 const esc = (s = "") =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -26,7 +26,6 @@ const itemName = (o = {}) =>
     ? o.book?.title || "Book (deleted)"
     : `${o.plan ? o.plan[0].toUpperCase() + o.plan.slice(1) : "Premium"} subscription${o.billingCycle ? ` (${o.billingCycle})` : ""}`;
 
-// Date after N business days (Saturday and Sunday are skipped)
 const addBusinessDays = (start, days) => {
   const d = new Date(start);
   let added = 0;
@@ -38,7 +37,6 @@ const addBusinessDays = (start, days) => {
   return d;
 };
 
-// "Waiting 1d" / red "Overdue" once the 2-business-day promise has passed
 const waitingBadge = (r) => {
   if (r.status !== "pending") return null;
   const created = new Date(r.createdAt);
@@ -53,8 +51,6 @@ const waitingBadge = (r) => {
   );
 };
 
-// How much of the book the customer has read (policy: opened/read books are
-// generally not refundable)
 const readingCell = (r) => {
   if (r.order?.type !== "book") return <span className="text-muted">—</span>;
   if (!r.reading) return <Badge bg="success">Not opened</Badge>;
@@ -90,7 +86,6 @@ function AdminRefunds() {
       toast.error("Could not load refund requests");
     } finally {
       setLoading(false);
-      // tell the sidebar badge to refresh
       window.dispatchEvent(new Event("refund-count-changed"));
     }
   }, [filter]);

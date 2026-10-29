@@ -6,8 +6,6 @@ import "../styles/CategoryChips.css";
 
 const VISIBLE_COUNT = 3;
 
-// Prioritise categories with the most books. The fourth chip opens all
-// categories that currently contain at least one book.
 function CategoryChips() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);

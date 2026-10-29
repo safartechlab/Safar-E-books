@@ -1,4 +1,3 @@
-/* Zero-dimension SVG definition holder */
 .svg-wave-defs {
   position: absolute;
   width: 0;
@@ -6,7 +5,6 @@
   pointer-events: none;
 }
 
-/* Hero Root Container */
 .editorial-hero-root {
   background-color: var(--color-cream-bg, #F7ECEB) !important;
   width: 100%;
@@ -20,20 +18,18 @@
   position: relative;
 }
 
-/* Main Container: Full width, zero right-padding */
 .editorial-hero-container {
   width: 100% !important;
   max-width: 100% !important;
   margin: 0 !important;
   display: flex;
-  flex-direction: row; /* Strict side-by-side always */
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: 0 0 0 4vw !important;
   box-sizing: border-box;
 }
 
-/* Left Content Column */
 .editorial-text-col {
   flex: 0 0 42%;
   max-width: 460px;
@@ -60,7 +56,6 @@
   color: var(--brand-amber, #A48794);
 }
 
-/* Divider with Book Accent */
 .editorial-divider {
   display: flex;
   align-items: center;
@@ -94,7 +89,6 @@
   font-weight: 400;
 }
 
-/* CTA Button */
 .editorial-btn {
   background-color: var(--brand-primary, #5D4857);
   color: #FFFFFF;
@@ -119,7 +113,6 @@
   box-shadow: var(--shadow-md);
 }
 
-/* Right Visual Stage */
 .editorial-visual-col {
   flex: 0 0 58%;
   width: 58%;
@@ -150,7 +143,6 @@
   display: block;
 }
 
-/* Bottom Strip */
 .editorial-footer-strip {
   width: 100%;
   border-top: 1px solid var(--color-border, #DCC6C6);
@@ -212,9 +204,6 @@
   margin: 0;
 }
 
-/* =========================================================
-   Mobile View: Image Hidden & Clean Center Hero Content
-   ========================================================= */
 @media (max-width: 768px) {
   .editorial-hero-root {
     padding-top: 25px;
@@ -228,7 +217,6 @@
     min-height: auto !important;
   }
 
-  /* Left Column: Full width aur clear readable typography */
   .editorial-text-col {
     flex: 0 0 100% !important;
     max-width: 100% !important;
@@ -271,12 +259,10 @@
     letter-spacing: 1.5px !important;
   }
 
-  /* Right Visual: Mobile screen par image completely hide */
   .editorial-visual-col {
     display: none !important;
   }
 
-  /* Bottom Feature Strip: 2x2 Clean Grid */
   .editorial-footer-strip {
     padding: 1.2rem 0 !important;
   }

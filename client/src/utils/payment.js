@@ -1,8 +1,6 @@
 import API from "../api/axios";
 import { toast } from "react-toastify";
 
-// type: "book" | "subscription"
-// plan / billingCycle: only used (and required) when type is "subscription"
 export async function startPayment({ type, bookId, plan, billingCycle, onSuccess }) {
   try {
     const { data } = await API.post("/payments/create-order", {
@@ -28,9 +26,6 @@ export async function startPayment({ type, bookId, plan, billingCycle, onSuccess
         try {
           await API.post("/payments/verify", response);
 
-          // Refresh the cached user so purchasedBooks/isSubscribed reflect
-          // reality immediately — without this, Library/Reader still think
-          // nothing changed until the next login.
           if (user?._id) {
             const freshUserRes = await API.get(`/auth/users/${user._id}`);
             localStorage.setItem("user", JSON.stringify(freshUserRes.data.user));

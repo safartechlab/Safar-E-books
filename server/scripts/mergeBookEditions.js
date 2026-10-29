@@ -1,25 +1,3 @@
-// One-time migration for the "one book, many languages" feature.
-//
-//  1. Merges duplicate books (same title + author, different language) into
-//     ONE book with several editions, and moves purchases, orders, reviews,
-//     wishlist, reading history and banners over to the surviving book.
-//     The extra copies are archived (not deleted).
-//  2. Gives every other book an editions[] entry built from its old
-//     language / pdfUrl / pages.
-//  3. Replaces ReadingHistory's old (user, book) unique index with
-//     (user, book, language).
-//
-// BACK UP YOUR DATABASE FIRST.
-//
-// Usage (from the server/ folder):
-//   node scripts/mergeBookEditions.js            -> DRY RUN, changes nothing
-//   node scripts/mergeBookEditions.js --apply    -> really do it
-//   node scripts/mergeBookEditions.js --merge <primaryId> <dupId> [<dupId>...] [--apply]
-//        -> manual merge, for books whose titles differ per language
-//           (e.g. the Hindi copy has a Hindi title)
-//
-// Safe to run more than once.
-
 require("dotenv").config();
 const mongoose = require("mongoose");
 const Book = require("../models/Book");
@@ -33,8 +11,6 @@ const Banner = require("../models/bannerModel");
 const APPLY = process.argv.includes("--apply");
 const norm = (s) => String(s || "").trim().toLowerCase().replace(/\s+/g, " ");
 
-// Move rows from a duplicate book to the primary, dropping rows that would
-// collide with a unique index (the same user already has one on the primary).
 async function repoint(Model, dupId, primaryId, dupLanguage, perLanguage) {
   const rows = await Model.find({ book: dupId });
   for (const row of rows) {
@@ -96,7 +72,7 @@ async function mergeInto(primaryId, dupIds) {
 
     if (!APPLY) continue;
 
-    await primary.save(); // so the edition exists before data is re-pointed
+    await primary.save(); 
 
     await User.updateMany({ purchasedBooks: dup._id }, { $addToSet: { purchasedBooks: primary._id } });
     await User.updateMany({ purchasedBooks: dup._id }, { $pull: { purchasedBooks: dup._id } });
@@ -123,7 +99,6 @@ async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log(APPLY ? "APPLY MODE" : "DRY RUN (add --apply to change data)");
 
-  // Drops the old (user, book) unique index and builds (user, book, language).
   if (APPLY) await ReadingHistory.syncIndexes();
 
   const mi = process.argv.indexOf("--merge");
@@ -149,7 +124,6 @@ async function main() {
     if (!found) console.log("\nNo duplicate title+author groups found.");
   }
 
-  // Give every remaining book an editions[] entry + fix reading-history language.
   const all = await Book.find({});
   let backfilled = 0;
   for (const b of all) {

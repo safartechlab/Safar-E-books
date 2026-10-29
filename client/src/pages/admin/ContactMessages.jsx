@@ -20,7 +20,6 @@ function ContactMessages() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  // View & Reply Modals
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [showReplyModal, setShowReplyModal] = useState(false);
@@ -32,10 +31,8 @@ function ContactMessages() {
   });
   const [sendingReply, setSendingReply] = useState(false);
 
-  // Bulk Selection
   const [selectedIds, setSelectedIds] = useState([]);
 
-  // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
 
@@ -43,7 +40,6 @@ function ContactMessages() {
     fetchMessages();
   }, []);
 
-  // Reset page to 1 whenever search or filter changes
   useEffect(() => {
     setCurrentPage(1);
   }, [search, statusFilter]);
@@ -94,7 +90,6 @@ function ContactMessages() {
       fetchMessages();
       setSelectedIds((prev) => prev.filter((item) => item !== id));
 
-      // Fix: Adjust page if last item on current page was deleted
       if (currentMessages.length === 1 && currentPage > 1) {
         setCurrentPage((prev) => prev - 1);
       }
@@ -134,7 +129,6 @@ function ContactMessages() {
     }
   };
 
-  // Filter Logic
   const filteredMessages = messages.filter((msg) => {
     const matchesSearch =
       msg.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -150,7 +144,6 @@ function ContactMessages() {
     return matchesSearch && matchesStatus;
   });
 
-  // Calculate Paginated Items
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentMessages = filteredMessages.slice(
@@ -159,7 +152,6 @@ function ContactMessages() {
   );
   const totalPages = Math.ceil(filteredMessages.length / itemsPerPage);
 
-  // Fix: Check selection status relative ONLY to the current page items
   const isAllCurrentSelected =
     currentMessages.length > 0 &&
     currentMessages.every((msg) => selectedIds.includes(msg._id));
@@ -167,10 +159,8 @@ function ContactMessages() {
   const handleSelectAll = (e) => {
     const currentIds = currentMessages.map((msg) => msg._id);
     if (e.target.checked) {
-      // Merge unique IDs
       setSelectedIds((prev) => Array.from(new Set([...prev, ...currentIds])));
     } else {
-      // Uncheck only items on current page
       setSelectedIds((prev) => prev.filter((id) => !currentIds.includes(id)));
     }
   };
@@ -201,7 +191,6 @@ function ContactMessages() {
       setSelectedIds([]);
       fetchMessages();
 
-      // Reset page if needed
       if (selectedIds.length >= currentMessages.length && currentPage > 1) {
         setCurrentPage(1);
       }

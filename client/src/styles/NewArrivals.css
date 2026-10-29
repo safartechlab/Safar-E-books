@@ -9,7 +9,6 @@
   border: none !important;
 }
 
-/* Thoda bada & bold heading */
 .na-heading {
   font-family: var(--font-serif, "Playfair Display", serif);
   font-size: clamp(26px, 3.2vw, 34px);
@@ -25,7 +24,6 @@
   font-size: 0.95rem;
 }
 
-/* Circular Arrow Button */
 .na-arrow-btn {
   width: 40px;
   height: 40px;
@@ -48,7 +46,6 @@
   transform: translateX(4px);
 }
 
-/* Horizontal Scroll Track */
 .na-scroll-track {
   display: flex;
   align-items: center;
@@ -67,7 +64,6 @@
   height: 0 !important;
 }
 
-/* Thoda sa bada Card Dimension (165px -> 185px) */
 .na-book-card {
   flex: 0 0 185px;
   width: 185px;
@@ -90,7 +86,6 @@
   transform: translateY(-5px);
 }
 
-/* Poster Aspect Ratio (235px -> 265px) */
 .na-poster-wrap {
   position: relative;
   width: 100%;
@@ -106,7 +101,6 @@
   display: block;
 }
 
-/* Desktop Hover Overlay */
 .na-hover-overlay {
   position: absolute;
   inset: 0;
@@ -238,7 +232,6 @@
   color: #ffffff;
 }
 
-/* ================= Mobile Screen Clean View ================= */
 @media (max-width: 768px) {
   .na-section {
     padding: 10px 0 15px 0 !important;
@@ -284,9 +277,6 @@
   }
 }
 
-/* =========================================================
-   Shared book row (New Arrivals / Free Books / VIP Books)
-   ========================================================= */
 .na-section .min-w-0 {
   min-width: 0;
 }
@@ -296,9 +286,6 @@
   outline-offset: 3px;
 }
 
-/* Label that is ALWAYS visible (Free / VIP / price). The hover overlay has
-   its own copy, so this one fades out while the overlay is showing. Phones
-   have no hover, so this is the only label they ever see. */
 .na-corner-badge {
   position: absolute;
   top: 8px;
@@ -327,12 +314,10 @@
   }
 }
 
-/* Left / right scroll buttons (desktop only, shown when the row overflows) */
 .na-nav-btn:hover {
   transform: none;
 }
 
-/* Loading placeholders */
 .na-skeleton {
   pointer-events: none;
   background-color: var(--color-blush) !important;
@@ -364,8 +349,6 @@
   }
 }
 
-/* Very small phones: slightly smaller covers so ~2.3 are visible at once,
-   which hints that the row scrolls sideways. */
 @media (max-width: 380px) {
   .na-book-card {
     flex: 0 0 120px !important;
@@ -376,13 +359,6 @@
   }
 }
 
-/* =========================================================
-   SIMPLE POLISH — paste at the END of styles/NewArrivals.css
-   CSS only. No JSX changes. Same colors as your theme.
-   (Affects New Arrivals, Free Books and VIP Books)
-   ========================================================= */
-
-/* Small accent line under the heading */
 .na-heading::after {
   content: "";
   display: block;
@@ -393,7 +369,6 @@
   background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
 }
 
-/* Soft resting shadow so covers feel lifted off the page */
 .na-section .na-book-card {
   box-shadow: 0 6px 16px rgba(74, 59, 71, 0.18) !important;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -403,12 +378,10 @@
   box-shadow: none !important;
 }
 
-/* Gentle zoom on the cover (smooth) */
 .na-poster-img {
   transition: transform 0.4s ease;
 }
 
-/* Hover effects only on devices that really have hover (not phones) */
 @media (hover: hover) {
   .na-section .na-book-card:hover {
     box-shadow: 0 14px 28px rgba(74, 59, 71, 0.3) !important;
@@ -419,7 +392,6 @@
   }
 }
 
-/* Softer, rounder FREE / VIP / price label */
 .na-corner-badge {
   border-radius: var(--radius-pill);
   padding: 3px 9px;
@@ -427,7 +399,6 @@
   -webkit-backdrop-filter: blur(4px);
 }
 
-/* Slightly more breathing room between the sections */
 .na-section {
   padding-bottom: 36px;
 }

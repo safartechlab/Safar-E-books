@@ -1,4 +1,3 @@
-/* Only brand colors + the avatar circle size — layout is Bootstrap now */
 .user-details-heading { color: var(--color-text-dark); }
 
 .user-avatar {

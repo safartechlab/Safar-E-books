@@ -5,7 +5,6 @@ import API from "../api/axios";
 import useSiteInfo from "../hooks/useSiteInfo";
 import { toast } from "react-toastify";
 
-// Image import
 import contactHeroImg from "../assets/images/image.jpg";
 import "../styles/ContactUs.css";
 
@@ -23,7 +22,6 @@ function ContactUs() {
   const siteInfo = useSiteInfo();
   const [formData, setFormData] = useState(EMPTY_FORM);
 
-  // Book-name autosuggest state
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
@@ -35,13 +33,11 @@ function ContactUs() {
   };
 
   const handleQueryTypeChange = (e) => {
-    // Switching away from "Book Query" clears the book field + dropdown.
     setFormData({ ...formData, queryType: e.target.value, bookName: "" });
     setSuggestions([]);
     setShowSuggestions(false);
   };
 
-  // Fetch matching books while typing (debounced 300ms)
   useEffect(() => {
     if (formData.queryType !== "book") return;
 
@@ -73,7 +69,6 @@ function ContactUs() {
     };
   }, [formData.bookName, formData.queryType]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (bookBoxRef.current && !bookBoxRef.current.contains(e.target)) {
@@ -118,7 +113,6 @@ function ContactUs() {
     }
   };
 
-  // Contact details come from Admin > Settings > Website Information.
   const infoItems = [
     siteInfo.contactPhone && {
       icon: <Phone size={20} />,

@@ -38,7 +38,7 @@ function BookDetails() {
 
   const [myRating, setMyRating] = useState(0);
   const [myComment, setMyComment] = useState("");
-  const [myReview, setMyReview] = useState(null); // existing review by this user, if any
+  const [myReview, setMyReview] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [selectedLang, setSelectedLang] = useState("");
 
@@ -89,11 +89,6 @@ function BookDetails() {
     }
   };
 
-  // Just navigate to the reader — do NOT create/overwrite a reading-history
-  // entry here. Reader.jsx is the only place that knows the real current
-  // page + totalPages; posting {bookId only} here used to reset any
-  // existing progress to page 1 of 1 (100%), wiping it every time someone
-  // clicked "Read Book" from the details page.
   const handleReadBook = () => {
     const lang = activeEdition?.language;
     navigate(`/reader/${book._id}${lang ? `?lang=${encodeURIComponent(lang)}` : ""}`);
@@ -152,25 +147,19 @@ function BookDetails() {
     }
   };
 
-  // One book, several language editions. Old records without editions[]
-  // fall back to their single language.
   const editions = book?.editions?.length
     ? book.editions
     : book
     ? [{ language: book.language, pages: book.pages, pdfUrl: book.pdfUrl }]
     : [];
-  // Only languages that really have a PDF are offered to readers
-  // (a language the admin has not uploaded yet would just give an error).
+
   const readableEditions = editions.filter((e) => e.pdfUrl);
   const chipEditions = readableEditions.length ? readableEditions : editions;
   const activeEdition =
     chipEditions.find((e) => e.language === selectedLang) || chipEditions[0];
 
-  // One shared rule (same as the Library) for what the main button should be.
   const action = book ? getBookAction(book, loggedUser) : null;
 
-  // Store links the admin added. Used for the small link row (readable books)
-  // and for the big buttons shown when the book can't be read on the website.
   const storeLinks = book
     ? [
         { url: book.kindleUrl, label: "Get Kindle eBook", short: "Kindle", cls: "kindle", title: "Read on Kindle" },
@@ -246,8 +235,6 @@ function BookDetails() {
           <p><strong>Published:</strong> {book.publishedYear}</p>
           <p className="description">{book.description}</p>
 
-          {/* Small store links. Only when the book is also readable here; for
-              external-only books the big buttons below replace them. */}
           {action && storeLinks.length > 0 && (
             <div className="d-flex gap-2 flex-wrap mb-3">
               {storeLinks.map((l) => (
@@ -290,7 +277,7 @@ function BookDetails() {
                 : "📖 Read Book"}
             </button>
           ) : storeLinks.length > 0 ? (
-            // External-only book: buttons that open the store pages.
+          
             <div className="d-flex gap-2 flex-wrap">
               {storeLinks.map((l) => (
                 <a

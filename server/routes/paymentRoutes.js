@@ -19,9 +19,6 @@ const {
   getRevenueAnalytics,
 } = require("../controllers/adminOrderController");
 
-// Note: the Razorpay webhook route is NOT here — it needs a raw (unparsed)
-// request body for signature verification, so it's mounted directly in
-// server.js, ahead of the global express.json() middleware.
 
 router.post("/create-order", protect, paymentLimiter, createOrder);
 router.post("/verify", protect, verifyPayment);

@@ -5,28 +5,22 @@ const { PLANS } = require("../config/plans");
 
 const getDashboardData = async (req, res) => {
   try {
-    
-    // Total Books
+ 
     const totalBooks = await Book.countDocuments();
-    // Total Users
     const totalUsers = await User.countDocuments({
       role: "user",
     });
-    // Total Categories
     const categories = await Book.distinct("category");
-    // Total Reads
+
     const totalReadsAgg = await Book.aggregate([
   { $group: { _id: null, total: { $sum: "$readCount" } } },
 ]);
 const totalReads = totalReadsAgg[0]?.total || 0;
-
-    // Recently Added Books   
+  
     const recentBooks = await Book.find()
       .sort({ createdAt: -1 })
       .limit(5)
       .select("title author category");
-    
-    // Books Per Category
     
     const booksPerCategory = await Book.aggregate([
       {
@@ -49,9 +43,6 @@ const totalReads = totalReadsAgg[0]?.total || 0;
       },
     ]);
 
-    
-    // User Statistics
-    
     const activeUsers = await User.countDocuments({
       role: "user",
       status: "active",
@@ -62,9 +53,6 @@ const totalReads = totalReadsAgg[0]?.total || 0;
       status: "blocked",
     });
 
-        // ==========================
-    // Revenue & Orders
-    // ==========================
     const orderStatsAgg = await Order.aggregate([
   { $match: { status: "paid" } },
   {
@@ -85,13 +73,7 @@ const { totalRevenue = 0, totalOrders = 0, bookSalesCount = 0, subscriptionCount
       subscriptionExpiry: { $gt: new Date() },
     });
 
-    // ==========================
-    // Subscription plan breakdown — which of the 3 tiers × 2 billing
-    // cycles are actually in use right now, among CURRENTLY active
-    // subscribers (not historical orders, which would still count
-    // people who've since cancelled or lapsed).
-    // ==========================
-    const TIERS = Object.keys(PLANS); // ["basic", "medium", "premium"]
+    const TIERS = Object.keys(PLANS); 
     const CYCLES = ["monthly", "quarterly"];
 
     const planAgg = await User.aggregate([
@@ -99,20 +81,17 @@ const { totalRevenue = 0, totalOrders = 0, bookSalesCount = 0, subscriptionCount
     $match: {
       isSubscribed: true,
       subscriptionExpiry: { $gt: new Date() },
-      subscriptionPlan: { $ne: null },        // ✅ matches schema
+      subscriptionPlan: { $ne: null },   
     },
   },
   {
     $group: {
-      _id: { tier: "$subscriptionPlan", cycle: "$subscriptionCycle" },  // ✅ matches schema
+      _id: { tier: "$subscriptionPlan", cycle: "$subscriptionCycle" }, 
       count: { $sum: 1 },
     },
   },
 ]);
 
-    // Build a lookup so every tier×cycle combo is present with a real
-    // number (0 if unused) — keeps charts/tables on the frontend stable
-    // instead of silently omitting empty categories.
     const planCounts = {};
     planAgg.forEach((row) => {
       const key = `${row._id.tier}|${row._id.cycle}`;
@@ -147,7 +126,6 @@ const { totalRevenue = 0, totalOrders = 0, bookSalesCount = 0, subscriptionCount
         .reduce((sum, row) => sum + row.count, 0),
     }));
 
-    // Revenue for the last 6 months, grouped by month
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 5);
     sixMonthsAgo.setDate(1);
@@ -169,7 +147,6 @@ const { totalRevenue = 0, totalOrders = 0, bookSalesCount = 0, subscriptionCount
       revenue: m.revenue,
     }));
 
-    // Top 5 best-selling books
     const topBooksAgg = await Order.aggregate([
   { $match: { status: "paid", type: "book" } },
   { $group: { _id: "$book", sales: { $sum: 1 }, revenue: { $sum: "$amount" } } },
@@ -196,7 +173,7 @@ const { totalRevenue = 0, totalOrders = 0, bookSalesCount = 0, subscriptionCount
 ]);
 
 const topBooks = topBooksAgg;
-    // Response
+
     
         res.status(200).json({
       success: true,
@@ -221,7 +198,6 @@ const topBooks = topBooksAgg;
         },
       ],
 
-      // New: revenue data
       totalRevenue,
       totalOrders,
       bookSalesCount,

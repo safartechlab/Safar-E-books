@@ -5,7 +5,6 @@
   position: relative;
 }
 
-/* Mobile Header - Hidden on Desktop */
 .admin-mobile-header {
   display: none;
   justify-content: space-between;
@@ -35,23 +34,19 @@
   padding: 5px;
 }
 
-/* Main Content Area */
+
 .admin-main-content {
   flex: 1;
-  min-width: 0; /* Prevents overflow inside flexbox containers */
-  margin-left: 250px; /* Offset for desktop sidebar width */
+  min-width: 0; 
+  margin-left: 250px;
   padding: 30px;
   transition: margin-left 0.3s ease;
 }
 
-/* Sidebar Overlay Backdrop for Mobile */
 .admin-sidebar-overlay {
   display: none;
 }
 
-/* ================= Responsive Breakpoints ================= */
-
-/* Tablet & Mobile Screens */
 @media (max-width: 992px) {
   .admin-layout {
     flex-direction: column;
@@ -62,7 +57,7 @@
   }
 
   .admin-main-content {
-    margin-left: 0; /* Full width content on smaller screens */
+    margin-left: 0;
     padding: 20px 15px;
   }
 

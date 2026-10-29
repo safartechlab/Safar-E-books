@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios";
 
-// Basic website details that the admin manages in Admin > Settings.
-// Empty values fall back to these defaults (or are simply hidden).
 export const DEFAULT_SITE_INFO = {
   siteName: "SAFAR EBOOKS",
   supportEmail: "",
@@ -46,7 +44,6 @@ const load = () => {
   return inflight;
 };
 
-// Call after the admin saves, so the footer/navbar update without a reload.
 export const refreshSiteInfo = (data) => publish(pickSiteInfo(data));
 
 export default function useSiteInfo() {

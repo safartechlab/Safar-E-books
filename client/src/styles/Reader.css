@@ -10,7 +10,6 @@
   font-family: var(--font-sans, "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
 }
 
-/* 1. Theme Variables */
 .book-reader-wrapper.theme-sepia {
   --canvas-bg: #EFE4DC;
   --header-bg: #3D2D37;
@@ -44,7 +43,6 @@
   background: var(--canvas-bg);
 }
 
-/* 2. Top Header */
 .reader-top-header {
   height: 56px;
   background: var(--header-bg);
@@ -123,7 +121,6 @@
   color: #FFC9CC;
 }
 
-/* Theme Toggle Pill */
 .theme-toggle-group {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -147,7 +144,6 @@
   font-weight: 700;
 }
 
-/* 3. Reading Desk Canvas */
 .reading-desk-canvas {
   padding: 16px 20px 20px 20px;
   background: radial-gradient(circle, var(--canvas-bg) 0%, rgba(0,0,0,0.12) 100%);
@@ -253,9 +249,6 @@
   object-fit: contain;
 }
 
-/* =========================================================
-   4. MOBILE SINGLE PAGE & FLOATING PILL (Screenshot 2 Match)
-   ========================================================= */
 @media (max-width: 768px) {
   .reader-top-header {
     height: 52px;
@@ -263,11 +256,10 @@
   }
 
   .reading-desk-canvas {
-    padding: 10px 10px 80px 10px; /* bottom padding for floating pill */
+    padding: 10px 10px 80px 10px;
     background: var(--canvas-bg);
   }
 
-  /* Single Page Full Container */
   .mobile-single-page {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18) !important;
     border-radius: 12px !important;
@@ -287,7 +279,6 @@
     display: none;
   }
 
-  /* Screenshot 2 Matching Floating Pill Toolbar */
   .mobile-reader-floating-pill {
     position: fixed;
     bottom: 24px;
@@ -332,7 +323,6 @@
   }
 }
 
-/* Loading & Error States */
 .reader-loading-container {
   background: #F7ECEB;
   color: #4A3B47;
@@ -368,7 +358,6 @@
   color: #FFFFFF;
 }
 
-/* Paywall */
 .paywall-overlay {
   inset: 0;
   z-index: 500;

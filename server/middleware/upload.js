@@ -1,11 +1,5 @@
 const multer = require("multer");
 
-// Files are kept in memory only long enough to be checked and sent to
-// Cloudinary (see utils/cloudinaryStorage.js). Nothing is saved on the
-// server's disk, so uploads survive redeploys on any host.
-const storage = multer.memoryStorage();
-
-// File filter
 const fileFilter = (req, file, cb) => {
   if (file.fieldname === "coverImage") {
     const allowedTypes = [

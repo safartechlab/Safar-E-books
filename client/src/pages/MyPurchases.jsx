@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { FaBookOpen, FaCrown } from "react-icons/fa";
 import "../styles/MyPurchases.css";
 
-const REFUND_WINDOW_DAYS = 7; // keep in sync with the Refund Policy page
+const REFUND_WINDOW_DAYS = 7;
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 const REFUND_STATUS_LABEL = {
@@ -19,7 +19,7 @@ const REFUND_STATUS_LABEL = {
 
 function MyPurchases() {
   const [orders, setOrders] = useState([]);
-  const [refunds, setRefunds] = useState({}); // keyed by order id
+  const [refunds, setRefunds] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -62,13 +62,11 @@ function MyPurchases() {
     return <span className={classes[status] || "status-badge"}>{status}</span>;
   };
 
-  // Same rule as the server: the window starts when access was granted.
   const refundDeadline = (order) =>
     new Date(new Date(order.accessGrantedAt || order.createdAt).getTime() + REFUND_WINDOW_DAYS * DAY_MS);
 
   const refundWindowOpen = (order) => Date.now() <= refundDeadline(order).getTime();
 
-  // Only book purchases can be refunded from here (subscriptions are not refundable).
   const canRequestRefund = (order) =>
     order.type === "book" &&
     order.status === "paid" &&
@@ -80,7 +78,6 @@ function MyPurchases() {
     const request = refunds[String(order._id)];
     const isBook = order.type === "book";
 
-    // 1) Money has been returned
     if (order.status === "refunded" || order.refundedAmount > 0) {
       const full = order.status === "refunded";
       const accessRemoved = full && isBook && request?.accessRevoked !== false;
@@ -93,7 +90,6 @@ function MyPurchases() {
       );
     }
 
-    // 2) A request exists
     if (request) {
       return (
         <div className="refund-line">
@@ -107,7 +103,6 @@ function MyPurchases() {
       );
     }
 
-    // 3) Paid book with no request yet: show the deadline
     if (isBook && order.status === "paid") {
       if (refundWindowOpen(order)) {
         const until = refundDeadline(order).toLocaleDateString("en-IN", {

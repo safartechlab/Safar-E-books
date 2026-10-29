@@ -1,13 +1,8 @@
 import "../styles/Pagination.css";
 
-// Numbered pagination with First / Prev / Next / Last, an ellipsis for long
-// ranges and a "Showing X-Y of Z" summary. Always renders (even for one page)
-// so admins can see the totals.
-//
-// props: page, totalPages, totalCount, pageSize, onChange(newPage)
 function Pagination({ page, totalPages, totalCount, pageSize, onChange }) {
   const pages = [];
-  const windowSize = 1; // neighbours on each side of the current page
+  const windowSize = 1; 
 
   for (let i = 1; i <= totalPages; i++) {
     if (i === 1 || i === totalPages || Math.abs(i - page) <= windowSize) {

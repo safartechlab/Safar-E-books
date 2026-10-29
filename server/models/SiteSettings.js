@@ -7,7 +7,6 @@ const siteSettingsSchema = new mongoose.Schema(
     maintenanceMode: { type: Boolean, default: false },
     maintenanceMessage: { type: String, default: "", maxlength: 300 },
 
-    // Basic website details, managed by the admin in Settings
     siteName: { type: String, default: "", trim: true, maxlength: 80 },
     supportEmail: { type: String, default: "", trim: true, maxlength: 120 },
     contactPhone: { type: String, default: "", trim: true, maxlength: 40 },

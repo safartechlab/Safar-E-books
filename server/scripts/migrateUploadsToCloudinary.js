@@ -1,13 +1,3 @@
-// One-time migration: moves book covers and PDFs that are still stored on
-// this server's disk (/uploads/...) to Cloudinary, and updates each book.
-//
-// Safe to run more than once — it only touches books whose cover/PDF still
-// points at a local /uploads path. It does NOT delete the local files, so
-// you can check the site first and remove server/uploads yourself later.
-//
-// Usage (from the server/ folder, with Cloudinary set in .env):
-//   node scripts/migrateUploadsToCloudinary.js
-
 require("dotenv").config();
 const fs = require("fs");
 const path = require("path");

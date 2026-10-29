@@ -3,10 +3,6 @@ const Contact = require("../models/Contact");
 const mongoose = require("mongoose");
 const escapeRegex = require("../utils/escapeRegex");
 
-// ==========================
-// Admin: unread message count — powers the sidebar badge so admins
-// notice new messages without opening the Messages page.
-// ==========================
 const getUnreadCount = async (req, res) => {
   try {
     const count = await Contact.countDocuments({ isRead: false });
@@ -24,7 +20,6 @@ const getUnreadCount = async (req, res) => {
   }
 };
 
-// 1. Save Contact Message (Public Form)
 const sendMessage = async (req, res) => {
   try {
     const { name, email, message, queryType = "general", bookName = "" } = req.body;
@@ -73,8 +68,6 @@ const sendMessage = async (req, res) => {
       bookName: cleanBookName,
     });
 
-    // No need to echo the saved document back to the (public, unauthenticated)
-    // caller — just confirm it was sent.
     res.status(201).json({
       success: true,
       message: "Message sent successfully",
@@ -87,8 +80,6 @@ const sendMessage = async (req, res) => {
   }
 };
 
-// 2. Get All Messages (Admin)
-// Get All Messages with Pagination, Search & Sorting
 const getMessages = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -100,7 +91,6 @@ const getMessages = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    // Build Search & Filter Query
     const searchRegex = escapeRegex(search);
     let query = {
       $or: [
@@ -133,7 +123,6 @@ const getMessages = async (req, res) => {
   }
 };
 
-// 3. Send Direct Email Reply (Admin)
 const replyMessage = async (req, res) => {
   const { toEmail, subject, message } = req.body;
 
@@ -156,7 +145,6 @@ const replyMessage = async (req, res) => {
   }
 };
 
-// 4. Toggle Read/Unread Status (Admin)
 const updateMessageStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -178,7 +166,6 @@ const updateMessageStatus = async (req, res) => {
   }
 };
 
-// 5. Delete Single Message (Admin)
 const deleteMessage = async (req, res) => {
   try {
     const { id } = req.params;
@@ -193,7 +180,6 @@ const deleteMessage = async (req, res) => {
   }
 };
 
-// 6. Bulk Delete Messages (Admin)
 const bulkDeleteMessages = async (req, res) => {
   try {
     const { ids } = req.body;

@@ -30,7 +30,7 @@ const updateSiteSettings = async (update) => {
     { $set: update },
     { upsert: true, returnDocument: "after" }
   );
-  cache = null; // force a fresh read next time
+  cache = null; 
   return getSiteSettings();
 };
 

@@ -20,13 +20,11 @@
   line-height: 1.4;
 }
 
-/* Progress bar inside toast */
 .bookverse-progress {
   background: var(--color-plum, #5d4857) !important;
   height: 4px !important;
 }
 
-/* Toastify close icon color match */
 .bookverse-toast .Toastify__close-button {
   color: var(--color-deep-mauve, #4a3b47) !important;
   opacity: 0.7;

@@ -25,9 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // OTP is stored as a SHA-256 hash, never the raw code. Never returned
-    // by default (select: false) — controllers that need it must
-    // .select("+otp +otpExpiry +otpAttempts") explicitly.
+
     otp: {
       type: String,
       default: "",
@@ -39,16 +37,12 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
 
-    // Wrong guesses against the current OTP. After too many, the OTP is
-    // voided (forces a fresh code) instead of allowing unlimited guessing.
     otpAttempts: {
       type: Number,
       default: 0,
       select: false,
     },
 
-    // Issued only after a successful verifyOtp call; proves the user
-    // actually owns the email before resetPassword will accept a new password.
     resetToken: {
       type: String,
       default: null,
@@ -87,10 +81,6 @@ const userSchema = new mongoose.Schema(
       default: null,
     },
 
-    // Which plan/cycle the user's current (or most recent) subscription is
-    // for — set whenever a subscription order is paid. Used to show the
-    // user their plan in Profile/MyPurchases; NOT used to determine access
-    // (isSubscribed + subscriptionExpiry alone still gate that).
     subscriptionPlan: {
       type: String,
       enum: ["basic", "medium", "premium", null],

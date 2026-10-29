@@ -2,9 +2,6 @@ const Banner = require("../models/bannerModel");
 const mongoose = require("mongoose");
 const Book = require("../models/Book");
 
-// Fields an admin is allowed to set via create/update — req.body is
-// arbitrary client input and was previously spread straight into
-// Banner.create/findByIdAndUpdate.
 const ALLOWED_FIELDS = ["book", "title", "description", "isActive"];
 const pickAllowedFields = (body) => {
   const data = {};
@@ -14,14 +11,8 @@ const pickAllowedFields = (body) => {
   return data;
 };
 
-// Hard ceiling on total banners so the homepage carousel can't grow
-// unbounded. Raise this if the design ever needs more slots.
 const MAX_BANNERS = 10;
 
-// Get all banners. Public visitors only ever see active ones — an admin
-// (attachUserIfPresent populates req.user when a valid admin token is
-// sent) sees everything, including banners they've turned off, so they
-// can re-enable one from the admin panel.
 const getAllBanners = async (req, res) => {
   try {
     const isAdmin = req.user?.role === "admin";
@@ -43,7 +34,6 @@ const getAllBanners = async (req, res) => {
   }
 };
 
-// Add Banner
 const createBanner = async (req, res) => {
   try {
     const { book } = req.body;
@@ -64,7 +54,6 @@ const createBanner = async (req, res) => {
       return res.status(404).json({ success: false, message: "Book not found" });
     }
 
-    // Guard 1: the same book can't be turned into a banner twice.
     const duplicate = await Banner.findOne({ book });
     if (duplicate) {
       return res.status(400).json({
@@ -73,8 +62,6 @@ const createBanner = async (req, res) => {
       });
     }
 
-    // Guard 2: cap the total number of banners so they can't pile up
-    // unbounded on the homepage.
     const totalBanners = await Banner.countDocuments();
     if (totalBanners >= MAX_BANNERS) {
       return res.status(400).json({
@@ -97,7 +84,6 @@ const createBanner = async (req, res) => {
   }
 };
 
-// Update Banner
 const updateBanner = async (req, res) => {
   try {
     const { id } = req.params;
@@ -108,8 +94,6 @@ const updateBanner = async (req, res) => {
 
     const data = pickAllowedFields(req.body);
 
-    // If the admin is switching the banner to a different book, that book
-    // must be a real id, must exist, and must not already have a banner.
     if (data.book !== undefined) {
       if (!mongoose.isValidObjectId(data.book)) {
         return res.status(400).json({ success: false, message: "Invalid book id" });
@@ -150,7 +134,6 @@ const updateBanner = async (req, res) => {
   }
 };
 
-// Delete Banner
 const deleteBanner = async (req, res) => {
   try {
     const { id } = req.params;
