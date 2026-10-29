@@ -1,0 +1,73 @@
+.manage-options-bg { background: var(--color-cream-bg); min-height: 100vh; }
+.manage-options-heading { color: var(--color-text-dark); }
+
+.options-panel {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.options-panel-title {
+  color: var(--color-text-dark);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.options-add-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.options-add-btn {
+  background: var(--brand-primary) !important;
+  border: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.options-add-btn:hover { background: var(--brand-primary-hover) !important; }
+
+.options-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.options-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 4px;
+  border-bottom: 1px solid var(--color-light-blush);
+}
+.options-item:last-child { border-bottom: none; }
+
+.options-name {
+  flex: 1;
+  color: var(--color-text-dark);
+  font-weight: 600;
+}
+
+.options-count {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-right: 6px;
+}
+
+.options-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-muted-purple);
+  padding: 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.options-icon-btn:hover:not(:disabled) { background: var(--color-light-blush); }
+.options-icon-btn.ok { color: var(--status-active-text); }
+.options-icon-btn.danger { color: var(--status-blocked-text); }
+.options-icon-btn:disabled { opacity: 0.5; cursor: not-allowed; }

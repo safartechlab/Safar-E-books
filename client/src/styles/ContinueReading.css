@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.continue-reading-section {
+  background-color: var(--color-light-blush);
+  padding: 0 40px 50px 40px;
+  position: relative;
+  z-index: 5;
+  box-shadow: none !important;
+  border: none !important;
+  padding-top: 25px !important;
+  margin-top: 20px !important;
+}
+
+.cr-header-wrap {
+  margin-top: -38px;
+  position: relative;
+  z-index: 6;
+}
+
+.continue-section-heading {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 800;
+  color: var(--color-deep-mauve);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+
+/* Horizontal track */
+.cr-scroll-track {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 22px 5px 10px 0 !important;
+  background: transparent !important;
+}
+
+.cr-scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Individual Book Card */
+.cr-book-card {
+  flex: 0 0 165px;
+  width: 165px;
+  background-color: #2b2329;
+  border-radius: 12px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  cursor: pointer;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transition: transform 0.25s ease;
+}
+
+.cr-book-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Poster Aspect Ratio */
+.cr-poster-wrap {
+  position: relative;
+  width: 100%;
+  height: 235px;
+  background-color: var(--color-plum);
+  overflow: hidden;
+}
+
+.cr-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================================================
+   Top-Left Progress Badge (Exact Match with Image)
+   ========================================================= */
+.cr-progress-pill {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  background: rgba(35, 27, 33, 0.88);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 7px;
+  padding: 3.5px 8px;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Hover Overlay (Desktop) */
+.cr-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(42, 34, 39, 0.35) 0%,
+    rgba(42, 34, 39, 0.65) 50%,
+    rgba(42, 34, 39, 0.95) 100%
+  );
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 3;
+}
+
+.cr-book-card:hover .cr-hover-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cr-overlay-top {
+  display: flex;
+  justify-content: flex-end; /* Progress pill left mein hai isliye badge right me shift */
+  align-items: center;
+  width: 100%;
+}
+
+.cr-badge-type {
+  background: rgba(58, 45, 54, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.cr-overlay-bottom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.cr-hover-book-title {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0 0 2px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cr-hover-book-author {
+  font-size: 11px;
+  color: var(--color-soft-rose);
+  margin: 0 0 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cr-hover-read-now-btn {
+  background: rgba(164, 135, 148, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.cr-hover-read-now-btn:hover {
+  background: var(--color-plum);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Progress line at poster bottom */
+.cr-progress-bar-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 4;
+}
+
+.cr-progress-bar-fill {
+  height: 100%;
+  background-color: #e50914;
+}
+
+/* Bottom Actions Bar */
+.cr-card-footer {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #231c21;
+  border: none !important;
+  position: relative;
+  z-index: 4;
+}
+
+.cr-icon-btn {
+  background: none;
+  border: none;
+  color: #ab9fa7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.cr-icon-btn:hover {
+  color: #ffffff;
+  transform: scale(1.12);
+}
+
+/* Mobile Screens */
+@media (max-width: 768px) {
+  .continue-reading-section {
+    padding: 0 0 10px 0 !important;
+  }
+
+  .cr-header-wrap {
+    margin-top: 0 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .continue-section-heading {
+    font-size: 19px !important;
+    font-weight: 700 !important;
+  }
+
+  .cr-scroll-track {
+    gap: 12px !important;
+    padding: 2px 0 6px 0 !important;
+  }
+
+  .cr-book-card {
+    flex: 0 0 135px !important;
+    width: 135px !important;
+  }
+
+  .cr-poster-wrap {
+    height: 185px !important;
+  }
+
+  .cr-progress-pill {
+    top: 7px;
+    left: 7px;
+    font-size: 9px;
+    padding: 2px 6px;
+  }
+
+  .cr-card-footer {
+    height: 38px !important;
+  }
+
+  .cr-hover-overlay {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   SIMPLE POLISH — paste at the END of styles/ContinueReading.css
+   CSS only. No JSX changes. Same colors as your theme.
+   ========================================================= */
+
+/* Small accent line under the heading (same as the other sections) */
+.continue-section-heading::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
+}
+
+/* Soft resting shadow so covers feel lifted off the page */
+.continue-reading-section .cr-book-card {
+  box-shadow: 0 6px 16px rgba(74, 59, 71, 0.18) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Gentle zoom on the cover (smooth) */
+.cr-poster-img {
+  transition: transform 0.4s ease;
+}
+
+/* Hover effects only on devices that really have hover (not phones) */
+@media (hover: hover) {
+  .continue-reading-section .cr-book-card:hover {
+    box-shadow: 0 14px 28px rgba(74, 59, 71, 0.3) !important;
+  }
+
+  .cr-book-card:hover .cr-poster-img {
+    transform: scale(1.05);
+  }
+}
+
+/* Slightly thicker progress bar, rounded end */
+.cr-progress-bar-bg {
+  height: 5px;
+}
+
+.cr-progress-bar-fill {
+  border-radius: 0 4px 4px 0;
+}
+
+/* OPTIONAL: progress bar in your theme color instead of red.
+   Remove the comment marks to turn it on.
+
+.cr-progress-bar-fill {
+  background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
+}
+*/
+
+@media (max-width: 768px) {
+  .continue-section-heading::after {
+    width: 32px;
+    margin-top: 6px;
+  }
+
+  .continue-reading-section .cr-book-card {
+    box-shadow: 0 4px 12px rgba(74, 59, 71, 0.16) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cr-poster-img {
+    transition: none;
+  }
+  .cr-book-card:hover .cr-poster-img {
+    transform: none;
+  }
+}

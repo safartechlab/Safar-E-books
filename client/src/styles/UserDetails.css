@@ -1,0 +1,15 @@
+/* Only brand colors + the avatar circle size — layout is Bootstrap now */
+.user-details-heading { color: var(--color-text-dark); }
+
+.user-avatar {
+  width: 170px;
+  height: 170px;
+  background: var(--brand-amber);
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.user-details-back-btn { background: var(--brand-primary) !important; border: none !important; }
+.user-details-back-btn:hover { background: var(--brand-primary-hover) !important; }

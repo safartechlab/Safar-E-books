@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+/* Aesthetic Deep Warm Plum Sidebar */
+.aesthetic-admin-sidebar {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: linear-gradient(180deg, #2a1f26 0%, #3a2b34 60%, #46343f 100%);
+  padding: 24px 16px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1020;
+  box-shadow: 4px 0 25px rgba(42, 31, 38, 0.15);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  overflow-y: auto;
+}
+
+/* Custom Sleek Scrollbar */
+.aesthetic-admin-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.aesthetic-admin-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(220, 198, 198, 0.2);
+  border-radius: 4px;
+}
+
+/* Brand Header */
+.sidebar-brand-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 8px 20px 8px;
+  border-bottom: 1px solid rgba(220, 198, 198, 0.15);
+  margin-bottom: 18px;
+}
+
+.sidebar-brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(220, 198, 198, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f7eceb;
+  flex-shrink: 0;
+}
+
+.sidebar-brand-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.sidebar-brand-sub {
+  font-size: 11.5px;
+  color: #c9aeb5;
+  font-weight: 500;
+}
+
+/* Nav Container */
+.sidebar-nav-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+}
+
+/* Nav Item Links */
+.sidebar-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #dcc6c6;
+  transition: all 0.22s ease;
+}
+
+.sidebar-link-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sidebar-nav-link:hover {
+  background: rgba(220, 198, 198, 0.12);
+  color: #ffffff;
+}
+
+.sidebar-nav-link:hover .sidebar-link-icon {
+  transform: translateX(2px);
+  opacity: 1;
+}
+
+/* Active Menu Item (Match Reference Styling) */
+.sidebar-nav-link.active {
+  background: #dcc6c6;
+  color: #2a1f26;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.sidebar-nav-link.active .sidebar-link-icon {
+  color: #2a1f26;
+  opacity: 1;
+}
+
+/* Unread Messages Pill */
+.sidebar-unread-badge {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 4px 8px;
+  background-color: #d9534f !important;
+}
+
+/* Reference-Style Bottom Status Card */
+.sidebar-perk-card {
+  background: rgba(220, 198, 198, 0.08);
+  border: 1px solid rgba(220, 198, 198, 0.18);
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+}
+
+.perk-card-header {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 2px;
+}
+
+.perk-card-text {
+  font-size: 11px;
+  color: #b99ba7;
+  margin: 0;
+}
+
+/* Logout Button */
+.sidebar-logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  background: rgba(220, 53, 69, 0.15);
+  border: 1px solid rgba(220, 53, 69, 0.35);
+  color: #ffb3b8;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sidebar-logout-btn:hover {
+  background: #dc3545;
+  color: #ffffff;
+  border-color: #dc3545;
+  transform: translateY(-1px);
+}

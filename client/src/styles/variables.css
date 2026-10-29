@@ -1,0 +1,53 @@
+:root {
+  /* ================= Strict Mauve Palette ================= */
+  --color-deep-mauve: #4A3B47;
+  --color-plum: #5D4857;
+  --color-muted-purple: #785F70;
+  --color-dusty-mauve: #A48794;
+  --color-rose-mauve: #B99BA7;
+  --color-soft-rose: #C9AEB5;
+  --color-blush: #DCC6C6;
+  --color-light-blush: #F7ECEB;
+
+  /* ================= Global Semantic Mapping ================= */
+  /* Har page ka background strictly #F7ECEB */
+  --color-cream-bg: var(--color-light-blush);
+  --color-surface-alt: #E2D1D0;
+  --color-card-bg: #FFFFFF;
+
+  /* Core Brand Tokens */
+  --brand-primary: #5D4857;
+  --brand-primary-hover: #4A3B47;
+  --brand-amber: #8d2b57;
+  --brand-amber-hover: #785F70;
+
+  /* Text & Accents */
+  --color-green-dark: #4A3B47;
+  --color-text-dark: #4A3B47;
+  --color-text-muted: #785F70;
+  --color-border: #DCC6C6;
+
+  /* RGB variants for transparent overlays */
+  --brand-primary-rgb: 93, 72, 87;
+  --brand-amber-rgb: 164, 135, 148;
+  --color-cream-rgb: 247, 236, 235;
+  --color-dark-rgb: 74, 59, 71;
+
+  /* UI Feedback States */
+  --status-active-bg: #E6F4EA;
+  --status-active-text: #137333;
+  --status-blocked-bg: #FCE8E6;
+  --status-blocked-text: #C5221F;
+
+  /* Elevation */
+  --modal-overlay-bg: rgba(74, 59, 71, 0.6);
+  --shadow-sm: 0 2px 8px rgba(74, 59, 71, 0.08);
+  --shadow-md: 0 8px 24px rgba(74, 59, 71, 0.12);
+
+  /* Geometry & Fonts */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-pill: 9999px;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Montserrat', 'Poppins', sans-serif;
+}

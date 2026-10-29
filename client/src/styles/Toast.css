@@ -1,0 +1,37 @@
+.bookverse-toast {
+  background: linear-gradient(
+    135deg,
+    var(--color-light-blush, #f7eceb) 0%,
+    var(--color-blush, #dcc6c6) 100%
+  ) !important;
+  color: var(--color-deep-mauve, #4a3b47) !important;
+  border: 1px solid var(--color-rose-mauve, #b99ba7);
+  border-left: 5px solid var(--color-plum, #5d4857) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 25px rgba(74, 59, 71, 0.16) !important;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif) !important;
+  backdrop-filter: blur(8px);
+}
+
+.bookverse-toast-body {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--color-deep-mauve, #4a3b47) !important;
+  line-height: 1.4;
+}
+
+/* Progress bar inside toast */
+.bookverse-progress {
+  background: var(--color-plum, #5d4857) !important;
+  height: 4px !important;
+}
+
+/* Toastify close icon color match */
+.bookverse-toast .Toastify__close-button {
+  color: var(--color-deep-mauve, #4a3b47) !important;
+  opacity: 0.7;
+}
+
+.bookverse-toast .Toastify__close-button:hover {
+  opacity: 1;
+}

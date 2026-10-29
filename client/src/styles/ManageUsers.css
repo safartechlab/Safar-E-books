@@ -1,0 +1,49 @@
+.manage-users { max-width: 1200px; }
+
+.page-header h1 { font-family: var(--font-serif); color: var(--color-text-dark); }
+
+.search-box {
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-alt);
+  font-size: 0.95rem;
+  width: 250px;
+}
+.search-box:focus { border-color: var(--brand-amber); background-color: #FFFFFF; outline: none; }
+
+/* Stats */
+.stat-card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+.stat-card h3 { font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card h2 { font-size: 1.8rem; color: var(--brand-amber); }
+
+/* Table — layout & borders now come from Bootstrap's .table classes */
+.users-table { background: var(--color-card-bg); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border); }
+.users-table th { background-color: var(--color-surface-alt); font-size: 0.85rem; text-transform: uppercase; color: var(--color-text-muted); }
+
+.status-active { background-color: var(--status-active-bg, #E6F4EA); color: var(--status-active-text, #137333); text-transform: capitalize; }
+.status-blocked { background-color: var(--status-blocked-bg, #FCE8E6); color: var(--status-blocked-text, #C5221F); text-transform: capitalize; }
+
+.block-btn { background-color: var(--color-surface-alt); color: var(--color-text-dark); border: 1px solid var(--color-border); }
+.block-btn:hover { background-color: var(--color-border); }
+.delete-btn { background-color: #FCE8E6; color: var(--status-blocked-text, #C5221F); border: none; }
+.view-btn { background-color: #E8F0FE; color: #1A73E8; border: none; }
+
+/* User modal */
+.user-modal-content { max-width: 400px; }
+.user-modal-close-icon { top: 16px; right: 16px; background: transparent; border: none; font-size: 1.2rem; color: var(--color-text-muted); }
+
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  background-color: var(--brand-amber);
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.user-modal-title { font-family: var(--font-serif); }
+
+.user-info { background-color: var(--color-surface-alt); font-size: 0.95rem; }

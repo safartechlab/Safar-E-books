@@ -1,0 +1,46 @@
+.admin-desktop-only {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--color-cream, #f7efe7);
+}
+
+.admin-desktop-only-card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 10px 30px rgba(74, 59, 71, 0.15);
+}
+
+.admin-desktop-only-icon {
+  font-size: 44px;
+  margin-bottom: 8px;
+}
+
+.admin-desktop-only-card h1 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: var(--color-deep-mauve, #4a3b47);
+}
+
+.admin-desktop-only-card p {
+  color: #6b5b66;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.admin-desktop-only-card button {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-plum, #6b4f63);
+  min-height: 44px;
+}

@@ -1,0 +1,29 @@
+/* Shared brand styling for auth forms — everything else comes from Bootstrap */
+
+.form-control-brand:focus,
+.form-select-brand:focus {
+  border-color: var(--brand-amber);
+  box-shadow: 0 0 0 0.15rem rgba(var(--brand-amber-rgb), 0.25);
+}
+
+.btn-brand {
+  background-color: var(--brand-amber);
+  border-color: var(--brand-amber);
+  color: #fff;
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+  background-color: var(--brand-amber-hover);
+  border-color: var(--brand-amber-hover);
+  color: #fff;
+}
+
+.link-brand {
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.link-brand:hover {
+  color: var(--brand-amber);
+}

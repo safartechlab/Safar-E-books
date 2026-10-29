@@ -1,0 +1,246 @@
+/* Brand look & feel */
+.navbar-custom {
+  background: transparent;
+  transition: all 0.4s ease;
+  z-index: 1030;
+  width: 100%;
+}
+
+.navbar-custom.scrolled {
+  background: rgba(158, 129, 137, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 25px rgba(62, 50, 57, 0.08);
+}
+
+.logo-text {
+  font-size: 24px;
+  color: var(--color-deep-mauve, #4A3B47);
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.brand-title-text {
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  white-space: nowrap;
+}
+
+.brand-book-icon {
+  font-size: 20px;
+}
+
+/* Underline-on-hover nav links */
+.nav-links a {
+  text-decoration: none;
+  color: var(--color-deep-mauve, #4A3B47);
+  font-weight: 600;
+  position: relative;
+  transition: 0.3s;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--brand-amber, #A48794);
+  transition: 0.3s;
+}
+
+.nav-links a:hover::after { width: 100%; }
+.nav-links a:hover { color: var(--brand-amber, #A48794); }
+
+/* Desktop Login Button */
+.login-btn {
+  background: var(--brand-primary, #5D4857) !important;
+  color: #ffffff !important;
+  border: none;
+  padding: 8px 22px;
+  font-size: 14.5px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.login-btn:hover {
+  background: var(--color-deep-mauve, #4A3B47) !important;
+  transform: translateY(-1px);
+}
+
+.login-btn-icon-img {
+  display: none;
+}
+
+/* Avatar button styling */
+.avatar-toggle-btn {
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 50%;
+}
+
+.avatar-toggle-btn:hover {
+  transform: scale(1.06);
+}
+
+.avatar-sm { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+.avatar-lg { 
+  width: 70px; 
+  height: 70px; 
+  object-fit: cover; 
+}
+
+.profile-dropdown { 
+  background: linear-gradient(
+    to bottom,
+    var(--color-light-blush, #fcf9f9) 0%,
+    var(--color-blush, #f4e8e9) 55%,
+    var(--color-soft-rose, #ecd8db) 100%
+  ) !important;
+  width: 230px; 
+  z-index: 9999; 
+}
+
+.profile-dropdown button:hover { 
+  background: var(--color-cream-bg); 
+}
+
+/* Popup styling */
+.popup-overlay { 
+  background: var(--modal-overlay-bg); 
+  backdrop-filter: blur(2px); 
+  z-index: 9999; 
+}
+
+.popup-box { 
+  width: 520px; 
+  max-width: 90%; 
+  max-height: 90vh; 
+  overflow-y: auto; 
+  animation: popup .3s ease; 
+}
+
+@keyframes popup {
+  from { opacity: 0; transform: scale(.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Mobile Drawer */
+@media (max-width: 991.98px) {
+  .nav-content {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 220px;
+    height: 100vh;
+    height: 100dvh;
+    background: #ffffff;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    padding: 24px 20px;
+    transition: right 0.3s ease;
+    z-index: 1050;
+    overflow-y: auto;
+  }
+
+  .nav-content.open {
+    right: 0;
+  }
+
+  .nav-links li {
+    padding: 6px 0;
+  }
+
+  .nav-links a {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--color-deep-mauve, #2a2227) !important;
+  }
+}
+
+/* =========================================================
+   Mobile View Fix: Exact Icon Sizing & Logo on 1 Line
+   ========================================================= */
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 17px !important;
+  }
+
+  .brand-title-text {
+    white-space: nowrap !important;
+    display: inline-block;
+  }
+
+  .brand-book-icon {
+    font-size: 16px;
+  }
+
+  /* Text hide, icon show */
+  .login-btn-text {
+    display: none !important;
+  }
+
+  .login-btn-icon-img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  /* Logged-out Icon button ka exact 38px circle */
+  .login-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+  }
+
+  .avatar-toggle-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .hamburger-btn {
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .nav-right-controls {
+    gap: 10px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-box {
+    padding: 1rem !important;
+  }
+  .nav-content {
+    width: 210px !important;
+    max-width: 65% !important;
+  }
+  .logo-text {
+    font-size: 15.5px !important;
+  }
+}

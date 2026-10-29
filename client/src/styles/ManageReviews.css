@@ -1,0 +1,29 @@
+/* Only brand colors — table/layout/spacing come from Bootstrap, matching the other admin pages */
+.manage-reviews-bg { background: var(--color-cream-bg); }
+.manage-reviews-heading { color: var(--color-text-dark); }
+
+.manage-reviews-thead th { background: var(--brand-primary); color: white; }
+
+.manage-reviews-stars { display: inline-flex; gap: 2px; font-size: 0.85rem; }
+.manage-reviews-stars .star-filled { color: var(--brand-amber); }
+.manage-reviews-stars .star-empty { color: var(--color-border); }
+
+.manage-reviews-book-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--color-text-dark);
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.manage-reviews-book-link:hover { color: var(--brand-primary); }
+
+.manage-reviews-comment {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 0.88rem;
+}

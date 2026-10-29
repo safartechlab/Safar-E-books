@@ -1,0 +1,469 @@
+/* =========================================================
+FOOTER WRAPPER
+========================================================= */
+
+.footer-wrapper {
+background: linear-gradient(
+to bottom,
+var(--color-light-blush) 0%,
+var(--color-blush) 60%,
+var(--color-soft-rose) 100%
+) !important;
+border-top: 1px solid var(--color-border);
+position: relative;
+overflow: hidden;
+}
+
+.footer-content-container {
+min-width: 0;
+}
+
+.footer-brand-color {
+color: var(--color-deep-mauve);
+}
+
+.footer-brand-icon {
+color: var(--color-plum);
+flex-shrink: 0;
+}
+
+.footer-brand-name {
+overflow-wrap: anywhere;
+}
+
+.footer-tagline {
+color: var(--color-muted-purple);
+}
+
+.footer-divider {
+border-color: var(--color-rose-mauve);
+opacity: 0.35;
+}
+
+/* =========================================================
+FOOTER NAVIGATION
+========================================================= */
+
+.footer-links-column {
+min-width: 0;
+overflow-wrap: anywhere;
+}
+
+.footer-navigation {
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
+align-items: center;
+gap: 12px 18px;
+}
+
+.footer-link {
+color: var(--color-deep-mauve);
+text-decoration: none;
+font-weight: 700;
+font-size: 13px;
+line-height: 1.5;
+transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+color: var(--color-plum);
+}
+
+/* =========================================================
+ANIMATED WIREFRAME BOOK
+========================================================= */
+
+.footer-illustration-column {
+min-width: 0;
+display: flex;
+align-items: center;
+justify-content: flex-end;
+}
+
+.footer-wireframe-container {
+width: 100%;
+max-width: 320px;
+height: 200px;
+display: flex;
+align-items: center;
+justify-content: center;
+background: radial-gradient(
+circle,
+rgba(93, 72, 87, 0.2) 0%,
+rgba(74, 59, 71, 0.05) 50%,
+transparent 75%
+);
+border-radius: 24px;
+position: relative;
+}
+
+.footer-wireframe-svg {
+display: block;
+width: 100%;
+height: 100%;
+max-height: 190px;
+animation: floatBook 4s ease-in-out infinite;
+filter: drop-shadow(0 10px 18px rgba(74, 59, 71, 0.25));
+}
+
+@keyframes floatBook {
+0%,
+100% {
+transform: translateY(0) rotate(0deg);
+}
+
+50% {
+transform: translateY(-8px) rotate(-1deg);
+}
+}
+
+.node-pulse {
+animation: pulseNode 2s infinite ease-in-out;
+transform-origin: center;
+}
+
+@keyframes pulseNode {
+0%,
+100% {
+opacity: 0.6;
+r: 3px;
+}
+
+50% {
+opacity: 1;
+r: 4.5px;
+}
+}
+
+/* =========================================================
+DIAGONAL STEPPED BANNER
+========================================================= */
+
+.diagonal-stepped-banner {
+position: relative;
+width: 100%;
+height: 65px;
+margin-top: -10px;
+}
+
+.step-layer {
+position: absolute;
+bottom: 0;
+right: 0;
+width: 100%;
+height: 100%;
+}
+
+.layer-deep-mauve {
+z-index: 1;
+height: 60px;
+background-color: var(--color-deep-mauve);
+clip-path: polygon(65% 0, 100% 0, 100% 100%, 60% 100%);
+}
+
+.layer-plum {
+z-index: 2;
+height: 44px;
+background-color: var(--color-plum);
+clip-path: polygon(50% 0, 100% 0, 100% 100%, 45% 100%);
+}
+
+.layer-dusty-mauve {
+z-index: 3;
+height: 28px;
+background-color: var(--color-dusty-mauve);
+clip-path: polygon(35% 0, 100% 0, 100% 100%, 30% 100%);
+display: flex;
+align-items: center;
+justify-content: flex-end;
+padding-right: 40px;
+}
+
+/* =========================================================
+SCROLL TO TOP BUTTON
+========================================================= */
+
+.scroll-top-btn {
+width: 26px;
+height: 26px;
+display: flex;
+align-items: center;
+justify-content: center;
+border: 1.5px solid var(--color-light-blush);
+border-radius: 50%;
+background: transparent;
+color: var(--color-light-blush);
+cursor: pointer;
+font-size: 11px;
+transition: all 0.3s ease;
+}
+
+.scroll-top-btn:hover {
+background-color: var(--color-light-blush);
+color: var(--color-deep-mauve);
+}
+
+/* =========================================================
+FOOTER BOTTOM BAR
+========================================================= */
+
+.footer-bottom-bar {
+background-color: var(--color-deep-mauve);
+color: var(--color-soft-rose);
+}
+
+.footer-bottom-content {
+min-width: 0;
+}
+
+.footer-legal-navigation {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: flex-start;
+gap: 8px;
+}
+
+.footer-legal-link {
+color: var(--color-soft-rose);
+text-decoration: none;
+transition: color 0.2s ease;
+}
+
+.footer-legal-link:hover {
+color: var(--color-light-blush);
+}
+
+.footer-dot {
+color: var(--color-rose-mauve);
+}
+
+.footer-copyright {
+color: var(--color-soft-rose);
+overflow-wrap: anywhere;
+}
+
+/* =========================================================
+TABLET AND DESKTOP
+========================================================= */
+
+@media (min-width: 768px) {
+.footer-main-row {
+flex-direction: row;
+align-items: center;
+}
+
+.footer-links-column {
+text-align: left;
+}
+
+.footer-navigation {
+justify-content: flex-start;
+}
+
+.footer-illustration-column {
+justify-content: flex-end;
+}
+}
+
+/* =========================================================
+TABLETS AND SMALLER SCREENS
+========================================================= */
+
+@media (max-width: 900px) {
+.layer-deep-mauve {
+clip-path: polygon(40% 0, 100% 0, 100% 100%, 25% 100%);
+}
+
+.layer-plum {
+clip-path: polygon(25% 0, 100% 0, 100% 100%, 10% 100%);
+}
+
+.layer-dusty-mauve {
+clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+padding-right: 15px;
+}
+}
+
+/* =========================================================
+MOBILE: LINKS LEFT, SVG RIGHT
+========================================================= */
+
+@media (max-width: 767.98px) {
+.footer-content-container {
+padding-top: 1.25rem !important;
+padding-bottom: 1.25rem !important;
+}
+
+.footer-wrapper .footer-main-row {
+display: flex;
+flex-direction: row !important;
+flex-wrap: nowrap !important;
+align-items: center !important;
+text-align: left !important;
+}
+
+.footer-wrapper .footer-main-row > .footer-links-column {
+flex: 0 0 68%;
+width: 68%;
+max-width: 68%;
+min-width: 0;
+padding-right: 6px;
+text-align: left !important;
+}
+
+.footer-wrapper .footer-main-row > .footer-illustration-column {
+flex: 0 0 32%;
+width: 32%;
+max-width: 32%;
+min-width: 0;
+padding: 0 4px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.footer-brand-color {
+justify-content: flex-start !important;
+flex-wrap: wrap;
+gap: 5px !important;
+font-size: clamp(1rem, 4vw, 1.25rem) !important;
+text-align: left;
+}
+
+.footer-tagline {
+margin-bottom: 0.5rem;
+font-size: 0.78rem;
+text-align: left;
+}
+
+.footer-divider {
+width: 100%;
+margin: 0.75rem 0 1rem !important;
+}
+
+.footer-navigation {
+justify-content: flex-start !important;
+align-items: flex-start;
+gap: 9px 12px;
+}
+
+.footer-link {
+font-size: 0.76rem;
+}
+
+.footer-wireframe-container {
+width: 100%;
+max-width: 150px;
+height: auto;
+aspect-ratio: 240 / 220;
+margin: 0;
+border-radius: 16px;
+}
+
+.footer-wireframe-svg {
+width: 100%;
+height: auto;
+max-height: 145px;
+}
+
+.diagonal-stepped-banner {
+height: 55px;
+margin-top: 0;
+}
+
+.layer-deep-mauve {
+height: 50px;
+}
+
+.layer-plum {
+height: 36px;
+}
+
+.layer-dusty-mauve {
+height: 24px;
+}
+
+.footer-bottom-content {
+align-items: center !important;
+text-align: center;
+}
+
+.footer-legal-navigation {
+justify-content: center;
+}
+
+.footer-copyright {
+text-align: center;
+}
+}
+
+/* =========================================================
+EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+.footer-wrapper .footer-main-row > .footer-links-column {
+flex-basis: 68%;
+width: 68%;
+max-width: 68%;
+}
+
+.footer-wrapper .footer-main-row > .footer-illustration-column {
+flex-basis: 32%;
+width: 32%;
+max-width: 32%;
+}
+
+.footer-brand-color {
+gap: 4px !important;
+font-size: 0.95rem !important;
+}
+
+.footer-tagline {
+font-size: 0.7rem;
+}
+
+.footer-navigation {
+gap: 8px 9px;
+}
+
+.footer-link {
+font-size: 0.7rem;
+}
+
+.footer-wireframe-container {
+max-width: 115px;
+}
+
+.footer-wireframe-svg {
+max-height: 115px;
+}
+
+.layer-dusty-mauve {
+padding-right: 10px;
+}
+
+.footer-legal-navigation {
+gap: 6px;
+font-size: 0.72rem;
+}
+}
+
+/* =========================================================
+ACCESSIBILITY: REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+.footer-wireframe-svg,
+.node-pulse {
+animation: none !important;
+}
+
+.footer-link,
+.footer-legal-link,
+.scroll-top-btn {
+transition: none !important;
+}
+}

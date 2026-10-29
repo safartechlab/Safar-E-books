@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.hb-hero-wrapper {
+  background-color: var(--color-light-blush);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  min-height: 520px;
+}
+
+/* Swiper Base Fixes */
+.hb-swiper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  background: transparent !important;
+}
+
+.hb-slide {
+  background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  transition: opacity 0.6s ease, visibility 0.6s ease !important;
+  pointer-events: none;
+}
+
+.hb-slide.swiper-slide-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto;
+}
+
+/* Desktop Banner Card */
+.hb-banner-card {
+  position: relative;
+  width: 100%;
+  height: clamp(480px, 60vw, 580px);
+  align-items: center;
+  background: transparent !important;
+}
+
+.hb-wave-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hb-inner-content { 
+  position: relative; 
+  z-index: 2; 
+  width: 100%; 
+}
+
+.hb-text-box { 
+  max-width: 500px; 
+  color: var(--color-light-blush); 
+}
+
+.hb-tag {
+  background-color: rgba(241, 229, 226, 0.2);
+  color: var(--color-light-blush);
+  border: 1px solid var(--color-rose-mauve);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.hb-title {
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 4vw, 48px);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.hb-description { 
+  color: var(--color-blush); 
+  font-size: 15px; 
+  line-height: 1.6;
+}
+
+.hb-shop-btn { 
+  background-color: var(--color-light-blush) !important; 
+  color: var(--color-deep-mauve) !important; 
+  border: none !important;
+  transition: all 0.25s ease;
+}
+
+.hb-shop-btn:hover { 
+  background-color: #ffffff !important; 
+  color: var(--color-plum) !important; 
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(74, 59, 71, 0.25);
+}
+
+.hb-image-box { 
+  display: flex; 
+  justify-content: center; 
+}
+
+.hb-cover-frame {
+  width: 270px;
+  height: 390px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2.5px solid var(--color-rose-mauve);
+  background-color: var(--color-plum);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+.hb-cover-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hb-loader { 
+  text-align: center; 
+  padding: 80px 0; 
+  font-size: 18px; 
+  color: var(--color-deep-mauve); 
+}
+
+/* ========================================================
+   MOBILE VIEW: NETFLIX STYLE POSTER CARD (GHOST CORNER FIX)
+   ======================================================== */
+@media (max-width: 768px) {
+  .hb-hero-wrapper {
+    min-height: auto;
+    padding: 75px 16px 20px !important;
+    background-color: var(--color-light-blush);
+    overflow: hidden;
+  }
+
+  /* Desktop block ko mobile screen par completely detach karein */
+  .hb-banner-card {
+    display: none !important;
+  }
+
+  .hb-swiper {
+    overflow: hidden !important;
+    border-radius: 20px;
+  }
+
+  .hb-slide {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hb-mobile-poster-card {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hb-mobile-poster-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 370px;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    /* Corner clipping fix: hardware border leak roke */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    mask-image: radial-gradient(white, black);
+    box-shadow: 0 16px 36px rgba(74, 59, 71, 0.28);
+    border: 1px solid var(--color-rose-mauve);
+    background-color: var(--color-plum);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .hb-mobile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  /* Netflix Bottom Shadow Gradient Overlay */
+  .hb-mobile-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 18px 20px;
+    background: linear-gradient(
+      to top,
+      rgba(42, 34, 39, 0.98) 0%,
+      rgba(58, 45, 54, 0.88) 45%,
+      rgba(74, 59, 71, 0.4) 75%,
+      transparent 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+  }
+
+  .hb-mobile-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hb-mobile-tags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--color-soft-rose);
+    margin-bottom: 16px;
+  }
+
+  .hb-mobile-tags .dot {
+    color: var(--color-dusty-mauve);
+    font-size: 14px;
+  }
+
+  /* Action Buttons Row */
+  .hb-mobile-btn-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  /* White/Blush Play/Read Button */
+  .hb-btn-play {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--color-light-blush);
+    color: var(--color-deep-mauve);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 700;
+    transition: transform 0.15s ease;
+  }
+
+  .hb-btn-play:active {
+    transform: scale(0.96);
+  }
+
+  /* Translucent Glassy My List Button */
+  .hb-btn-mylist {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(241, 229, 226, 0.22);
+    color: #ffffff;
+    border: 1px solid rgba(241, 229, 226, 0.4);
+    backdrop-filter: blur(8px);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: transform 0.15s ease;
+  }
+
+  .hb-btn-mylist:active {
+    transform: scale(0.96);
+  }
+}

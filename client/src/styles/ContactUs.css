@@ -1,0 +1,354 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.contact-page { 
+  background-color: var(--color-light-blush); 
+  font-family: 'Plus Jakarta Sans', sans-serif; 
+  color: var(--color-deep-mauve);
+}
+
+/* Hero Section with Mauve top-to-bottom linear gradient */
+.contact-hero {
+  position: relative;
+  background: linear-gradient(
+    to top,
+    var(--color-muted-purple) 0%,
+    var(--color-rose-mauve) 45%,
+    var(--color-blush) 80%,
+    var(--color-light-blush) 100%
+  ) !important;
+  padding: 60px 0 100px;
+}
+
+.contact-hero-title { 
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 48px); 
+  font-weight: 700; 
+  color: var(--color-deep-mauve); 
+  margin-bottom: 16px; 
+}
+
+.contact-hero-p { 
+  color: var(--color-plum);
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; 
+  font-size: clamp(12px, 1.4vw, 18px); 
+  font-weight: 600; 
+  max-width: 480px; 
+  line-height: 1.6; 
+}
+
+/* About/Library matched wave */
+.contact-hero-wave { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 140px;
+  overflow: hidden; 
+  line-height: 0; 
+  z-index: 1;
+  pointer-events: none;
+}
+
+.contact-hero-wave svg { 
+  width: 100%; 
+  height: 100%; 
+}
+
+/* Arch Image Frame */
+.contact-cover-frame {
+  width: clamp(130px, 26vw, 310px);
+  height: clamp(170px, 34vw, 450px);
+  border-radius: 200px 200px 0 0;
+  overflow: hidden;
+  margin-top: 30px;
+  margin-bottom: -70px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 20px 40px rgba(74, 59, 71, 0.2);
+  border: 2px solid var(--color-rose-mauve);
+}
+
+.contact-cover-frame img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
+/* Form Card with subtle gradient */
+.contact-form-card {
+  background: linear-gradient(
+    to bottom,
+    var(--color-light-blush) 0%,
+    var(--color-blush) 60%,
+    var(--color-soft-rose) 100%
+  ) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-form-title { 
+  font-family: var(--font-serif);
+  font-weight: 700; 
+  color: var(--color-deep-mauve); 
+  margin-bottom: 12px; 
+}
+
+.contact-form-p { 
+  color: var(--color-muted-purple); 
+  font-size: 14px; 
+  line-height: 1.5;
+}
+
+/* Inputs styled with Mauve blush border */
+.contact-input { 
+  background: rgba(241, 229, 226, 0.7); 
+  border: 1.5px solid var(--color-rose-mauve); 
+  color: var(--color-deep-mauve);
+  transition: all 0.2s ease;
+}
+
+.contact-input:focus {
+  background: #ffffff;
+  border-color: var(--color-plum);
+  box-shadow: none;
+  color: var(--color-deep-mauve);
+}
+
+.contact-input::placeholder { 
+  color: var(--color-muted-purple); 
+  opacity: 0.8;
+}
+
+/* Buttons and icons */
+.contact-submit-btn { 
+  background-color: var(--color-plum) !important; 
+  border: none !important; 
+  color: var(--color-light-blush) !important; 
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+.contact-submit-btn:hover { 
+  background-color: var(--color-deep-mauve) !important; 
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.contact-icon-circle { 
+  width: 50px; 
+  height: 50px; 
+  background-color: var(--color-dusty-mauve); 
+  color: var(--color-light-blush); 
+}
+
+.contact-info-title {
+  color: var(--color-deep-mauve);
+}
+
+.contact-info-sub {
+  color: var(--color-muted-purple);
+}
+
+/* Book-name autosuggest dropdown */
+.contact-autosuggest {
+  position: relative;
+}
+
+.contact-suggestions {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1.5px solid var(--color-rose-mauve);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(74, 59, 71, 0.18);
+}
+
+.contact-suggestion-item {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--color-deep-mauve);
+}
+
+.contact-suggestion-item.active,
+.contact-suggestion-item:hover {
+  background: var(--color-blush);
+}
+
+.contact-suggestion-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.contact-suggestion-author {
+  font-size: 12px;
+  color: var(--color-muted-purple);
+}
+
+.contact-suggestion-empty {
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--color-muted-purple);
+}
+
+/* ==========================================================================
+   DESKTOP ONLY OVERRIDES (>= 992px)
+   Forces width, card elevation, clear borders, and input spacing
+   ========================================================================== */
+@media (min-width: 992px) {
+  /* Widen desktop container to look expansive and broad */
+  .contact-page .container {
+    max-width: 1240px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  /* Pull arch in slightly so it aligns with content instead of floating off-screen */
+  .contact-hero .contact-cover-frame {
+    margin-right: 40px;
+    width: 290px;
+    height: 400px;
+  }
+
+  /* Make Card visibly elevated with solid white background, drop shadow & dark mauve border */
+  .contact-page .contact-form-card {
+    background: #ffffff !important;
+    border: 1.5px solid var(--color-rose-mauve) !important;
+    border-radius: 22px !important;
+    box-shadow: 0 14px 38px rgba(74, 59, 71, 0.1) !important;
+  }
+
+  /* Give inputs comfortable height and breathing room from the rounded borders */
+  .contact-page .contact-input {
+    padding: 13px 22px !important;
+    font-size: 15px !important;
+  }
+
+  .contact-page textarea.contact-input {
+    padding: 16px 22px !important;
+  }
+
+  .contact-page .contact-submit-btn {
+    padding: 12px 36px !important;
+    font-size: 15px !important;
+  }
+
+  .contact-page .contact-info-title {
+    font-size: 16px !important;
+  }
+}
+
+/* ==========================================================================
+   ALL YOUR ORIGINAL RESPONSIVE CODE REMAINS COMPLETELY UNCHANGED BELOW
+   ========================================================================== */
+@media (max-width: 768px) {
+  .contact-hero {
+    padding: 40px 0 80px;
+  }
+  .contact-hero-wave {
+    height: 100px;
+  }
+  .contact-cover-frame {
+    margin-bottom: -40px;
+  }
+}
+
+/* ---------- Contact page: phone layout ---------- */
+@media (max-width: 576px) {
+  .contact-hero {
+    padding: 90px 0 70px;
+  }
+
+  .contact-hero-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .contact-hero-p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    max-width: 100%;
+  }
+
+  .contact-cover-frame {
+    width: 118px;
+    height: 160px;
+    margin-top: 6px;
+    margin-bottom: -34px;
+    border-radius: 70px 70px 0 0;
+  }
+
+  .contact-hero-wave {
+    height: 70px;
+  }
+
+  /* form card + info block */
+  .contact-form-card .card-body {
+    padding: 22px 16px !important;
+  }
+
+  .contact-form-title {
+    font-size: 22px;
+  }
+
+  .contact-form-title.fs-2 {
+    font-size: 22px !important;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+  }
+
+  .contact-icon-circle {
+    width: 42px;
+    height: 42px;
+  }
+
+  /* long emails / addresses must wrap instead of overflowing the screen */
+  .contact-info-title,
+  .contact-info-sub {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .contact-info-title {
+    font-size: 14px;
+  }
+
+  .contact-page .ps-md-4 {
+    padding-left: 4px !important;
+  }
+}
+
+/* tablets: keep the hero arch from crowding the text */
+@media (min-width: 577px) and (max-width: 991px) {
+  .contact-cover-frame {
+    width: clamp(150px, 30vw, 230px);
+    height: clamp(200px, 40vw, 300px);
+  }
+}
+
+/* Keep native query dropdowns and autosuggest panels within narrow screens. */
+.contact-page, .contact-page .container, .contact-form-card, .contact-form-card .card-body,
+.contact-page form, .contact-page .form-group, .contact-page .mb-3 { min-width: 0; max-width: 100%; }
+.contact-page select.contact-input, .contact-page .form-select.contact-input {
+  display: block; width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box;
+  white-space: normal; text-overflow: ellipsis;
+}
+.contact-suggestions { width: 100%; max-width: 100%; box-sizing: border-box; overflow-x: hidden; }
+.contact-suggestion-title, .contact-suggestion-author { overflow-wrap: anywhere; word-break: break-word; }
+@media (max-width: 576px) {
+  .contact-page .row, .contact-page [class*="col-"] { min-width: 0; }
+  .contact-page .form-select { padding-right: 2.2rem; font-size: 14px; }
+  .contact-suggestions { left: 0; right: 0; max-height: min(220px, 45vh); }
+}

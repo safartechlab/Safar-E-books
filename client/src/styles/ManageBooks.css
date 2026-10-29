@@ -1,0 +1,11 @@
+/* Only brand colors — table/layout/spacing now come from Bootstrap */
+.manage-books-bg { background: var(--color-cream-bg); }
+.manage-books-heading { color: var(--color-text-dark); }
+
+.manage-books-add-btn { background: var(--brand-primary) !important; border: none !important; }
+.manage-books-add-btn:hover { background: var(--brand-primary-hover) !important; }
+
+.manage-books-thead th { background: var(--brand-primary); color: white; }
+
+.manage-books-edit-btn { background: var(--brand-amber) !important; border: none !important; }
+.manage-books-edit-btn:hover { background: var(--brand-amber-hover) !important; }

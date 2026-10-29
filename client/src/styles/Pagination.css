@@ -1,0 +1,74 @@
+.app-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.app-pagination-summary {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.app-pagination-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-pagination-controls button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-border);
+  background: #ffffff;
+  color: var(--color-deep-mauve);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.app-pagination-controls button:hover:not(:disabled):not(.active) {
+  background: var(--color-blush);
+  border-color: var(--color-rose-mauve);
+}
+
+.app-pagination-controls button.active {
+  background: var(--color-plum);
+  border-color: var(--color-plum);
+  color: #ffffff;
+}
+
+.app-pagination-controls button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.app-pagination-dots {
+  padding: 0 4px;
+  color: var(--color-muted-purple);
+}
+
+@media (max-width: 576px) {
+  .app-pagination {
+    justify-content: center;
+    text-align: center;
+  }
+  .app-pagination-controls button {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+}

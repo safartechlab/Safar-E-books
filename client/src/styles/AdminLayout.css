@@ -1,0 +1,76 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-color, var(--color-cream-bg));
+  position: relative;
+}
+
+/* Mobile Header - Hidden on Desktop */
+.admin-mobile-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: var(--primary-color, var(--color-green-dark));
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-logo {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.sidebar-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+/* Main Content Area */
+.admin-main-content {
+  flex: 1;
+  min-width: 0; /* Prevents overflow inside flexbox containers */
+  margin-left: 250px; /* Offset for desktop sidebar width */
+  padding: 30px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Sidebar Overlay Backdrop for Mobile */
+.admin-sidebar-overlay {
+  display: none;
+}
+
+/* ================= Responsive Breakpoints ================= */
+
+/* Tablet & Mobile Screens */
+@media (max-width: 992px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-mobile-header {
+    display: flex;
+  }
+
+  .admin-main-content {
+    margin-left: 0; /* Full width content on smaller screens */
+    padding: 20px 15px;
+  }
+
+  .admin-sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+}

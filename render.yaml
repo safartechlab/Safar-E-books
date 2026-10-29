@@ -1,0 +1,47 @@
+# Render "Blueprint" for the BACKEND (API) only. The website itself is
+# deployed on Vercel from the /client folder.
+#
+# Secrets marked "sync: false" are NOT stored in this file - Render asks you
+# to type them in its dashboard (or you can add them later under Environment).
+services:
+  - type: web
+    name: safar-ebooks-api
+    runtime: node
+    region: singapore          # closest Render region to India
+    plan: free                 # change to "starter" for always-on (recommended once you take real payments)
+    rootDir: server
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: CORS_ORIGIN
+        value: https://safarebooks.com,https://www.safarebooks.com
+      - key: JWT_SECRET
+        generateValue: true    # Render invents a long random value for you
+      - key: EMAIL_PROVIDER
+        value: resend          # free Render blocks SMTP; "resend" or "brevo" send over HTTPS
+      - key: EMAIL_FROM
+        value: SAFAR EBOOKS <no-reply@safarebooks.com>
+      - key: EMAIL_USER
+        sync: false            # inbox/admin address, e.g. your Gmail
+      - key: RESEND_API_KEY
+        sync: false
+      - key: MONGODB_URI
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false

@@ -1,0 +1,281 @@
+/* Container & Section Spacing */
+.bc-section {
+  background-color: var(--color-cream-bg, #F7ECEB);
+  /* Top 20px, Bottom 40px karke comfortable breathing space diya */
+  padding: 10px 0 55px 0 !important; 
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  box-sizing: border-box;
+}
+/* Thoda right side shift alignment matching New Arrivals */
+.bc-inner-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4.5rem; /* Exact left-right margin taaki content thoda right push ho */
+  box-sizing: border-box;
+}
+
+/* Header Row */
+.bc-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 1.6rem;
+}
+
+.bc-title-col {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Heading: New Arrivals identical */
+.bc-heading {
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(26px, 3.2vw, 34px);
+  font-weight: 800;
+  color: var(--color-deep-mauve, #4A3B47);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Accent Underline Line */
+.bc-heading::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-dusty-mauve, #A48794), var(--color-blush, #DCC6C6));
+}
+
+.bc-subtext {
+  color: var(--color-text-muted, #785F70);
+  font-family: var(--font-sans, "Plus Jakarta Sans", "Montserrat", sans-serif);
+  font-size: 0.95rem;
+  margin: 2px 0 0 0;
+}
+
+/* Minimalist Circular Arrow Button */
+.bc-viewall-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-rose-mauve, #B99BA7);
+  background: rgba(241, 229, 226, 0.55);
+  color: var(--color-plum, #5D4857);
+  transition: all 0.25s ease;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.bc-viewall-btn:hover {
+  background: var(--brand-primary, #5D4857);
+  border-color: var(--brand-primary, #5D4857);
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+/* 6-Column Strip without gaps */
+.bc-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+/* Compact Card */
+.bc-card {
+  position: relative;
+  width: 100% !important;
+  height: 105px !important;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(74, 59, 71, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  outline: none;
+}
+
+.bc-card:hover,
+.bc-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(74, 59, 71, 0.2);
+}
+
+/* Vignette Overlay */
+.bc-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(32, 22, 30, 0.45) 0%,
+    rgba(25, 17, 24, 0.7) 50%,
+    rgba(18, 12, 17, 0.92) 100%
+  );
+  transition: background 0.25s ease;
+}
+
+.bc-card:hover .bc-overlay,
+.bc-card:focus-visible .bc-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(32, 22, 30, 0.3) 0%,
+    rgba(25, 17, 24, 0.58) 50%,
+    rgba(18, 12, 17, 0.85) 100%
+  );
+}
+
+/* Card Content: Centered Layout */
+.bc-card-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.5rem 0.65rem 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Circular Icon Badge */
+.bc-icon-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(247, 236, 235, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  font-size: 13px;
+  margin-top: 0.15rem;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.bc-card:hover .bc-icon-badge {
+  transform: scale(1.08);
+  border-color: #FFFFFF;
+}
+
+/* Text Container */
+.bc-text-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.bc-name {
+  font-family: var(--font-sans, "Montserrat", sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 95%;
+}
+
+.bc-sub {
+  font-family: var(--font-sans, "Montserrat", sans-serif);
+  font-size: 8.5px;
+  color: rgba(247, 236, 235, 0.82);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* ================= Tablet & Mobile Responsive ================= */
+@media (max-width: 1199.98px) {
+  .bc-inner-container {
+    padding: 0 2rem;
+  }
+  .bc-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile par bottom margin aur padding ko tighten kiya */
+  .bc-section {
+    padding-top: 14px !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 0 !important; /* Extra bottom gap bilkul zero kiya */
+  }
+
+  .bc-inner-container {
+    padding: 0 1rem !important;
+  }
+
+  .bc-header-row {
+    margin-bottom: 0.85rem !important;
+  }
+
+  .bc-heading {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+  }
+
+  .bc-heading::after {
+    width: 32px !important;
+    margin-top: 5px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .bc-subtext {
+    font-size: 0.82rem !important;
+  }
+
+  .bc-viewall-btn {
+    width: 34px !important;
+    height: 34px !important;
+  }
+
+  /* Horizontal swipe track */
+  .bc-grid {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .bc-grid::-webkit-scrollbar {
+    display: none !important;
+    width: 0;
+    height: 0;
+  }
+
+  .bc-card {
+    flex: 0 0 135px !important;
+    width: 135px !important;
+    height: 115px !important;
+    scroll-snap-align: start;
+    border-radius: 12px !important;
+  }
+}

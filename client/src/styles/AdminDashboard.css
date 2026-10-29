@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+/* Main Canvas Wrapper */
+.admin-dashboard-container {
+  padding: 30px 24px 70px;
+  max-width: 1380px;
+  margin: 0 auto;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  color: var(--color-deep-mauve, #4A3B47);
+  background-color: var(--color-light-blush, #F7ECEB);
+  min-height: 100vh;
+}
+
+/* 1. Simple Header Without Box Container */
+.admin-simple-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.admin-welcome-h1 {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 800;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin: 0 0 4px 0;
+}
+
+.admin-welcome-sub {
+  font-size: 14.5px;
+  color: var(--color-dusty-mauve, #785F70);
+  margin: 0;
+}
+
+.admin-date-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  border: 1px solid var(--color-rose-mauve, #B99BA7);
+  border-radius: 25px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-plum, #5D4857);
+  box-shadow: 0 2px 8px rgba(74, 59, 71, 0.05);
+}
+
+/* 2. Stat Cards with Icon Bubbles */
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.admin-stat-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 18px 20px;
+  border: 1px solid rgba(185, 155, 167, 0.35);
+  box-shadow: 0 4px 16px rgba(74, 59, 71, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(74, 59, 71, 0.08);
+}
+
+.stat-icon-bubble {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-light-blush, #F7ECEB);
+  border: 1px solid var(--color-soft-rose, #C9AEB5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-plum, #5D4857);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.stat-info-wrap {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-dusty-mauve, #A48794);
+  margin-bottom: 2px;
+  display: block;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-deep-mauve, #4A3B47);
+  line-height: 1.15;
+  margin: 0 0 3px 0;
+}
+
+.stat-trend {
+  font-size: 11px;
+  font-weight: 700;
+  color: #2E7D32;
+  display: block;
+}
+
+.stat-sub {
+  font-size: 11px;
+  color: var(--color-dusty-mauve, #A48794);
+  display: block;
+}
+
+/* 3. Two-Column Grid */
+.admin-dashboard-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 10px;
+}
+
+@media (max-width: 991.98px) {
+  .admin-dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-dash-col {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Card Styling */
+.admin-dash-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 22px;
+  border: 1px solid rgba(185, 155, 167, 0.35);
+  box-shadow: 0 4px 18px rgba(74, 59, 71, 0.04);
+}
+
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.admin-card-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin: 0;
+}
+
+.card-badge {
+  background: var(--color-light-blush, #F7ECEB);
+  color: var(--color-plum, #5D4857);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--color-rose-mauve, #B99BA7);
+}
+
+/* 4. Modern Striped Tables */
+.admin-book-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.admin-book-table th {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-dusty-mauve, #785F70);
+  padding: 0 14px 6px;
+  border: none;
+}
+
+.admin-table-row {
+  background: #FAF6F6;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.admin-table-row:hover {
+  background: #F4EBEB;
+  transform: translateY(-1px);
+}
+
+.admin-table-row td {
+  padding: 11px 14px;
+  font-size: 13px;
+  color: var(--color-deep-mauve, #4A3B47);
+  border-top: 1px solid rgba(201, 174, 181, 0.25);
+  border-bottom: 1px solid rgba(201, 174, 181, 0.25);
+}
+
+.admin-table-row td:first-child {
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  border-left: 1px solid rgba(201, 174, 181, 0.25);
+}
+
+.admin-table-row td:last-child {
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  border-right: 1px solid rgba(201, 174, 181, 0.25);
+}
+
+.table-category-badge {
+  background: var(--color-blush, #DCC6C6);
+  color: var(--color-deep-mauve, #4A3B47);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* 5. Achievement Bottom Strip */
+.admin-bottom-strip {
+  background: linear-gradient(135deg, #4A3B47 0%, #5D4857 100%);
+  border-radius: 20px;
+  padding: 16px 24px;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 28px;
+  box-shadow: 0 6px 20px rgba(74, 59, 71, 0.15);
+}
+
+.strip-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.strip-icon {
+  font-size: 18px;
+  color: #DCC6C6;
+}
+
+/* Mobile Screens */
+@media (max-width: 576px) {
+  .admin-dashboard-container {
+    padding: 20px 14px 50px;
+  }
+  .admin-simple-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

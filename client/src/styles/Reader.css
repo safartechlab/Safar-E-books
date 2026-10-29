@@ -1,0 +1,407 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.book-reader-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  overflow: hidden;
+  font-family: var(--font-sans, "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+}
+
+/* 1. Theme Variables */
+.book-reader-wrapper.theme-sepia {
+  --canvas-bg: #EFE4DC;
+  --header-bg: #3D2D37;
+  --header-text: #FFFFFF;
+  --pill-bg: #2E222A;
+  --pill-text: #F7ECEB;
+  --accent: #B99BA7;
+  --page-bg: #FAF6F0;
+  background: var(--canvas-bg);
+}
+
+.book-reader-wrapper.theme-light {
+  --canvas-bg: #F4EBE9;
+  --header-bg: #4A3B47;
+  --header-text: #FFFFFF;
+  --pill-bg: #362933;
+  --pill-text: #FFFFFF;
+  --accent: #C9AEB5;
+  --page-bg: #FFFFFF;
+  background: var(--canvas-bg);
+}
+
+.book-reader-wrapper.theme-dark {
+  --canvas-bg: #1B1418;
+  --header-bg: #241A20;
+  --header-text: #E5D5DA;
+  --pill-bg: #161014;
+  --pill-text: #E5D5DA;
+  --accent: #8F6E80;
+  --page-bg: #221B20;
+  background: var(--canvas-bg);
+}
+
+/* 2. Top Header */
+.reader-top-header {
+  height: 56px;
+  background: var(--header-bg);
+  color: var(--header-text);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.reader-back-btn {
+  width: 34px;
+  height: 34px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.reader-back-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: translateX(-2px);
+}
+
+.reader-header-title {
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.2;
+}
+
+.reader-header-author {
+  font-size: 11px;
+  color: #DCC6C6;
+  line-height: 1.2;
+}
+
+.reader-header-nav-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reader-header-nav-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: #2E222A;
+}
+
+.reader-header-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.reader-progress-chip,
+.reader-preview-chip {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #F7ECEB;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.reader-preview-chip {
+  background: rgba(220, 53, 69, 0.25);
+  border-color: rgba(220, 53, 69, 0.4);
+  color: #FFC9CC;
+}
+
+/* Theme Toggle Pill */
+.theme-toggle-group {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.theme-toggle-group button {
+  background: transparent;
+  border: none;
+  color: #DCC6C6;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle-group button:hover {
+  color: #FFFFFF;
+}
+
+.theme-toggle-group button.active {
+  background: var(--accent);
+  color: #2E222A;
+  font-weight: 700;
+}
+
+/* 3. Reading Desk Canvas */
+.reading-desk-canvas {
+  padding: 16px 20px 20px 20px;
+  background: radial-gradient(circle, var(--canvas-bg) 0%, rgba(0,0,0,0.12) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-shadow {
+  position: absolute;
+  width: 94%;
+  height: 90%;
+  background: rgba(45, 33, 40, 0.28);
+  filter: blur(28px);
+  border-radius: 12px;
+}
+
+.book-spread {
+  border-radius: 6px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28), 0 2px 0 rgba(0, 0, 0, 0.15);
+  animation: settle 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-spread.turn-prev { --slide: -8px; }
+.book-spread.turn-next { --slide: 8px; }
+
+@keyframes settle {
+  from { opacity: 0.35; transform: translateX(var(--slide, 0)) scale(0.985); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+.book-page {
+  background: var(--page-bg);
+  max-height: 100%;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.book-page:disabled {
+  cursor: default;
+}
+
+.left-page {
+  border-radius: 6px 0 0 6px;
+}
+
+.right-page {
+  border-radius: 0 6px 6px 0;
+}
+
+.left-page::after, .right-page::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 24px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.left-page::after {
+  right: 0;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.08));
+}
+
+.right-page::after {
+  left: 0;
+  background: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.08));
+}
+
+.turn-hint {
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  background: rgba(45, 33, 40, 0.12);
+  color: #4A3B47;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.turn-hint-left { left: 10px; }
+.turn-hint-right { right: 10px; }
+
+.book-page:hover .turn-hint {
+  opacity: 1;
+}
+
+.book-spine {
+  width: 14px;
+  z-index: 3;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.35), rgba(255, 255, 255, 0.15) 50%, rgba(0, 0, 0, 0.35));
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.react-pdf__Page canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  height: auto !important;
+  object-fit: contain;
+}
+
+/* =========================================================
+   4. MOBILE SINGLE PAGE & FLOATING PILL (Screenshot 2 Match)
+   ========================================================= */
+@media (max-width: 768px) {
+  .reader-top-header {
+    height: 52px;
+    padding: 0 14px;
+  }
+
+  .reading-desk-canvas {
+    padding: 10px 10px 80px 10px; /* bottom padding for floating pill */
+    background: var(--canvas-bg);
+  }
+
+  /* Single Page Full Container */
+  .mobile-single-page {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18) !important;
+    border-radius: 12px !important;
+    max-height: calc(100vh - 150px) !important;
+    max-height: calc(100dvh - 150px) !important;
+  }
+
+  .mobile-single-page .left-page {
+    border-radius: 12px !important;
+  }
+
+  .mobile-single-page .left-page::after {
+    display: none;
+  }
+
+  .book-shadow {
+    display: none;
+  }
+
+  /* Screenshot 2 Matching Floating Pill Toolbar */
+  .mobile-reader-floating-pill {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--pill-bg);
+    color: var(--pill-text);
+    border-radius: 35px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 200;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .mobile-pill-btn {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    color: #FFFFFF;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .mobile-pill-btn:disabled {
+    opacity: 0.3;
+  }
+
+  .mobile-pill-counter {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--pill-text);
+    min-width: 65px;
+    text-align: center;
+  }
+}
+
+/* Loading & Error States */
+.reader-loading-container {
+  background: #F7ECEB;
+  color: #4A3B47;
+}
+
+.loading-book {
+  font-size: 34px;
+  color: #5D4857;
+  animation: breathe 1.4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.pdf-inline-loading {
+  color: #5D4857;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.reader-error-box {
+  max-width: 380px;
+  background: #FFFFFF;
+  border: 1px solid rgba(185, 155, 167, 0.4);
+  color: #4A3B47;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.retry-btn {
+  background: #5D4857;
+  color: #FFFFFF;
+}
+
+/* Paywall */
+.paywall-overlay {
+  inset: 0;
+  z-index: 500;
+  background: rgba(45, 33, 40, 0.72);
+  backdrop-filter: blur(4px);
+}
+
+.paywall-card {
+  max-width: 380px;
+  width: 90%;
+  background: #FFFFFF;
+  color: #4A3B47;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.paywall-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #5D4857;
+  color: #FFFFFF;
+}
+
+.btn-subscribe {
+  background: #5D4857;
+  color: #FFFFFF;
+}
+
+.btn-dismiss {
+  background: rgba(0, 0, 0, 0.08);
+  color: #4A3B47;
+}

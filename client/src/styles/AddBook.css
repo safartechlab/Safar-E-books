@@ -1,0 +1,271 @@
+/* =====================================================================
+   Add Book (modal) + Edit Book (page) + Languages box
+   Built on Bootstrap 5 classes, with the site's mauve palette on top.
+   ===================================================================== */
+
+/* ---------- Add Book modal shell (react-bootstrap Modal) ---------- */
+.bk-modal .modal-content {
+  border: 1px solid var(--color-rose-mauve);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-card-bg);
+  box-shadow: var(--shadow-md);
+}
+.bk-modal .modal-header {
+  background: linear-gradient(135deg, var(--color-plum), var(--color-deep-mauve));
+  color: #fff;
+  border: 0;
+  padding: 18px 24px;
+}
+.bk-modal .modal-body {
+  background: var(--color-light-blush);
+  padding: 20px 24px 8px;
+}
+.bk-modal .modal-footer {
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+  padding: 14px 24px;
+  gap: 10px;
+}
+.bk-modal-title {
+  margin: 2px 0 0;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+/* ---------- Page (Edit Book) ---------- */
+.bk-page { max-width: 1100px; margin: 0 auto; }
+.bk-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.bk-page-header h2 {
+  margin: 2px 0 4px;
+  font-family: var(--font-serif, Georgia, serif);
+  color: var(--color-deep-mauve);
+}
+.bk-page-header p { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; }
+
+.bk-eyebrow {
+  display: block;
+  color: var(--color-muted-purple);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+.bk-eyebrow-light { color: rgba(255, 255, 255, 0.75); }
+
+@media (min-width: 992px) {
+  .bk-sticky { position: sticky; top: 20px; }
+}
+
+/* ---------- Section cards ---------- */
+.bk-section {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-sm);
+}
+.bk-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted-purple);
+}
+.bk-step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-plum);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+}
+.bk-hint {
+  margin: -6px 0 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Form controls ---------- */
+.bk-form .form-label,
+.bk-section .form-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-deep-mauve);
+  margin-bottom: 4px;
+}
+.bk-form .form-control,
+.bk-form .form-select,
+.bk-section .form-control,
+.bk-section .form-select {
+  border-color: var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: #fff;
+  color: var(--color-deep-mauve);
+  min-width: 0;
+  max-width: 100%;
+}
+.bk-form .form-control:focus,
+.bk-form .form-select:focus,
+.bk-section .form-control:focus,
+.bk-section .form-select:focus {
+  border-color: var(--color-dusty-mauve);
+  box-shadow: 0 0 0 0.2rem rgba(var(--brand-amber-rgb), 0.25);
+}
+.bk-form .input-group-text,
+.bk-section .input-group-text {
+  background: var(--color-light-blush);
+  border-color: var(--color-border);
+  color: var(--color-muted-purple);
+}
+.bk-form .form-check-input:checked {
+  background-color: var(--color-plum);
+  border-color: var(--color-plum);
+}
+
+/* ---------- Access type: pick-a-card ---------- */
+.bk-access-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.bk-access-option { position: relative; display: block; margin: 0; cursor: pointer; }
+.bk-access-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.bk-access-card {
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+.bk-access-option:hover .bk-access-card { border-color: var(--color-dusty-mauve); }
+.bk-access-option input:checked + .bk-access-card {
+  border-color: var(--color-plum);
+  background: var(--color-light-blush);
+  box-shadow: 0 0 0 3px rgba(var(--brand-primary-rgb), 0.12);
+}
+.bk-access-option input:focus-visible + .bk-access-card {
+  outline: 2px solid var(--color-plum);
+  outline-offset: 2px;
+}
+.bk-access-icon { font-size: 1.3rem; line-height: 1.1; }
+.bk-access-name { font-weight: 700; font-size: 0.9rem; color: var(--color-deep-mauve); }
+.bk-access-desc { font-size: 0.78rem; line-height: 1.35; color: var(--color-text-muted); }
+
+/* ---------- Cover preview ---------- */
+.bk-cover-preview {
+  width: 100%;
+  max-width: 190px;
+  aspect-ratio: 3 / 4;
+  border: 1.5px dashed var(--color-rose-mauve);
+  border-radius: var(--radius-sm);
+  background: var(--color-light-blush);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 8px;
+}
+.bk-cover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.bk-cover-preview.has-image { border-style: solid; border-color: var(--color-border); padding: 0; }
+
+/* ---------- Extra-language rows (Add Book) ---------- */
+.bk-lang-row {
+  background: var(--color-light-blush);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+/* ---------- Languages & PDFs box (Edit Book) ---------- */
+.bk-edition-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.bk-edition-row:first-of-type { padding-top: 0; }
+.bk-edition-add {
+  background: var(--color-light-blush);
+  border: 1px dashed var(--color-rose-mauve);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-top: 14px;
+}
+
+/* ---------- Buttons ---------- */
+.bk-btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-plum);
+  --bs-btn-border-color: var(--color-plum);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--color-deep-mauve);
+  --bs-btn-hover-border-color: var(--color-deep-mauve);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--color-deep-mauve);
+  --bs-btn-active-border-color: var(--color-deep-mauve);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--color-plum);
+  --bs-btn-disabled-border-color: var(--color-plum);
+  --bs-btn-border-radius: var(--radius-pill);
+  --bs-btn-padding-x: 1.5rem;
+  font-weight: 600;
+}
+.bk-btn-ghost {
+  --bs-btn-color: var(--color-muted-purple);
+  --bs-btn-border-color: var(--color-border);
+  --bs-btn-hover-color: var(--color-deep-mauve);
+  --bs-btn-hover-bg: var(--color-blush);
+  --bs-btn-hover-border-color: var(--color-rose-mauve);
+  --bs-btn-border-radius: var(--radius-pill);
+  --bs-btn-padding-x: 1.25rem;
+  font-weight: 600;
+}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 576px) {
+  .bk-modal .modal-header,
+  .bk-modal .modal-body,
+  .bk-modal .modal-footer { padding-left: 14px; padding-right: 14px; }
+  .bk-section { padding: 14px; }
+  .bk-access-grid { grid-template-columns: 1fr; }
+  .bk-page-header { flex-direction: column; }
+  .bk-cover-preview { max-width: 150px; }
+  .bk-modal .modal-footer { flex-direction: column-reverse; }
+  .bk-modal .modal-footer .btn { width: 100%; }
+}
+
+/* Native select menus must never force the form wider than the viewport. */
+select, .form-select { max-width: 100%; min-width: 0; box-sizing: border-box; }

@@ -1,0 +1,536 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.about-page { 
+  color: var(--color-deep-mauve, #4A3B47); 
+  background-color: var(--color-light-blush, #F7ECEB); 
+  overflow-x: hidden; 
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  padding-bottom: 70px;
+}
+
+/* 1. ORIGINAL HERO SECTION WITH MAUVE GRADIENT */
+.about-hero {
+  position: relative;
+  background: linear-gradient(
+    to top,
+    var(--color-muted-purple) 0%,
+    var(--color-rose-mauve) 45%,
+    var(--color-blush) 80%,
+    var(--color-light-blush) 100%
+  ) !important;
+  padding: 85px 0 120px;
+  border: none !important;
+  border-bottom: none !important;
+}
+
+.about-hero-title { 
+  padding: 0 !important;
+  margin-top: 10px !important;
+  margin-bottom: 6px !important;
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(28px, 4vw, 44px); 
+  font-weight: 800; 
+  color: var(--color-deep-mauve, #4A3B47); 
+  line-height: 1.2 !important;
+}
+
+.about-hero-subtitle { 
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 24px !important;
+  color: var(--color-plum, #5D4857);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif); 
+  font-size: clamp(13px, 1.4vw, 16.5px); 
+  font-weight: 500;  
+  line-height: 1.6; 
+}
+
+.about-gallery-grid { 
+  margin-bottom: -100px; 
+  position: relative;
+  z-index: 3;
+}
+
+.gallery-card { 
+  border-radius: 24px; 
+  overflow: hidden; 
+  box-shadow: 0 15px 35px rgba(74, 59, 71, 0.18); 
+  background: var(--color-blush, #DCC6C6);
+  border: 1px solid var(--color-rose-mauve, #B99BA7);
+}
+
+.gallery-card img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block; 
+  transition: transform 0.3s ease; 
+}
+
+.gallery-card img:hover { 
+  transform: scale(1.05); 
+}
+
+.gallery-card-tall { 
+  height: 280px; 
+}
+
+.gallery-card-short { 
+  height: 230px; 
+  margin-bottom: 15px; 
+}
+
+/* RESTORED WAVE SVG DIVIDER */
+.about-hero-wave { 
+  position: absolute; 
+  bottom: -1px !important;
+  left: 0; 
+  width: 100%; 
+  height: 140px; 
+  overflow: hidden; 
+  line-height: 0; 
+  z-index: 1; 
+  pointer-events: none;
+}
+
+.about-hero-wave svg { 
+width: 100%; 
+  height: calc(100% + 1px) !important; 
+  display: block !important; 
+}
+
+/* Shared Typography */
+.about-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-plum, #5D4857);
+  margin-bottom: 8px;
+}
+
+.about-heading { 
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(24px, 2.8vw, 34px);
+  font-weight: 800; 
+  color: var(--color-deep-mauve, #4A3B47); 
+  line-height: 1.25;
+}
+
+.about-text-muted { 
+  color: #63505c; 
+  line-height: 1.7; 
+  font-size: 15px;
+}
+
+/* 2. VISION SECTION */
+.about-vision-section {
+  padding-top: 30px;
+  padding-bottom: 60px;
+  border-top: none !important;
+  outline: none !important;
+}
+
+.vision-pill-card {
+  background: #FFFFFF;
+  border-radius: 22px;
+  padding: 30px 24px;
+  border: 1px solid rgba(185, 155, 167, 0.35);
+  box-shadow: 0 4px 18px rgba(74, 59, 71, 0.04);
+  text-align: center;
+  height: 100%;
+  transition: transform 0.2s ease;
+}
+
+.vision-pill-card:hover {
+  transform: translateY(-4px);
+}
+
+.vision-icon-bubble {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-light-blush, #F7ECEB);
+  color: var(--color-plum, #5D4857);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  border: 1px solid var(--color-rose-mauve, #B99BA7);
+}
+
+.vision-card-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin-bottom: 8px;
+}
+
+.vision-card-desc {
+  font-size: 13.5px;
+  color: #63505c;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 3. USP GRID & HIGHLIGHT CARD */
+.about-usp-section {
+  padding: 0px 0 60px 0;
+}
+
+.usp-grid-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid rgba(185, 155, 167, 0.3);
+  height: 100%;
+}
+
+.usp-icon {
+  font-size: 22px;
+  color: var(--color-plum, #5D4857);
+  margin-bottom: 12px;
+}
+
+.usp-grid-card h4 {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin-bottom: 6px;
+}
+
+.usp-grid-card p {
+  font-size: 13px;
+  color: var(--color-dusty-mauve, #785F70);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Deep Plum Highlight Card */
+.usp-highlight-card {
+  background: linear-gradient(145deg, #3D2D37 0%, #4A3B47 100%);
+  border-radius: 22px;
+  padding: 30px 26px;
+  color: #FFFFFF;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 28px rgba(61, 45, 55, 0.25);
+}
+
+.highlight-tag {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #DCC6C6;
+  margin-bottom: 10px;
+}
+
+.highlight-heading {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 21px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+.highlight-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.highlight-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: #F7ECEB;
+  line-height: 1.45;
+}
+
+.check-icon {
+  color: #DCC6C6;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* 4. SOCIAL PROOF STRIP */
+.about-proof-section {
+  padding: 0px 0 60px 0;
+}
+
+.proof-metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.proof-item {
+  background: #FFFFFF;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid rgba(185, 155, 167, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.proof-icon {
+  font-size: 26px;
+  color: var(--color-plum, #5D4857);
+}
+
+.proof-content h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin: 0 0 2px 0;
+}
+
+.proof-content p {
+  font-size: 12.5px;
+  color: var(--color-dusty-mauve, #785F70);
+  margin: 0;
+}
+
+/* 5. CLOSING CTA BANNER */
+.about-cta-section {
+  padding: 20px 0 10px 0;
+}
+
+.about-cta-card {
+  background: linear-gradient(135deg, #2D2028 0%, #4A3B47 100%);
+  border-radius: 28px;
+  padding: 50px 30px;
+  text-align: center;
+  color: #FFFFFF;
+  box-shadow: 0 14px 38px rgba(45, 32, 40, 0.28);
+}
+
+.cta-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #DCC6C6;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.cta-headline {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+}
+
+.cta-sub {
+  font-size: 14.5px;
+  color: #F7ECEB;
+  opacity: 0.85;
+  margin-bottom: 24px;
+}
+
+.btn-cta-action {
+  background: #FFFFFF !important;
+  color: var(--color-deep-mauve, #4A3B47) !important;
+  font-weight: 700 !important;
+  padding: 12px 30px !important;
+  border-radius: 30px !important;
+  border: none !important;
+  font-size: 14.5px !important;
+  transition: transform 0.2s ease !important;
+}
+
+.btn-cta-action:hover {
+  transform: translateY(-2px);
+  background: #F7ECEB !important;
+}
+/* =========================================================
+   MOBILE RESPONSIVE ONLY (Desktop view un-touched)
+   ========================================================= */
+
+@media (max-width: 768px) {
+  /* 1. Page & Hero Spacing */
+  .about-page {
+    padding-bottom: 40px;
+  }
+
+  .about-hero {
+    padding: 60px 16px 80px !important;
+  }
+
+  .about-hero-title {
+    font-size: 28px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .about-hero-subtitle {
+    font-size: 14px !important;
+    line-height: 1.55 !important;
+    padding: 0 8px !important;
+    margin-bottom: 20px !important;
+  }
+
+  /* 2. Gallery 2x2 Clean Mobile Grid */
+  .about-gallery-grid {
+    margin-bottom: -50px !important;
+    --bs-gutter-x: 10px;
+    --bs-gutter-y: 10px;
+  }
+
+  .gallery-card {
+    border-radius: 16px !important;
+  }
+
+  .gallery-card-tall,
+  .gallery-card-short {
+    height: 160px !important;
+    margin-bottom: 0 !important;
+  }
+
+  .about-hero-wave {
+    height: 75px !important;
+  }
+
+  /* 3. Vision Section (Pillars) */
+  .about-vision-section {
+    padding-top: 75px !important;
+    padding-bottom: 35px !important;
+  }
+
+  .about-heading {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+
+  .about-text-muted {
+    font-size: 13.5px !important;
+    line-height: 1.6 !important;
+  }
+
+  .vision-pill-card {
+    padding: 22px 18px !important;
+    border-radius: 18px !important;
+  }
+
+  .vision-icon-bubble {
+    width: 46px !important;
+    height: 46px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .vision-card-title {
+    font-size: 16px !important;
+  }
+
+  /* 4. USP & Solutions Grid */
+  .about-usp-section {
+    padding: 30px 0 40px 0 !important;
+  }
+
+  .usp-grid-card {
+    padding: 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .usp-icon {
+    font-size: 20px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .usp-grid-card h4 {
+    font-size: 15px !important;
+  }
+
+  .usp-highlight-card {
+    padding: 24px 20px !important;
+    border-radius: 20px !important;
+    margin-top: 10px;
+  }
+
+  .highlight-heading {
+    font-size: 18px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* 5. Numbers / Social Proof (App-style 2x2 Grid) */
+  .about-proof-section {
+    padding: 30px 0 40px 0 !important;
+  }
+
+  .proof-metrics-strip {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .proof-item {
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+    gap: 10px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .proof-icon {
+    font-size: 22px !important;
+  }
+
+  .proof-content h3 {
+    font-size: 20px !important;
+  }
+
+  .proof-content p {
+    font-size: 11.5px !important;
+  }
+
+  /* 6. Closing CTA Banner */
+  .about-cta-section {
+    padding: 15px 0 0 0 !important;
+  }
+
+  .about-cta-card {
+    padding: 34px 20px !important;
+    border-radius: 22px !important;
+  }
+
+  .cta-headline {
+    font-size: 22px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .cta-sub {
+    font-size: 13.5px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .btn-cta-action {
+    width: 100% !important;
+    padding: 11px 20px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Extra small devices (iPhone SE, small screens < 400px) */
+@media (max-width: 400px) {
+  .gallery-card-tall,
+  .gallery-card-short {
+    height: 135px !important;
+  }
+
+  .about-hero-title {
+    font-size: 25px !important;
+  }
+
+  .proof-metrics-strip {
+    gap: 8px !important;
+  }
+}

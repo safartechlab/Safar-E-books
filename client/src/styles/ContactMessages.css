@@ -1,0 +1,208 @@
+/* Page Wrapper */
+.contact-page-wrapper {
+  background-color: var(--color-cream-bg);
+  min-height: 100vh;
+}
+
+.page-title {
+  color: var(--color-text-dark);
+  font-weight: 400;
+  font-size: 28px;
+}
+
+/* Pill Search Input */
+.search-input-pill {
+  border-radius: 20px !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.search-input-pill:focus {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Stat Cards */
+.custom-stat-card {
+  border-radius: 16px !important;
+  background-color: var(--color-surface-alt) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.stat-label {
+  color: var(--color-text-muted);
+  font-size: 15px;
+}
+
+.stat-value {
+  color: var(--brand-primary);
+  font-weight: 500;
+  font-size: 26px;
+}
+
+/* Direct Table Wrapper (No Card Component) */
+.standalone-table-wrapper {
+  background-color: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05) !important;
+  overflow: hidden;
+}
+
+/* Clean Brown Table Header */
+.clean-theme-table thead tr {
+  background-color: var(--brand-primary) !important;
+}
+
+.clean-theme-table thead th {
+  background-color: var(--brand-primary) !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  font-size: 15px;
+  padding: 16px 20px !important;
+  border: none !important;
+}
+
+.clean-theme-table tbody td {
+  padding: 16px 20px !important;
+  color: var(--color-text-dark);
+  font-size: 14px;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+.clean-theme-table tbody tr:hover td {
+  background-color: rgba(var(--brand-amber-rgb), 0.03);
+}
+
+/* Status Badges */
+.status-badge-active {
+  background-color: #D4EDDA !important;
+  color: #155724 !important;
+  font-weight: 500 !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+
+.status-badge-unread {
+  background-color: #FFF3CD !important;
+  color: #856404 !important;
+  font-weight: 500 !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+
+/* Action Buttons */
+.btn-action-view {
+  background-color: #2196F3 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+}
+
+.btn-action-reply {
+  background-color: #FF9800 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+}
+
+.btn-action-delete {
+  background-color: #E53935 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: #fff !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+}
+
+/* Filter Buttons */
+.filter-btn {
+  background-color: transparent !important;
+  border: 1px solid var(--brand-amber-hover) !important;
+  color: var(--brand-primary) !important;
+  border-radius: 20px !important;
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background-color: var(--brand-primary) !important;
+  color: #ffffff !important;
+  border-color: var(--brand-primary) !important;
+}
+
+/* Clickable Status Badge */
+.status-badge-toggle {
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.15s ease;
+}
+
+.status-badge-toggle:hover {
+  transform: scale(1.05);
+}
+
+/* CSV Export Button */
+.btn-export-csv {
+  background-color: var(--color-surface-alt) !important;
+  color: var(--brand-primary) !important;
+  border: 1px solid var(--brand-amber-hover) !important;
+  border-radius: 20px !important;
+  padding: 8px 18px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.btn-export-csv:hover {
+  background-color: var(--brand-primary) !important;
+  color: #ffffff !important;
+  border-color: var(--brand-primary) !important;
+}
+
+/* Custom Checkbox Alignment */
+.clean-theme-table .form-check-input:checked {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+}
+
+/* Send Email Button in Modal */
+.btn-send-email {
+  background-color: var(--brand-primary) !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 8px 24px !important;
+  font-weight: 500 !important;
+}
+
+.btn-send-email:hover {
+  background-color: var(--brand-primary) !important;
+}
+
+/* Custom Pagination Theme */
+.custom-pagination .page-link {
+  color: var(--brand-primary) !important;
+  border-color: var(--color-border) !important;
+  border-radius: 6px !important;
+  margin: 0 2px !important;
+  box-shadow: none !important;
+}
+
+.custom-pagination .page-item.active .page-link {
+  background-color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  color: #ffffff !important;
+}
+
+.custom-pagination .page-link:hover {
+  background-color: var(--color-cream-bg) !important;
+}

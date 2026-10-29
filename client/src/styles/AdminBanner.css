@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap');
+
+/* Main Page Canvas */
+.banner-mgmt-page {
+  padding: 28px 24px 70px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  color: var(--color-deep-mauve, #4A3B47);
+  background-color: var(--color-light-blush, #F7ECEB);
+  min-height: 100vh;
+}
+
+.banner-page-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(22px, 2.3vw, 28px);
+  font-weight: 800;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin-bottom: 2px;
+}
+
+.banner-page-subtitle {
+  font-size: 13.5px;
+  color: var(--color-dusty-mauve, #785F70);
+  margin: 0;
+}
+
+.text-plum {
+  color: var(--color-plum, #5D4857) !important;
+}
+
+.banner-count-badge {
+  background: var(--color-plum, #5D4857);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* Shelf Containers */
+.banner-shelf-card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 22px 24px;
+  border: 1px solid rgba(185, 155, 167, 0.35);
+  box-shadow: 0 4px 18px rgba(74, 59, 71, 0.04);
+}
+
+.banner-shelf-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 17.5px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+}
+
+.banner-empty-box {
+  text-align: center;
+  padding: 36px 16px;
+  background: #FAF6F6;
+  border: 1px dashed var(--color-rose-mauve, #B99BA7);
+  border-radius: 14px;
+  color: var(--color-dusty-mauve, #785F70);
+  font-size: 13.5px;
+}
+
+/* Poster Grid */
+.banner-posters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 16px;
+}
+
+.banner-book-item {
+  background: #FAF6F6;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(185, 155, 167, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-book-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(74, 59, 71, 0.12);
+}
+
+.banner-book-item.is-active {
+  border: 2px solid var(--color-plum, #5D4857);
+}
+
+.banner-poster-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: #eae2e2;
+  overflow: hidden;
+}
+
+.banner-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.banner-book-item:hover .banner-poster-img {
+  transform: scale(1.05);
+}
+
+.banner-status-tag {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: var(--color-plum, #5D4857);
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+}
+
+/* Hover Action Overlay */
+.banner-overlay-actions {
+  position: absolute;
+  inset: 0;
+  background: rgba(45, 32, 40, 0.72);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 10px;
+}
+
+.banner-book-item:hover .banner-overlay-actions {
+  opacity: 1;
+}
+
+.banner-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.banner-action-btn:hover {
+  transform: scale(1.05);
+}
+
+.banner-action-btn.add {
+  background: #FFFFFF;
+  color: var(--color-deep-mauve, #4A3B47);
+}
+
+.banner-action-btn.edit {
+  background: #FFFFFF;
+  color: var(--color-plum, #5D4857);
+}
+
+.banner-action-btn.delete {
+  background: #dc3545;
+  color: #FFFFFF;
+}
+
+.banner-item-meta {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-item-title {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.banner-item-author {
+  font-size: 11px;
+  color: var(--color-dusty-mauve, #785F70);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   Create / Edit Modal (Matching Screenshot with Mauve Finish)
+   ========================================================= */
+.banner-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 34, 39, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1060;
+  padding: 16px;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.banner-modal-box {
+background: linear-gradient(
+    to bottom,
+    var(--color-light-blush) 0%,
+    var(--color-blush) 60%,
+    var(--color-soft-rose) 100%
+  ) !important;
+  border-radius: 20px;
+  border: 1px solid var(--color-rose-mauve, #c9aeb5);
+  width: 520px;
+  max-width: 95%;
+  padding: 28px;
+  box-shadow: 0 16px 40px rgba(42, 34, 39, 0.25);
+}
+
+.banner-modal-heading {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-deep-mauve, #4A3B47);
+}
+
+.banner-modal-close {
+  color: var(--color-dusty-mauve, #785F70);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 4px;
+}
+
+.banner-modal-close:hover {
+  color: var(--color-deep-mauve, #4A3B47);
+}
+
+.banner-field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-deep-mauve, #4A3B47);
+  margin-bottom: 6px;
+}
+
+.banner-input-box {
+  border-radius: 10px !important;
+  border: 1.5px solid #dcc6c6 !important;
+  padding: 10px 14px !important;
+  font-size: 14px !important;
+  color: var(--color-deep-mauve, #4A3B47) !important;
+}
+
+.banner-input-box:focus {
+  border-color: var(--color-plum, #5D4857) !important;
+  box-shadow: 0 0 0 3px rgba(93, 72, 87, 0.15) !important;
+}
+
+.banner-btn-submit {
+  background: var(--color-plum, #5D4857) !important;
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+}
+
+.banner-btn-submit:hover {
+  background: var(--color-deep-mauve, #4A3B47) !important;
+}
+
+.banner-btn-cancel {
+  background: #6c757d !important;
+  border: none !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 576px) {
+  .banner-mgmt-page {
+    padding: 20px 14px 50px;
+  }
+  .banner-posters-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}

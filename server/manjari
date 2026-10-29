@@ -1,0 +1,44 @@
+PORT=5000
+
+# Comma-separated list of allowed frontend origins in production, e.g.:
+#   CORS_ORIGIN=https://bookverse.com,https://www.bookverse.com
+# Leave unset for local dev (allows any origin) — but ALWAYS set this
+# before deploying, or any website can call this API using a visitor's
+# token.
+CORS_ORIGIN=
+
+# MongoDB connection string (use your production cluster, not localhost, in prod)
+MONGODB_URI=mongodb://127.0.0.1:27017/ebook_platform
+
+# Long random string used to sign login tokens. Generate one with:
+#   node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"
+JWT_SECRET=c6d9d49b41e5e860f9c6447e6dd8a4f35684b7eef712cce336636b69f05745a70201d5a8b7031f8ae5c970e3ca72b2fc64d237ce947597b81995114643ded7c5
+
+# SMTP sender used for OTP / verification / reminder emails.
+# Gmail app-password works for testing; use a transactional email
+# provider (SendGrid, SES, Postmark, etc.) for production volume.
+EMAIL_USER=safarcareers@gmail.com
+EMAIL_PASS=zhzk boti vsco ngjk
+
+# Razorpay dashboard (Settings -> API Keys). Use test keys (rzp_test_...)
+# until you're ready to go live with rzp_live_... keys.
+RAZORPAY_KEY_ID=rzp_test_Tbmzc6ejpyq9H5
+RAZORPAY_KEY_SECRET=AhegYMa5jZK3Rq5053ZRjrIg
+
+# Razorpay dashboard (Settings -> Webhooks) -> the secret you set when
+# adding the webhook URL. Required for the webhook route to work; without
+# it the payment-reconciliation job (scripts/reconcilePendingOrders.js)
+# is the only thing that still grants access for payments that don't
+# come back through /verify.
+RAZORPAY_WEBHOOK_SECRET=
+
+# Subscription pricing fallback — see config/plans.js for the actual
+# per-plan pricing table; these two are used only where noted there.
+SUBSCRIPTION_PRICE=299
+SUBSCRIPTION_DURATION_DAYS=30
+
+# Cloudinary (https://console.cloudinary.com -> Dashboard -> API Keys).
+# Book covers and PDFs are stored here instead of on the server's disk.
+CLOUDINARY_CLOUD_NAME=w9ubfbrj
+CLOUDINARY_API_KEY=222422712278458
+CLOUDINARY_API_SECRET=hxWk6Ob1kJL6oEywdVDpqn2Cwm4

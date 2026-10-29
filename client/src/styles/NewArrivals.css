@@ -1,0 +1,457 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.na-section {
+  background-color: var(--color-light-blush);
+  padding: 0 0 30px 0;
+  position: relative;
+  z-index: 5;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Thoda bada & bold heading */
+.na-heading {
+  font-family: var(--font-serif, "Playfair Display", serif);
+  font-size: clamp(26px, 3.2vw, 34px);
+  font-weight: 800;
+  color: var(--color-deep-mauve);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+}
+
+.na-subtext {
+  color: var(--color-text-muted);
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 0.95rem;
+}
+
+/* Circular Arrow Button */
+.na-arrow-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-rose-mauve);
+  background: rgba(241, 229, 226, 0.55);
+  color: var(--color-plum);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+.na-arrow-btn:hover {
+  background-color: var(--color-plum);
+  color: var(--color-light-blush);
+  border-color: var(--color-plum);
+  transform: translateX(4px);
+}
+
+/* Horizontal Scroll Track */
+.na-scroll-track {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 8px 0 14px 0 !important;
+  background: transparent !important;
+}
+
+.na-scroll-track::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Thoda sa bada Card Dimension (165px -> 185px) */
+.na-book-card {
+  flex: 0 0 185px;
+  width: 185px;
+  background-color: #2b2329;
+  border-radius: 14px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  cursor: pointer;
+  box-shadow: none !important;
+  border: none !important;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  transition: transform 0.25s ease;
+}
+
+.na-book-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Poster Aspect Ratio (235px -> 265px) */
+.na-poster-wrap {
+  position: relative;
+  width: 100%;
+  height: 265px;
+  background-color: var(--color-plum);
+  overflow: hidden;
+}
+
+.na-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Desktop Hover Overlay */
+.na-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(42, 34, 39, 0.35) 0%,
+    rgba(42, 34, 39, 0.65) 50%,
+    rgba(42, 34, 39, 0.95) 100%
+  );
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  z-index: 3;
+}
+
+.na-book-card:hover .na-hover-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+.na-overlay-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.na-badge {
+  background: rgba(58, 45, 54, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 2.5px 8px;
+  border-radius: 4px;
+}
+
+.na-heart-btn {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(4px);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.na-heart-btn:hover {
+  background: rgba(74, 59, 71, 0.85);
+  transform: scale(1.1);
+}
+
+.na-overlay-bottom {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.na-hover-title {
+  font-family: var(--font-sans, "Plus Jakarta Sans", sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.25;
+  margin: 0 0 3px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.na-hover-author {
+  font-size: 12px;
+  color: var(--color-soft-rose);
+  margin: 0 0 8px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.na-hover-read-btn {
+  background: rgba(164, 135, 148, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.na-hover-read-btn:hover {
+  background: var(--color-plum);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.na-store-btn {
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.na-store-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+}
+
+/* ================= Mobile Screen Clean View ================= */
+@media (max-width: 768px) {
+  .na-section {
+    padding: 10px 0 15px 0 !important;
+  }
+
+  .na-heading {
+    font-size: 20px !important;
+    font-weight: 700 !important;
+  }
+
+  .na-subtext {
+    font-size: 0.85rem !important;
+  }
+
+  .na-arrow-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .na-scroll-track {
+    gap: 12px !important;
+    padding: 2px 0 6px 0 !important;
+  }
+
+  .na-book-card {
+    flex: 0 0 135px !important;
+    width: 135px !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    border: none !important;
+    background-color: #2b2329 !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .na-poster-wrap {
+    height: 185px !important;
+  }
+
+  .na-hover-overlay {
+    display: none !important;
+  }
+}
+
+/* =========================================================
+   Shared book row (New Arrivals / Free Books / VIP Books)
+   ========================================================= */
+.na-section .min-w-0 {
+  min-width: 0;
+}
+
+.na-book-card:focus-visible {
+  outline: 2px solid var(--color-plum);
+  outline-offset: 3px;
+}
+
+/* Label that is ALWAYS visible (Free / VIP / price). The hover overlay has
+   its own copy, so this one fades out while the overlay is showing. Phones
+   have no hover, so this is the only label they ever see. */
+.na-corner-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  background: rgba(58, 45, 54, 0.88);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  padding: 3px 7px;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.na-book-card:hover .na-corner-badge {
+  opacity: 0;
+}
+
+@media (hover: none) {
+  .na-book-card:hover .na-corner-badge {
+    opacity: 1;
+  }
+}
+
+/* Left / right scroll buttons (desktop only, shown when the row overflows) */
+.na-nav-btn:hover {
+  transform: none;
+}
+
+/* Loading placeholders */
+.na-skeleton {
+  pointer-events: none;
+  background-color: var(--color-blush) !important;
+}
+
+.na-skeleton .na-poster-wrap {
+  background: linear-gradient(
+    90deg,
+    rgba(220, 198, 198, 0.6) 25%,
+    rgba(247, 236, 235, 0.95) 50%,
+    rgba(220, 198, 198, 0.6) 75%
+  );
+  background-size: 200% 100%;
+  animation: naShimmer 1.4s linear infinite;
+}
+
+@keyframes naShimmer {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .na-skeleton .na-poster-wrap {
+    animation: none;
+  }
+  .na-book-card,
+  .na-arrow-btn {
+    transition: none;
+  }
+}
+
+/* Very small phones: slightly smaller covers so ~2.3 are visible at once,
+   which hints that the row scrolls sideways. */
+@media (max-width: 380px) {
+  .na-book-card {
+    flex: 0 0 120px !important;
+    width: 120px !important;
+  }
+  .na-poster-wrap {
+    height: 168px !important;
+  }
+}
+
+/* =========================================================
+   SIMPLE POLISH — paste at the END of styles/NewArrivals.css
+   CSS only. No JSX changes. Same colors as your theme.
+   (Affects New Arrivals, Free Books and VIP Books)
+   ========================================================= */
+
+/* Small accent line under the heading */
+.na-heading::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  margin-top: 8px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--color-dusty-mauve), var(--color-blush));
+}
+
+/* Soft resting shadow so covers feel lifted off the page */
+.na-section .na-book-card {
+  box-shadow: 0 6px 16px rgba(74, 59, 71, 0.18) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.na-section .na-book-card.na-skeleton {
+  box-shadow: none !important;
+}
+
+/* Gentle zoom on the cover (smooth) */
+.na-poster-img {
+  transition: transform 0.4s ease;
+}
+
+/* Hover effects only on devices that really have hover (not phones) */
+@media (hover: hover) {
+  .na-section .na-book-card:hover {
+    box-shadow: 0 14px 28px rgba(74, 59, 71, 0.3) !important;
+  }
+
+  .na-book-card:hover .na-poster-img {
+    transform: scale(1.05);
+  }
+}
+
+/* Softer, rounder FREE / VIP / price label */
+.na-corner-badge {
+  border-radius: var(--radius-pill);
+  padding: 3px 9px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Slightly more breathing room between the sections */
+.na-section {
+  padding-bottom: 36px;
+}
+
+@media (max-width: 768px) {
+  .na-heading::after {
+    width: 32px;
+    margin-top: 6px;
+  }
+
+  .na-section {
+    padding-bottom: 20px !important;
+  }
+
+  .na-section .na-book-card {
+    box-shadow: 0 4px 12px rgba(74, 59, 71, 0.16) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .na-poster-img {
+    transition: none;
+  }
+  .na-book-card:hover .na-poster-img {
+    transform: none;
+  }
+}
