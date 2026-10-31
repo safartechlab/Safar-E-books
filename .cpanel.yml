@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/rxr11hjce8ck/public_html
+    - export BACKENDPATH=/home/rxr11hjce8ck/safarebooks-backend
+    # 1. Sync frontend production build to public_html
+    - /bin/rsync -av client/dist/ $DEPLOYPATH/
+    # 2. Sync backend code to Node.js backend folder
+    - /bin/rsync -av --exclude 'node_modules' --exclude '.git' server/ $BACKENDPATH/
