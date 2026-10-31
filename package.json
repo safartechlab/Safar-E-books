@@ -2,8 +2,11 @@
   "name": "safar-ebooks",
   "private": true,
   "description": "Helper scripts for building and starting the whole project from the top folder",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "install:all": "npm --prefix client install && npm --prefix server install",
     "build": "npm --prefix client run build",
     "start": "npm --prefix server start",
     "dev:server": "npm --prefix server run dev",
