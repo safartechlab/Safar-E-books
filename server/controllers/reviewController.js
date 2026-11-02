@@ -61,7 +61,6 @@ const addReview = async (req, res) => {
     });
   }
 };
-g
 const getReviewsForBook = async (req, res) => {
   try {
     const { bookId } = req.params;
