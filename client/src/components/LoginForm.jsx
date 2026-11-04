@@ -44,7 +44,9 @@ function LoginForm({ closeLogin, openRegister, openForgotPassword, openSignupOtp
       }
 
       localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      if (response.data?.user) {
+  localStorage.setItem("user", JSON.stringify(response.data.user));
+}
 
       if (rememberMe) {
         localStorage.removeItem("sessionOnly");

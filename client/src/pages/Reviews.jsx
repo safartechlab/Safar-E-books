@@ -125,11 +125,14 @@ function Reviews() {
         },
       });
 
-      const data = res.data;
-      setStats(data.stats);
-      setTotalPages(data.totalPages);
-      setPage(data.currentPage);
-      setReviews((prev) => (replace ? data.reviews : [...prev, ...data.reviews]));
+      const data = res.data || {};
+const incoming = data.reviews || [];
+setStats(
+  data.stats || { averageRating: 0, totalReviews: 0, totalBooksReviewed: 0 }
+);
+setTotalPages(data.totalPages || 1);
+setPage(data.currentPage || pageToLoad);
+setReviews((prev) => (replace ? incoming : [...prev, ...incoming]));
     } catch (err) {
       setError("We couldn't load reviews right now.");
     } finally {

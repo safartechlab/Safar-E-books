@@ -6,7 +6,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from './App.jsx'
-
+["user", "token"].forEach((key) => {
+  const v = localStorage.getItem(key);
+  if (v === "undefined" || v === "null") localStorage.removeItem(key);
+});
 if (
   localStorage.getItem("sessionOnly") === "1" &&
   !/(?:^|;\s*)bv_session=1/.test(document.cookie)
