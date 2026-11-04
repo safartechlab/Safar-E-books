@@ -382,7 +382,7 @@ async function startServer() {
     }
 
     // Start Express server
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT,'0.0.0.0', () => {
       console.log("======================================");
       console.log(`✅ Server running on port ${PORT}`);
       console.log("🗄️ Database: Connected");
